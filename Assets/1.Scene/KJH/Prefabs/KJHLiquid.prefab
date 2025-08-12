@@ -128,5 +128,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolManager: {fileID: 0}
   copy: {fileID: 0}
+  globalCurvature: -999
+  initMeanDensity: -999
   verticesToArray: []
   normalsToArray: []
+  attachTarget: {fileID: 0}
+  attachTargetInitPosition: {x: 0, y: 0, z: 0}
+  initPos: {x: 0, y: 0, z: 0}
+  initVolume: -1
