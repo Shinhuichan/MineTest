@@ -15,4 +15,3 @@ MonoBehaviour:
   objectName: TestObject
   objectDescription: "\uD14C\uC2A4\uD2B8\uC6A9\uC785\uB2C8\uB2E4"
   objectSprite: {fileID: 21300000, guid: 5410adf0b914f49438506b7dd0022773, type: 3}
-  isConductivity: 1
