@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    public event Action<objectInfo> OnObjectHovered;
+    public event Action<ObjectInfo> OnObjectHovered;
     public event Action OnObjectHoverExited;
 
     private void Awake()
@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void NotifyHover(objectInfo info)
+    public void NotifyHover(ObjectInfo info)
     {
         OnObjectHovered?.Invoke(info);
     }

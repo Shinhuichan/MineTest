@@ -22,7 +22,7 @@ public class DisplayPanel : MonoBehaviour
         UIManager.Instance.OnObjectHoverExited -= ClearDisplay;
     }
 
-    private void UpdateDisplay(objectInfo info)
+    private void UpdateDisplay(ObjectInfo info)
     {
         panelRoot.SetActive(true);
         nameText.text = info.objectName;
