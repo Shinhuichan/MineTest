@@ -33,14 +33,27 @@ public class CheckMicroScopeData : MonoBehaviour
         var go = (args.interactableObject as Component)?.gameObject;
         if (go == null) return;
 
-        var obj = go.GetComponent<ItemObject>();
-        Data = obj != null ? obj.data : null;
 
-        if(Data !=null && Data.objectSprite != null)
+        var objectInfo = go.GetComponent<ObjectInfo>();
+        var progress = go.GetComponent<ExperimentProgress_H>(); // 진행상태
+
+        if(objectInfo != null && objectInfo.oreData != null)
         {
-            checkImage.sprite = Data.objectSprite;
+            // 현미경에 맞는 이미지 표시
+            checkImage.sprite = objectInfo.oreData.microShape;
             checkImage.preserveAspect = true;
+            
+            //실험 상태 업데이트 및 방송
+            if(progress != null)
+            {
+                // 현미경 실험 완료 상태를 트루로 변경
+                progress.isMicroScopeCheckd = true;
+
+                UIManager.Instance.NotifyExperimentUpdated(objectInfo);
+            }
         }
+
+      
     }
 
     private void OnSelectExited(SelectExitEventArgs args)

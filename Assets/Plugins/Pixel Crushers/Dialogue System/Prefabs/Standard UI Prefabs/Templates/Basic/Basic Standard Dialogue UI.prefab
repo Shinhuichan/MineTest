@@ -300,7 +300,7 @@ MonoBehaviour:
     QTEIndicators:
     - {fileID: 155762}
     - {fileID: 191022}
-  addEventSystemIfNeeded: 1
+  addEventSystemIfNeeded: 0
   verifyPanelAssignments: 1
 --- !u!1 &105778
 GameObject:
