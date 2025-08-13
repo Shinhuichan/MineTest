@@ -7,10 +7,8 @@ using System;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-
     public event Action<ObjectInfo> OnObjectHovered;
     public event Action OnObjectHoverExited;
-
     private void Awake()
     {
         if (Instance == null)
