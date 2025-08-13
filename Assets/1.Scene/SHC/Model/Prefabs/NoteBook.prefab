@@ -758,8 +758,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3afadcdbda61fe479515900376b82f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuUI: {fileID: 8409432453543259128}
-  settingUI: {fileID: 4342523631783878081}
+  menuUI: {fileID: 0}
+  settingUI: {fileID: 8409432453543259128}
   toggleBool: 0
 --- !u!1 &1596910920959097285
 GameObject:
