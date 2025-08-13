@@ -16,6 +16,7 @@ MonoBehaviour:
   - Default
   - Ray
   - Direct
+  - stone
   - 
   - 
   - 
@@ -43,5 +44,4 @@ MonoBehaviour:
   - 
   - 
   - 
-  - 
-  - 
+  - Teleport

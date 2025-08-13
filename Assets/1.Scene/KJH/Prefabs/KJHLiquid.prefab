@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.014
+      value: 0.011
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalScale.y
@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.014
+      value: 0.011
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalPosition.x
@@ -107,11 +107,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6014633393672178068, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
 --- !u!114 &6900441122901451580
@@ -123,10 +123,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7067272314205979246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99ee5461aa0178c48917cbbe2c666c68, type: 3}
+  m_Script: {fileID: 11500000, guid: e082e26f09d9e9a4eadb1eb473819a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   poolManager: {fileID: 0}
+  springStrength: 50
+  springDamping: 2
+  contactThreshold: 0.02
   copy: {fileID: 0}
   verticesToArray: []
   normalsToArray: []

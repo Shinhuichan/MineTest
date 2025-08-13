@@ -18,6 +18,16 @@ public struct KJHLiquidTag : IComponentData { }
 [RequireComponent(typeof(MeshCollider))]
 public class KJHLiquid : PoolBehaviour
 {
+
+    [Header("Spring (mesh-based)")]
+    [Tooltip("엣지(버텍스-이웃) 스프링 강성")]
+    public float springStrength = 50f;
+    [Tooltip("스프링 감쇠: 상대속도에 의해 에너지를 흡수")]
+    public float springDamping = 2f;
+    [Tooltip("충돌 시 '너무 가까움' 판정 임계값 (월드 단위)")]
+    public float contactThreshold = 0.02f;
+
+
     #region Entity Setting
     EntityManager entityManager;
     Entity entity;
@@ -39,31 +49,45 @@ public class KJHLiquid : PoolBehaviour
     [HideInInspector] public NativeArray<float3> gravityVelocites;
     [HideInInspector] public NativeArray<RaycastCommand> rayComms;
     [HideInInspector] public NativeArray<RaycastHit> hits;
-    [HideInInspector] public NativeArray<VertexInfo> infos;
+    [HideInInspector] public NativeArray<LocalInfo> infos;
     [HideInInspector] public NativeArray<float3> hitCloseNormals;
     [HideInInspector] public NativeArray<float3> hitClosePoints;
     [HideInInspector] public Vector3[] verticesToArray;
     [HideInInspector] public Vector3[] normalsToArray;
-    public struct VertexInfo
+    public struct LocalInfo
     {
         public float3 pos;
-        public float3 velo;
         public float3 normal;
-        public float3 upPos;
-        public float3 upVelo;
-        public float3 upNormal;
-        public float3 rightPos;
-        public float3 rightVelo;
-        public float3 rightNormal;
+        public float3 velocity;
+        public float localCurvature;
+        public int neighborA;
+        public int neighborB;
+        public float restLenA;
+        public float restLenB;
     }
-    public static float Area(float3 a, float3 b, float3 c)
+
+
+    int callCount;
+    void OnCollisionEnter(Collision collision)
     {
-        float3 vec1 = b - a;
-        float3 vec2 = c - a;
-        float3 crossProduct = math.cross(vec1, vec2);
-        float area = 0.5f * math.length(crossProduct);
-        return area;
+        if (collision.collider.name == "Ore1")
+        {
+            callCount++;
+            if (callCount % 20 == 0)
+            {
+                ParticleManager.I.PlayParticle("DustSmall", collision.contacts[0].point, Quaternion.identity, null);
+                SoundManager.I.PlaySFX("LiquidDrop", collision.contacts[0].point, null, 0.8f);
+            }
+            else if(callCount > 100)
+            {
+                UnInit();
+                Despawn();
+            }
+        }
     }
+
+
+
     void Awake()
     {
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
@@ -76,8 +100,12 @@ public class KJHLiquid : PoolBehaviour
         Init();
     }
     void OnDisable() => UnInit();
-    void OnDestroy() => UnInit();
+    void OnDestroy() => Dispose();
     void UnInit()
+    {
+        if (entityManager.Exists(entity)) entityManager.DestroyEntity(entity);
+    }
+    void Dispose()
     {
         if (vertices.IsCreated) vertices.Dispose();
         if (velocites.IsCreated) velocites.Dispose();
@@ -96,6 +124,7 @@ public class KJHLiquid : PoolBehaviour
         }
         copy.vertices = verticesToArray;
         copy.RecalculateNormals();
+        copy.RecalculateBounds();
         mc.sharedMesh = null;
         mc.sharedMesh = copy;
     }
@@ -107,23 +136,27 @@ public class KJHLiquid : PoolBehaviour
         {
             original = mf.mesh;
             copy = Instantiate(original);
-            mf.mesh = copy;
-            vertices = new NativeArray<float3>(copy.vertices.Length, Allocator.TempJob);
-            velocites = new NativeArray<float3>(copy.vertices.Length, Allocator.TempJob);
-            gravityVelocites = new NativeArray<float3>(copy.vertices.Length, Allocator.TempJob);
-            rayComms = new NativeArray<RaycastCommand>(copy.vertices.Length, Allocator.TempJob);
-            hits = new NativeArray<RaycastHit>(copy.vertices.Length, Allocator.TempJob);
-            infos = new NativeArray<VertexInfo>(copy.vertices.Length, Allocator.TempJob);
-            hitCloseNormals = new NativeArray<float3>(copy.vertices.Length, Allocator.TempJob);
-            hitClosePoints = new NativeArray<float3>(copy.vertices.Length, Allocator.TempJob);
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = new float3(copy.vertices[i].x, copy.vertices[i].y, copy.vertices[i].z);
-                velocites[i] = float3.zero;
-            }
-            verticesToArray = new Vector3[vertices.Length];
-            normalsToArray = new Vector3[vertices.Length];
+            vertices = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
+            velocites = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
+            gravityVelocites = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
+            rayComms = new NativeArray<RaycastCommand>(copy.vertices.Length, Allocator.Persistent);
+            hits = new NativeArray<RaycastHit>(copy.vertices.Length, Allocator.Persistent);
+            infos = new NativeArray<LocalInfo>(copy.vertices.Length, Allocator.Persistent);
+            hitCloseNormals = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
+            hitClosePoints = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
         }
+        else
+        {
+            copy = Instantiate(original);
+        }
+        mf.mesh = copy;
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            vertices[i] = new float3(copy.vertices[i].x, copy.vertices[i].y, copy.vertices[i].z);
+            velocites[i] = float3.zero;
+        }
+        verticesToArray = new Vector3[vertices.Length];
+        normalsToArray = new Vector3[vertices.Length];
         InitEntity();
     }
 }
@@ -148,11 +181,11 @@ public partial class KJHLiquidSystem : SystemBase
     }
     protected override void OnDestroy()
     {
-        if (jobHandle1.IsCompleted) jobHandle1.Complete();
-        if (jobHandle2.IsCompleted) jobHandle2.Complete();
-        if (jobHandle3.IsCompleted) jobHandle3.Complete();
-        if (jobHandle4.IsCompleted) jobHandle4.Complete();
-        if (jobHandle5.IsCompleted) jobHandle5.Complete();
+        jobHandle1.Complete();
+        jobHandle2.Complete();
+        jobHandle3.Complete();
+        jobHandle4.Complete();
+        jobHandle5.Complete();
     }
     protected override void OnUpdate()
     {
@@ -261,15 +294,11 @@ public partial struct KJHLiquidMoveJob : IJobParallelFor
     [NativeDisableParallelForRestriction] public NativeArray<float3> vertices;
     [NativeDisableParallelForRestriction] public NativeArray<float3> velocites;
     [NativeDisableParallelForRestriction] public NativeArray<float3> gravityVelocites;
-    [NativeDisableParallelForRestriction] public NativeArray<KJHLiquid.VertexInfo> infos;
+    [NativeDisableParallelForRestriction] public NativeArray<KJHLiquid.LocalInfo> infos;
     public void Execute(int index)
     {
         float3 currentPosition = vertices[index];
         float3 currentVelocity = velocites[index];
-
-
-
-
 
         // ////////////////////////////
         float3 gravityVelocity = gravityVelocites[index];
