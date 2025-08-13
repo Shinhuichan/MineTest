@@ -71,7 +71,7 @@ public class SoundManager : SingletonBehaviour<SoundManager>
         ausBGM1.volume = 0f;
         ausBGM1.Stop();
     }
-    public SFX PlaySFX(string Name, Vector3 pos, Transform parent = null, float spatialBlend = 0f)
+    public SFX PlaySFX(string Name, Vector3 pos, Transform parent = null, float spatialBlend = 0.8f)
     {
         int find = -1;
         for (int i = 0; i < sfxList.Count; i++)
