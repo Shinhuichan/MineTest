@@ -20,8 +20,45 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         LoadCSV();
-        ShowLine("1"); // 시작 ID (필요에 맞게 조정)
+        // Start에서 바로 ShowLine 호출 제거
         SetupButtons();
+
+        // 처음에는 UI 숨김
+        nameText.gameObject.SetActive(false);
+        contentText.gameObject.SetActive(false);
+        choiceText.gameObject.SetActive(false);
+        leftButton.gameObject.SetActive(false);
+        rightButton.gameObject.SetActive(false);
+        confirmButton.gameObject.SetActive(false);
+    }
+
+    public void ActivateDialogue()
+    {
+        gameObject.SetActive(true); // DialogueManager 활성화
+
+        // UI 요소 전체 켜기
+        nameText.gameObject.SetActive(true);
+        contentText.gameObject.SetActive(true);
+        choiceText.gameObject.SetActive(true);
+        leftButton.gameObject.SetActive(true);
+        rightButton.gameObject.SetActive(true);
+        confirmButton.gameObject.SetActive(true);
+
+        ShowLine("1"); // 시작 ID
+    }
+
+    public void HideDialogue()
+    {
+        // UI 숨기기
+        nameText.gameObject.SetActive(false);
+        contentText.gameObject.SetActive(false);
+        choiceText.gameObject.SetActive(false);
+        leftButton.gameObject.SetActive(false);
+        rightButton.gameObject.SetActive(false);
+        confirmButton.gameObject.SetActive(false);
+
+        // 필요 시 코루틴 정지
+        StopAllCoroutines();
     }
 
     void LoadCSV()
