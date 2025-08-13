@@ -8,4 +8,5 @@ public class ObjectInfo : MonoBehaviour
     [TextArea(3, 10)]
     public string description;
     public Sprite objImage;
+    public OreData oreData;
 }
