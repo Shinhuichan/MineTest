@@ -3,7 +3,12 @@ guid: ca9e364ea7fd09249a8b2209c1135e34
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KJHLiquid
+    second: {fileID: 2100000, guid: 779d83a29d233ff49945009ea6aedd6e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -78,7 +83,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
