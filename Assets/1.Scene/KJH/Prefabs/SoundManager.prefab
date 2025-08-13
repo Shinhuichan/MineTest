@@ -46,17 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b946654020106004cbcafab1c6ebbef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmList:
-  - {fileID: 8300000, guid: 9945a520b6b12e74285806c614c8edfc, type: 3}
-  - {fileID: 8300000, guid: 2695371e572d3734daa99bac2fa61067, type: 3}
-  - {fileID: 8300000, guid: 871d891e108fbda4bbd628d755556a7b, type: 3}
-  - {fileID: 8300000, guid: 02269a546e3a9e942aa833942633ca1a, type: 3}
-  - {fileID: 8300000, guid: 3ba4b586eadbac04b8ae90571cf2d51f, type: 3}
+  bgmList: []
   sfxList:
-  - {fileID: 8300000, guid: 296f15c0e88a0414bbd63bb836d0d65c, type: 3}
-  - {fileID: 8300000, guid: ce25db3c5c6f0574db3887b668c1556b, type: 3}
-  - {fileID: 8300000, guid: ffac26aa7750b3d4997a5e7d6d359f4d, type: 3}
-  - {fileID: 8300000, guid: 3938cb9e37d0dce4ab09eca8f8179cc8, type: 3}
+  - {fileID: 8300000, guid: b5e8551cea4e50344aa584407a74aa52, type: 3}
   ambienceList: []
   sfxPrefab: {fileID: 6825123997177719663, guid: 3573164359e59e749971469f005bd620, type: 3}
   volumeBGM: 1

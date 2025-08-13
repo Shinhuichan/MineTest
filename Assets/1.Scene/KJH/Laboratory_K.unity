@@ -813,14 +813,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5061775662627443215, guid: 4f19a57eb77e3d84aa871a9253cdbc4d, type: 3}
-      propertyPath: particleList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5061775662627443215, guid: 4f19a57eb77e3d84aa871a9253cdbc4d, type: 3}
-      propertyPath: particleList.Array.data[1]
-      value: 
-      objectReference: {fileID: 3342719283886983671, guid: 682a4ea2cf6844d4da31ce2c2bd099ee, type: 3}
     - target: {fileID: 8527682349841075835, guid: 4f19a57eb77e3d84aa871a9253cdbc4d, type: 3}
       propertyPath: m_Name
       value: ParticleManager
@@ -3555,38 +3547,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: bgmList.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: sfxList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: bgmList.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 2695371e572d3734daa99bac2fa61067, type: 3}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: bgmList.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 871d891e108fbda4bbd628d755556a7b, type: 3}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: bgmList.Array.data[2]
-      value: 
-      objectReference: {fileID: 8300000, guid: 02269a546e3a9e942aa833942633ca1a, type: 3}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: bgmList.Array.data[3]
-      value: 
-      objectReference: {fileID: 8300000, guid: 3ba4b586eadbac04b8ae90571cf2d51f, type: 3}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: sfxList.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: b5e8551cea4e50344aa584407a74aa52, type: 3}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: sfxList.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: ffac26aa7750b3d4997a5e7d6d359f4d, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
