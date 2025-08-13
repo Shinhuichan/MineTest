@@ -4,10 +4,8 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-
     public event Action<ObjectInfo> OnObjectHovered;
     public event Action OnObjectHoverExited;
-
     private void Awake()
     {
         // 싱글톤 초기화는 Awake에서
