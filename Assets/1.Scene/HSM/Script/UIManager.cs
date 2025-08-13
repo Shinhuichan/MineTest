@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     public event Action<ObjectInfo> OnObjectHovered;
     public event Action OnObjectHoverExited;
 
-    private void Awake()
+    private void Start()
     {
         if (Instance == null)
         {

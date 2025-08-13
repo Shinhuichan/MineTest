@@ -322,7 +322,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8585264975816542433}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 764809166942121807}
+        m_TargetAssemblyTypeName: SettingUI, Assembly-CSharp
+        m_MethodName: EnterSettingUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &669640886442892351
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -544,6 +556,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123034136321217421}
   - component: {fileID: 1983278977799684297}
+  - component: {fileID: 5609889594410923258}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -684,6 +697,62 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5609889594410923258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187230226722482472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 764809166942121807}
+        m_TargetAssemblyTypeName: SettingUI, Assembly-CSharp
+        m_MethodName: SetToggleUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1489409301123166658
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,8 +827,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3afadcdbda61fe479515900376b82f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuUI: {fileID: 0}
-  settingUI: {fileID: 8409432453543259128}
+  menuUI: {fileID: 8409432453543259128}
+  settingUI: {fileID: 4342523631783878081}
   toggleBool: 0
 --- !u!1 &1596910920959097285
 GameObject:
@@ -1654,7 +1723,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3860546130324584106}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 764809166942121807}
+        m_TargetAssemblyTypeName: SettingUI, Assembly-CSharp
+        m_MethodName: SceneRestart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &4161237743971678741
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1729,7 +1810,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 764809166942121807}
         m_TargetAssemblyTypeName: SettingUI, Assembly-CSharp
-        m_MethodName: LoadGame
+        m_MethodName: SceneRestart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1818,9 +1899,9 @@ Transform:
   m_GameObject: {fileID: 3450434582085949115}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: -0.073, y: 0.0757, z: 0.1269}
-  m_LocalScale: {x: 0.2, y: 0.01, z: 0.175}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.073, y: 0.1577, z: 0.2719}
+  m_LocalScale: {x: 0.4, y: 0.02, z: 0.35}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5821810132115103212}
   m_Father: {fileID: 4123034136321217421}
@@ -2330,7 +2411,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1079729277773367006}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 764809166942121807}
+        m_TargetAssemblyTypeName: SettingUI, Assembly-CSharp
+        m_MethodName: ExitSettingUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &5017723305334662793
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3416,8 +3509,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.073, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.01, z: 0.175}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.4, y: 0.019999998, z: 0.34999996}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4123034136321217421}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3691,7 +3784,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 76314150763066872}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 764809166942121807}
+        m_TargetAssemblyTypeName: SettingUI, Assembly-CSharp
+        m_MethodName: GameQuit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &1010919166235172303
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3766,7 +3871,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 764809166942121807}
         m_TargetAssemblyTypeName: SettingUI, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: GameQuit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
