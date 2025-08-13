@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     public event Action OnObjectHoverExited;
 
     public event Action<ObjectInfo> OnExperimentUpdated;
-    private void Start()
+    private void Awake()
     {
         // 싱글톤 초기화는 Awake에서
         if (Instance == null)

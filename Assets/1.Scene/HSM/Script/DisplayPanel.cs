@@ -15,8 +15,8 @@ public class DisplayPanel : MonoBehaviour
     public GameObject[] checks;
 
 
-    private ObjectInfo currentInfo; // ÇöÀç º¸°í ÀÖ´Â ¿ÀºêÁ§Æ® Á¤º¸ ÀúÀå
-    private void OnEnable()
+    private ObjectInfo currentInfo; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private void Start()
     {
         UIManager.Instance.OnObjectHovered += OnHover;
         UIManager.Instance.OnObjectHoverExited += ClearDisplay;
@@ -42,10 +42,10 @@ public class DisplayPanel : MonoBehaviour
     private void OnExperimentUpdate(ObjectInfo updatedInfo)
     {
 
-        // Áö±Ý º¸°í ÀÖ´Â È­¸éÀÌ ¸Â´ÂÁö È®ÀÎ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ È­ï¿½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if (currentInfo != null && currentInfo == updatedInfo)
         {
-            RefreshDisplay(); // ¸Â´Ù¸é »õ·Î°íÄ§
+            RefreshDisplay(); // ï¿½Â´Ù¸ï¿½ ï¿½ï¿½ï¿½Î°ï¿½Ä§
         }
     }
 
@@ -57,7 +57,7 @@ public class DisplayPanel : MonoBehaviour
 
         if(progress == null)
         {
-            Debug.Log($"{currentInfo.name}¿¡ ExperimentProgress ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù");
+            Debug.Log($"{currentInfo.name}ï¿½ï¿½ ExperimentProgress ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
             return;
         }
 
