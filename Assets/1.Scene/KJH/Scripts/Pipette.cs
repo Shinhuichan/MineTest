@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
-using Unity.Entities;
 public class Pipette : MonoBehaviour
 {
     public bool isGrab = false;

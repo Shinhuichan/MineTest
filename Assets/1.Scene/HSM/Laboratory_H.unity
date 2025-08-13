@@ -359,6 +359,7 @@ MonoBehaviour:
   objectName: stone2
   description: infinity stone~~
   objImage: {fileID: 21300000, guid: 17d565bb4a7744b41b7e4dc7e3a09e35, type: 3}
+  data: {fileID: 0}
 --- !u!65 &128128400
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -735,6 +736,7 @@ MonoBehaviour:
   objectName: stone1
   description: kim stone~~
   objImage: {fileID: 21300000, guid: e45f8f823c093d941855bb23b53b9414, type: 3}
+  data: {fileID: 11400000, guid: ee03167d8140e1443b1a73733e1f6a7c, type: 2}
 --- !u!65 &309754391
 BoxCollider:
   m_ObjectHideFlags: 0

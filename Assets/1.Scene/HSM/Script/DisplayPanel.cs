@@ -11,7 +11,7 @@ public class DisplayPanel : MonoBehaviour
     public Image objectImage;
     public GameObject panelRoot;
 
-    private void OnEnable()
+    private void Start()
     {
         UIManager.Instance.OnObjectHovered += UpdateDisplay;
         UIManager.Instance.OnObjectHoverExited += ClearDisplay;

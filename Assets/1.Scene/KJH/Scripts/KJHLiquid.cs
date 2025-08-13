@@ -18,6 +18,16 @@ public struct KJHLiquidTag : IComponentData { }
 [RequireComponent(typeof(MeshCollider))]
 public class KJHLiquid : PoolBehaviour
 {
+
+    [Header("Spring (mesh-based)")]
+    [Tooltip("엣지(버텍스-이웃) 스프링 강성")]
+    public float springStrength = 50f;
+    [Tooltip("스프링 감쇠: 상대속도에 의해 에너지를 흡수")]
+    public float springDamping = 2f;
+    [Tooltip("충돌 시 '너무 가까움' 판정 임계값 (월드 단위)")]
+    public float contactThreshold = 0.02f;
+
+
     #region Entity Setting
     EntityManager entityManager;
     Entity entity;
@@ -39,31 +49,30 @@ public class KJHLiquid : PoolBehaviour
     [HideInInspector] public NativeArray<float3> gravityVelocites;
     [HideInInspector] public NativeArray<RaycastCommand> rayComms;
     [HideInInspector] public NativeArray<RaycastHit> hits;
-    [HideInInspector] public NativeArray<VertexInfo> infos;
+    [HideInInspector] public NativeArray<LocalInfo> infos;
     [HideInInspector] public NativeArray<float3> hitCloseNormals;
     [HideInInspector] public NativeArray<float3> hitClosePoints;
     [HideInInspector] public Vector3[] verticesToArray;
     [HideInInspector] public Vector3[] normalsToArray;
-    public struct VertexInfo
+    public struct LocalInfo
     {
         public float3 pos;
-        public float3 velo;
         public float3 normal;
-        public float3 upPos;
-        public float3 upVelo;
-        public float3 upNormal;
-        public float3 rightPos;
-        public float3 rightVelo;
-        public float3 rightNormal;
+        public float3 velocity;
+        public float localCurvature;
+        public int neighborA;
+        public int neighborB;
+        public float restLenA;
+        public float restLenB;
     }
-    public static float Area(float3 a, float3 b, float3 c)
-    {
-        float3 vec1 = b - a;
-        float3 vec2 = c - a;
-        float3 crossProduct = math.cross(vec1, vec2);
-        float area = 0.5f * math.length(crossProduct);
-        return area;
-    }
+    // public static float Area(float3 a, float3 b, float3 c)
+    // {
+    //     float3 vec1 = b - a;
+    //     float3 vec2 = c - a;
+    //     float3 crossProduct = math.cross(vec1, vec2);
+    //     float area = 0.5f * math.length(crossProduct);
+    //     return area;
+    // }
     void Awake()
     {
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
@@ -96,6 +105,7 @@ public class KJHLiquid : PoolBehaviour
         }
         copy.vertices = verticesToArray;
         copy.RecalculateNormals();
+        copy.RecalculateBounds();
         mc.sharedMesh = null;
         mc.sharedMesh = copy;
     }
@@ -113,7 +123,7 @@ public class KJHLiquid : PoolBehaviour
             gravityVelocites = new NativeArray<float3>(copy.vertices.Length, Allocator.TempJob);
             rayComms = new NativeArray<RaycastCommand>(copy.vertices.Length, Allocator.TempJob);
             hits = new NativeArray<RaycastHit>(copy.vertices.Length, Allocator.TempJob);
-            infos = new NativeArray<VertexInfo>(copy.vertices.Length, Allocator.TempJob);
+            infos = new NativeArray<LocalInfo>(copy.vertices.Length, Allocator.TempJob);
             hitCloseNormals = new NativeArray<float3>(copy.vertices.Length, Allocator.TempJob);
             hitClosePoints = new NativeArray<float3>(copy.vertices.Length, Allocator.TempJob);
             for (int i = 0; i < vertices.Length; i++)
@@ -261,7 +271,7 @@ public partial struct KJHLiquidMoveJob : IJobParallelFor
     [NativeDisableParallelForRestriction] public NativeArray<float3> vertices;
     [NativeDisableParallelForRestriction] public NativeArray<float3> velocites;
     [NativeDisableParallelForRestriction] public NativeArray<float3> gravityVelocites;
-    [NativeDisableParallelForRestriction] public NativeArray<KJHLiquid.VertexInfo> infos;
+    [NativeDisableParallelForRestriction] public NativeArray<KJHLiquid.LocalInfo> infos;
     public void Execute(int index)
     {
         float3 currentPosition = vertices[index];
