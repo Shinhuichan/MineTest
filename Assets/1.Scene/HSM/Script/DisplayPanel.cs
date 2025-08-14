@@ -16,8 +16,13 @@ public class DisplayPanel : MonoBehaviour
 
 
     private ObjectInfo currentInfo; // 현재 보고 있는 오브젝트 정보 저장
-    private void OnEnable()
+    private void Start()
     {
+        if (panelRoot != null)
+        {
+            panelRoot.SetActive(false);
+        }
+
         UIManager.Instance.OnObjectHovered += OnHover;
         UIManager.Instance.OnObjectHoverExited += ClearDisplay;
         UIManager.Instance.OnExperimentUpdated += OnExperimentUpdate;
