@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f892b2fef11488d42b951d8881bc7fb1, type: 3}
-  m_Name: Calcite
+  m_Script: {fileID: 11500000, guid: 03bc68f14d65e7747a59d5ff74bd199b, type: 3}
+  m_Name: OculusLoader
   m_EditorClassIdentifier: 
-  type: 0
-  isReactingToChem: 2
-  hardness: 3
-  microShape: {fileID: 21300000, guid: 0bb8c8bd5e2dd7d4e9478eff46948a8b, type: 3}
-  electroConduct: 0

@@ -15,9 +15,17 @@ public class DisplayPanel : MonoBehaviour
     public GameObject[] checks;
 
 
+
+
     private ObjectInfo currentInfo; // ���� ���� �ִ� ������Ʈ ���� ����
+
     private void Start()
     {
+        if (panelRoot != null)
+        {
+            panelRoot.SetActive(false);
+        }
+
         UIManager.Instance.OnObjectHovered += OnHover;
         UIManager.Instance.OnObjectHoverExited += ClearDisplay;
         UIManager.Instance.OnExperimentUpdated += OnExperimentUpdate;
