@@ -7,7 +7,7 @@ public class LightEnable_LSH : MonoBehaviour
 {
     public GameObject LightObject;
 
-    private ObjectData Data;
+    private OreData Data;
 
     private XRSocketInteractor socket;
     void Awake()
@@ -33,10 +33,11 @@ public class LightEnable_LSH : MonoBehaviour
         var go = (args.interactableObject as Component)?.gameObject;
         if (go == null) return;
 
-        var obj = go.GetComponent<ItemObject>();
-        Data = obj != null ? obj.data : null;
+        var obj = go.GetComponent<ObjectInfo>();
 
-        if (Data != null && Data.isConductivity == true)
+        Data = obj != null ? obj.oreData : null;
+
+        if (Data != null && Data.electroConduct == true)
         {
             LightObject.SetActive(true);
         }
