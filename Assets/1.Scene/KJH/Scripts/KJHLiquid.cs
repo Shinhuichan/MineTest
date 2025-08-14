@@ -97,6 +97,7 @@ public class KJHLiquid : PoolBehaviour
     }
     void OnEnable()
     {
+        callCount = 0;
         Init();
     }
     void OnDisable() => UnInit();
@@ -154,6 +155,8 @@ public class KJHLiquid : PoolBehaviour
         {
             vertices[i] = new float3(copy.vertices[i].x, copy.vertices[i].y, copy.vertices[i].z);
             velocites[i] = float3.zero;
+            hitCloseNormals[i] = float3.zero;
+            hitClosePoints[i] = float3.zero;
         }
         verticesToArray = new Vector3[vertices.Length];
         normalsToArray = new Vector3[vertices.Length];
