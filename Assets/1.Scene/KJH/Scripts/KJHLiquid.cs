@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
 using Unity.Burst;
@@ -6,6 +7,8 @@ using Unity.Entities;
 using Unity.Collections;
 using Unity.Transforms;
 using Random = UnityEngine.Random;
+// --- IComponentData ---
+public struct KJHLiquidTag : IComponentData { }
 // --- MonoBehaviour ---
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
@@ -13,10 +16,10 @@ using Random = UnityEngine.Random;
 public class KJHLiquid : PoolBehaviour
 {
     public LayerMask collisionMask;
-    public float gravityFixVelo = 0.001f;
-    public float volumeSpring = 5f;
-    public float edgeSpring = 50f;
-    public float maxSpringVelo = 0.05f;
+    public float gravityForce = 3f;
+    public float volumeSpringK = 5f;
+    public float edgeSpringK = 50f;
+    public float maxSpeed_gravity;
     MeshFilter mf;
     MeshRenderer mr;
     MeshCollider mc;
@@ -25,6 +28,33 @@ public class KJHLiquid : PoolBehaviour
     #region Entity Setting
     EntityManager entityManager;
     Entity entity;
+    [HideInInspector] public NativeArray<float3> vertices;
+    [HideInInspector] public NativeArray<VertInfo> infos;
+    [HideInInspector] public NativeArray<RaycastCommand> rayComms;
+    [HideInInspector] public NativeArray<RaycastHit> hits;
+    uint seed;
+    public float3 initScale;
+    public float initVolume;
+    Vector3[] verticesToArray;
+    [HideInInspector] public Transform attachTarget;
+    [HideInInspector] public Vector3 initTargetPos;
+    [HideInInspector] public Vector3 initTrPos;
+    public struct VertInfo
+    {
+        public float3 initVertex;
+        public float3 vertex;
+        public float3 normal;
+        public float3 velocity;
+        public float3 velocity_gravity;
+        public float3 velocity_volume;
+        public float3 velocity_edge;
+        public bool isAttach;
+        public float3 hitNormal;
+        public float3 hitPoint;
+        public FixedList32Bytes<int> neighborIndex;
+        public FixedList32Bytes<float> neighborInitDistance;
+        public FixedList32Bytes<float> neighborDistance;
+    }
     void InitEntity()
     {
         if (entityManager.Exists(entity)) entityManager.DestroyEntity(entity);
@@ -32,27 +62,6 @@ public class KJHLiquid : PoolBehaviour
         entityManager.AddComponentObject(entity, this);
     }
     #endregion
-    uint seed;
-    [HideInInspector] public NativeArray<float3> vertices;
-    [HideInInspector] public NativeArray<float3> velocites;
-    [HideInInspector] public NativeArray<float3> normals;
-    [HideInInspector] public NativeArray<int> triangles;
-    [HideInInspector] public NativeArray<bool> isAttaches;
-    [HideInInspector] public NativeArray<RaycastCommand> rayComms;
-    [HideInInspector] public NativeArray<RaycastHit> hits;
-    [HideInInspector] public NativeArray<float3> hitClosePoints;
-    [HideInInspector] public NativeArray<float3> hitCloseNormals;
-    [HideInInspector] public Vector3[] verticesToArray;
-    [HideInInspector] public Vector3[] normalsToArray;
-    [HideInInspector] public Transform attachTarget;
-    [HideInInspector] public Vector3 initTargetPos;
-    [HideInInspector] public Vector3 initTrPos;
-    [HideInInspector] public float3 initScale;
-    [ReadOnlyInspector] public float initVolume;
-    // 엣지 정보 추가
-    [HideInInspector] public NativeArray<float3> initVertices;
-    [HideInInspector] public NativeArray<int> edgeIndices;
-    [HideInInspector] public NativeArray<int> edgeOffsets;
     void Awake()
     {
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
@@ -66,6 +75,71 @@ public class KJHLiquid : PoolBehaviour
     }
     void OnDisable() => UnInit();
     void OnDestroy() => Dispose();
+    public void Init()
+    {
+        if (original == null)
+        {
+            original = mf.mesh;
+            copy = Instantiate(original);
+            mf.mesh = copy;
+            vertices = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
+            infos = new NativeArray<VertInfo>(copy.vertices.Length, Allocator.Persistent);
+            rayComms = new NativeArray<RaycastCommand>(copy.vertices.Length, Allocator.Persistent);
+            hits = new NativeArray<RaycastHit>(copy.vertices.Length, Allocator.Persistent);
+        }
+        else
+        {
+            copy = Instantiate(original);
+        }
+        for (int i = 0; i < copy.vertices.Length; i++)
+        {
+            vertices[i] = copy.vertices[i];
+            VertInfo info = new VertInfo();
+            info.initVertex = copy.vertices[i];
+            info.vertex = copy.vertices[i];
+            info.normal = copy.normals[i];
+            info.velocity = float3.zero;
+            info.velocity_gravity = float3.zero;
+            info.velocity_volume = float3.zero;
+            info.velocity_edge = float3.zero;
+            info.isAttach = false;
+            info.hitNormal = float3.zero;
+            info.hitPoint = float3.zero;
+
+            info.neighborIndex = new FixedList32Bytes<int>();
+            info.neighborInitDistance = new FixedList32Bytes<float>();
+            info.neighborDistance = new FixedList32Bytes<float>();
+            // 가장 가까운 7개 찾기
+            List<(float dist, int index)> nearestList = new List<(float, int)>();
+            for (int j = 0; j < copy.vertices.Length; j++)
+            {
+                if (i == j) continue;
+                float dist = Vector3.Distance(copy.vertices[i], copy.vertices[j]);
+                nearestList.Add((dist, j));
+            }
+            nearestList.Sort((a, b) => a.dist.CompareTo(b.dist));
+            int neighborCount = math.min(7, nearestList.Count);
+            for (int n = 0; n < neighborCount; n++)
+            {
+                info.neighborIndex.Add(nearestList[n].index);
+                info.neighborInitDistance.Add(nearestList[n].dist);
+                info.neighborDistance.Add(nearestList[n].dist);
+            }
+
+
+
+
+            infos[i] = info;
+        }
+        verticesToArray = new Vector3[copy.vertices.Length];
+        initVolume = CalculateMeshVolume(copy);
+        seed = (uint)Random.Range(0, 10000);
+        initScale = transform.lossyScale;
+        attachTarget = null;
+        initTargetPos = Vector3.zero;
+        initTrPos = transform.position;
+        InitEntity();
+    }
     public void UnInit()
     {
         try
@@ -81,26 +155,30 @@ public class KJHLiquid : PoolBehaviour
     public void Dispose()
     {
         if (vertices.IsCreated) vertices.Dispose();
-        if (velocites.IsCreated) velocites.Dispose();
-        if (normals.IsCreated) normals.Dispose();
-        if (triangles.IsCreated) triangles.Dispose();
-        if (isAttaches.IsCreated) isAttaches.Dispose();
+        if (infos.IsCreated) infos.Dispose();
         if (rayComms.IsCreated) rayComms.Dispose();
         if (hits.IsCreated) hits.Dispose();
-        if (hitClosePoints.IsCreated) hitClosePoints.Dispose();
-        if (hitCloseNormals.IsCreated) hitCloseNormals.Dispose();
     }
     public void Draw()
     {
-        for (int i = 0; i < vertices.Length; i++)
+        for (int i = 0; i < copy.vertices.Length; i++)
         {
-            verticesToArray[i] = new Vector3(vertices[i].x, vertices[i].y, vertices[i].z);
+            var info = infos[i];
+            verticesToArray[i] = new Vector3(info.vertex.x, info.vertex.y, info.vertex.z);
         }
         copy.vertices = verticesToArray;
         copy.RecalculateNormals();
         copy.RecalculateBounds();
         mc.sharedMesh = null;
         mc.sharedMesh = copy;
+        for (int i = 0; i < copy.vertices.Length; i++)
+        {
+            VertInfo info = infos[i];
+            vertices[i] = copy.vertices[i];
+            info.vertex = copy.vertices[i];
+            info.normal = copy.normals[i];
+            infos[i] = info;
+        }
     }
     float CalculateSignedVolumeOfTriangle(Vector3 p1, Vector3 p2, Vector3 p3)
     {
@@ -120,121 +198,7 @@ public class KJHLiquid : PoolBehaviour
         }
         return Mathf.Abs(volume);
     }
-
-    void CreateEdges(out NativeArray<int> offsets, out NativeArray<int> indices)
-    {
-        // edgeCount 배열을 사용하여 각 정점에 연결된 엣지(방향성)의 총 개수를 계산
-        var edgeCount = new NativeArray<int>(vertices.Length, Allocator.Temp);
-
-        for (int i = 0; i < triangles.Length; i += 3)
-        {
-            int i0 = triangles[i];
-            int i1 = triangles[i + 1];
-            int i2 = triangles[i + 2];
-
-            // 한 삼각형은 6개의 방향성 엣지(i0->i1, i1->i0, i1->i2, i2->i1, i2->i0, i0->i2)를 가짐
-            edgeCount[i0] += 2; // i0에서 출발하는 엣지 두 개
-            edgeCount[i1] += 2; // i1에서 출발하는 엣지 두 개
-            edgeCount[i2] += 2; // i2에서 출발하는 엣지 두 개
-        }
-
-        // offsets 배열 생성
-        offsets = new NativeArray<int>(vertices.Length + 1, Allocator.Persistent);
-        offsets[0] = 0;
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            offsets[i + 1] = offsets[i] + edgeCount[i];
-        }
-
-        // indices 배열 생성 (총 엣지 개수)
-        indices = new NativeArray<int>(offsets[vertices.Length], Allocator.Persistent);
-        var edgePointers = new NativeArray<int>(vertices.Length, Allocator.Temp);
-
-        // indices 배열 채우기
-        for (int i = 0; i < triangles.Length; i += 3)
-        {
-            int i0 = triangles[i];
-            int i1 = triangles[i + 1];
-            int i2 = triangles[i + 2];
-
-            int p0 = offsets[i0] + edgePointers[i0]++;
-            int p1 = offsets[i1] + edgePointers[i1]++;
-            int p2 = offsets[i2] + edgePointers[i2]++;
-
-            indices[p0] = i1;
-            indices[p1] = i2;
-            indices[p2] = i0;
-
-            int p3 = offsets[i0] + edgePointers[i0]++;
-            int p4 = offsets[i1] + edgePointers[i1]++;
-            int p5 = offsets[i2] + edgePointers[i2]++;
-
-            indices[p3] = i2;
-            indices[p4] = i0;
-            indices[p5] = i1;
-        }
-
-        edgeCount.Dispose();
-        edgePointers.Dispose();
-    }
-    public void Init()
-    {
-        seed = (uint)Random.Range(0, 10000);
-        if (original == null)
-        {
-            original = mf.mesh;
-            copy = Instantiate(original);
-            mf.mesh = copy;
-            vertices = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
-            velocites = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
-            normals = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
-            triangles = new NativeArray<int>(copy.triangles.Length, Allocator.Persistent);
-            isAttaches = new NativeArray<bool>(copy.vertices.Length, Allocator.Persistent);
-            rayComms = new NativeArray<RaycastCommand>(copy.vertices.Length, Allocator.Persistent);
-            hits = new NativeArray<RaycastHit>(copy.vertices.Length, Allocator.Persistent);
-            hitClosePoints = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
-            hitCloseNormals = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
-            initVertices = new NativeArray<float3>(copy.vertices.Length, Allocator.Persistent);
-            for (int i = 0; i < triangles.Length; i++)
-                triangles[i] = copy.triangles[i];
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = new float3(copy.vertices[i].x, copy.vertices[i].y, copy.vertices[i].z);
-                initVertices[i] = vertices[i];
-                velocites[i] = float3.zero;
-                normals[i] = new float3(copy.normals[i].x, copy.normals[i].y, copy.normals[i].z);
-                isAttaches[i] = false;
-                hits[i] = new RaycastHit();
-                hitClosePoints[i] = float3.zero;
-                hitCloseNormals[i] = float3.zero;
-            }
-        }
-        else
-        {
-            copy = Instantiate(original);
-            for (int i = 0; i < triangles.Length; i++)
-                triangles[i] = copy.triangles[i];
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i] = new float3(copy.vertices[i].x, copy.vertices[i].y, copy.vertices[i].z);
-                velocites[i] = float3.zero;
-                normals[i] = new float3(copy.normals[i].x, copy.normals[i].y, copy.normals[i].z);
-                isAttaches[i] = false;
-                hits[i] = new RaycastHit();
-                hitClosePoints[i] = float3.zero;
-                hitCloseNormals[i] = float3.zero;
-            }
-        }
-        initScale = transform.lossyScale;
-        verticesToArray = new Vector3[vertices.Length];
-        normalsToArray = new Vector3[vertices.Length];
-        initVolume = CalculateMeshVolume(copy);
-        CreateEdges(out edgeOffsets, out edgeIndices);
-        InitEntity();
-    }
 }
-// --- IComponentData ---
-public struct KJHLiquidTag : IComponentData { }
 // --- ISystem or SystemBase ---
 [RequireMatchingQueriesForUpdate]
 public partial class KJHLiquidSystem : SystemBase
@@ -265,84 +229,81 @@ public partial class KJHLiquidSystem : SystemBase
             if (mono.attachTarget != null)
                 displacement = mono.attachTarget.position - mono.initTargetPos;
             Vector3 pivot = tr.position + displacement;
-
-            // --- Raycast Command Start Job ---
+            #region Raycast Command Start Job
             var job1 = new KJHLiquidRayCommJob
             {
                 pivot = new float3(pivot.x, pivot.y, pivot.z),
                 scale = new float3(tr.localScale.x, tr.localScale.y, tr.localScale.z),
-                vertices = mono.vertices,
-                velocites = mono.velocites,
-                normals = mono.normals,
+                infos = mono.infos,
                 rayComms = mono.rayComms,
                 layerMask = mono.collisionMask,
             };
             jobHandle1 = job1.Schedule(mono.rayComms.Length, 64, this.Dependency);
             this.Dependency = jobHandle1;
             jobHandle1.Complete();
-
-            // --- Raycast Command Result Job ---
+            #endregion
+            #region Raycast Command Result Job
             jobHandle2 = RaycastCommand.ScheduleBatch(mono.rayComms, mono.hits, 1, this.Dependency);
             this.Dependency = jobHandle2;
             jobHandle2.Complete();
             for (int i = 0; i < mono.hits.Length; i++)
             {
+                KJHLiquid.VertInfo info = mono.infos[i];
                 if (mono.hits[i].collider != null && mono.hits[i].distance <= 1f && mono.hits[i].distance > 0f)
                 {
-                    mono.hitCloseNormals[i] = new float3(mono.hits[i].normal.x, mono.hits[i].normal.y, mono.hits[i].normal.z);
-                    mono.hitClosePoints[i] = new float3(mono.hits[i].point.x, mono.hits[i].point.y, mono.hits[i].point.z);
+                    info.hitNormal = new float3(mono.hits[i].normal.x, mono.hits[i].normal.y, mono.hits[i].normal.z);
+                    info.hitPoint = new float3(mono.hits[i].point.x, mono.hits[i].point.y, mono.hits[i].point.z);
                 }
                 else
                 {
-                    mono.hitCloseNormals[i] = float3.zero;
-                    mono.hitClosePoints[i] = float3.zero;
+                    info.hitNormal = float3.zero;
+                    info.hitPoint = float3.zero;
+                }
+                mono.infos[i] = info;
+            }
+#if UNITY_EDITOR
+            if (math.length(mono.infos[0].hitNormal) > 0.01f)
+            {
+                Vector3 pos = pivot + new Vector3(tr.localScale.x * mono.infos[0].vertex.x,
+                tr.localScale.y * mono.infos[0].vertex.y, tr.localScale.z * mono.infos[0].vertex.z);
+                float distance = math.length(mono.infos[0].hitPoint - new float3(pos.x, pos.y, pos.z));
+                if (distance < 0.13f)
+                {
+                    Debug.DrawLine(pos, mono.infos[0].hitPoint, Color.red, 0.1f, true);
+                }
+                else if (distance < 0.25f)
+                {
+                    Debug.DrawLine(pos, mono.infos[0].hitPoint, Color.yellow, 0.1f, true);
+                }
+                else
+                {
+                    Debug.DrawLine(pos, mono.infos[0].hitPoint, Color.gray, 0.1f, true);
                 }
             }
-
-            // --- 버섯구름 방지: 바닥 접촉 비율 계산 ---
-            int contactCount = 0;
-            for (int i = 0; i < mono.vertices.Length; i++)
-            {
-                if (math.length(mono.hitClosePoints[i]) > 0.01f)
-                    contactCount++;
-            }
-            float contactRatio = (float)contactCount / mono.vertices.Length;
-            float volumeSpringFactor = 1f;
-            if (contactRatio > 0.4f) // 40% 이상 접촉 시 감쇠
-            {
-                float minFactor = 0.3f; // 최소 복원력 비율
-                volumeSpringFactor = math.max(minFactor, math.pow(1f - contactRatio, 2f));
-            }
-
-            // --- Move Job ---
-            float _currVolume = mono.CalculateMeshVolume(mono.copy);
-            float deltaTime = SystemAPI.Time.DeltaTime; // 여기서 deltaTime 가져옴
+#endif
+            #endregion
+            #region Move Job
+            float currVolume = mono.CalculateMeshVolume(mono.copy);
+            //Debug.Log($"{mono.initVolume},{currVolume},{math.clamp(mono.initVolume / currVolume, 0.1f, 10f)}");
+            elapsed = (float)SystemAPI.Time.ElapsedTime - elapsed;
+            elapsed += SystemAPI.Time.DeltaTime;
             var job = new KJHLiquidMoveJob
             {
                 pivot = new float3(pivot.x, pivot.y, pivot.z),
-                scale = new float3(tr.lossyScale.x, tr.lossyScale.y, tr.lossyScale.z),
-                deltaTime = deltaTime, // 수정
-                vertices = mono.vertices,
-                velocites = mono.velocites,
-                normals = mono.normals,
-                triangles = mono.triangles,
-                isAttaches = mono.isAttaches,
-                hitClosePoints = mono.hitClosePoints,
-                hitCloseNormals = mono.hitCloseNormals,
-                gravityFixVelo = mono.gravityFixVelo,
-                volumeSpring = mono.volumeSpring * volumeSpringFactor, // 감쇠 적용
-                edgeSpring = mono.edgeSpring,
-                maxSpringVelo = mono.maxSpringVelo,
+                scale = new float3(tr.localScale.x, tr.localScale.y, tr.localScale.z),
+                elapsed = elapsed,
+                infos = mono.infos,
+                gravityForce = mono.gravityForce,
+                volumeSpringK = mono.volumeSpringK,
+                edgeSpringK = mono.edgeSpringK,
+                maxSpeed_gravity = mono.maxSpeed_gravity,
                 initVolume = mono.initVolume,
-                currVolume = _currVolume,
-                initVertices = mono.initVertices,
-                edgeIndices = mono.edgeIndices,
-                edgeOffsets = mono.edgeOffsets,
+                currVolume = currVolume,
             };
-            jobHandle3 = job.Schedule(mono.vertices.Length, 64, this.Dependency);
+            jobHandle3 = job.Schedule(mono.infos.Length, 64, this.Dependency);
             this.Dependency = jobHandle3;
             jobHandle3.Complete();
-
+            #endregion
             mono.Draw();
         }).WithoutBurst().Run();
         ecbSystem.AddJobHandleForProducer(Dependency);
@@ -354,121 +315,90 @@ public partial struct KJHLiquidRayCommJob : IJobParallelFor
 {
     [ReadOnly] public float3 pivot;
     [ReadOnly] public float3 scale;
-    [ReadOnly] public NativeArray<float3> vertices;
-    [ReadOnly] public NativeArray<float3> velocites;
-    [ReadOnly] public NativeArray<float3> normals;
+    [ReadOnly] public NativeArray<KJHLiquid.VertInfo> infos;
     [WriteOnly] public NativeArray<RaycastCommand> rayComms;
     [ReadOnly] public LayerMask layerMask;
     public void Execute(int index)
     {
-        float3 direction = velocites[index];
+        float3 direction = infos[index].velocity;
         if (math.length(direction) < 0.0001f)
-        {
-            direction = normals[index];
-        }
+            direction = infos[index].normal;
         if (math.length(direction) < 0.0001f)
-        {
             direction = math.down();
-        }
         direction = math.normalize(direction);
-
-        // 4. RaycastCommand에 전달하기 전에 최종적
         QueryParameters queryParameters = new QueryParameters();
         queryParameters.layerMask = layerMask;
         queryParameters.hitTriggers = QueryTriggerInteraction.Ignore;
         queryParameters.hitBackfaces = false;
         queryParameters.hitMultipleFaces = false;
-        rayComms[index] = new RaycastCommand(pivot + scale * vertices[index], direction, queryParameters, 10f);
+        rayComms[index] = new RaycastCommand(pivot + scale * infos[index].vertex, direction, queryParameters, 10f);
     }
 }
+// Job
 [BurstCompile]
 public partial struct KJHLiquidMoveJob : IJobParallelFor
 {
     [ReadOnly] public float3 pivot;
     [ReadOnly] public float3 scale;
-    [ReadOnly] public float deltaTime; // elapsed 대신
-
-    [NativeDisableParallelForRestriction] public NativeArray<float3> vertices;
-    [NativeDisableParallelForRestriction] public NativeArray<float3> velocites;
-    [NativeDisableParallelForRestriction] public NativeArray<float3> normals;
-    [ReadOnly] public NativeArray<int> triangles;
-    [NativeDisableParallelForRestriction] public NativeArray<bool> isAttaches;
-    [ReadOnly] public NativeArray<float3> hitClosePoints;
-    [ReadOnly] public NativeArray<float3> hitCloseNormals;
-
-    [ReadOnly] public float gravityFixVelo;
-    [ReadOnly] public float volumeSpring;
-    [ReadOnly] public float edgeSpring;
-    [ReadOnly] public float maxSpringVelo;
+    [ReadOnly] public float elapsed;
+    [ReadOnly] public uint seed;
+    [ReadOnly] public float gravityForce;
+    [ReadOnly] public float volumeSpringK;
+    [ReadOnly] public float edgeSpringK;
+    [ReadOnly] public float maxSpeed_gravity;
     [ReadOnly] public float initVolume;
     [ReadOnly] public float currVolume;
-
-    [ReadOnly] public NativeArray<float3> initVertices;
-    [ReadOnly] public NativeArray<int> edgeIndices;
-    [NativeDisableParallelForRestriction] public NativeArray<int> edgeOffsets;
-
+    [NativeDisableParallelForRestriction] public NativeArray<KJHLiquid.VertInfo> infos;
     public void Execute(int index)
     {
-        if (isAttaches[index]) return;
-
-        float3 vert = vertices[index];
-        float3 velo = velocites[index];
-
-        
-        velo = gravityFixVelo * math.down() / scale;
-
-        // 부피 유지 스프링 힘
-        float ratio = initVolume / currVolume;
-        float3 velo_volume = (ratio - 1f) * volumeSpring * deltaTime * normals[index] / scale;
-        velo_volume = math.clamp(velo_volume, -maxSpringVelo, maxSpringVelo);
-        velo += velo_volume;
-
-        // 삼각형 유지 스프링 힘
-        float3 velo_edge = float3.zero;
-        int startIndex = edgeOffsets[index];
-        int endIndex = edgeOffsets[index + 1];
-        for (int i = startIndex; i < endIndex; i++)
+        // 불러오기
+        KJHLiquid.VertInfo info = infos[index];
+        if (info.isAttach) return;
+        uint seed = this.seed + (uint)index;
+        // 중력
+        info.velocity_gravity += gravityForce * elapsed * math.down() / scale;
+        if (math.lengthsq(info.velocity_gravity) > maxSpeed_gravity * maxSpeed_gravity)
+            info.velocity_gravity = math.normalize(info.velocity_gravity) * maxSpeed_gravity;
+        info.velocity += info.velocity_gravity;
+        // 진행하다가 전방에 충돌된 경우 (완전 비탄성 --> 벽에 달라붙어서 속도 0 --> 충돌 포인트에서 더이상 이동 하지않음)
+        if (math.length(info.hitNormal) > 0.01f)
         {
-            int adjacentIndex = edgeIndices[i];
-            float3 delta = vertices[adjacentIndex] - vertices[index];
-            float len = math.length(delta);
-            if (len > 1e-6f)
+            float3 pos = pivot + scale * info.vertex;
+            float distance = math.length(info.hitPoint - pos);
+            if (distance < 0.01f)
             {
-                float restLength = math.length(initVertices[index] - initVertices[adjacentIndex]);
-                float diff = len - restLength;
-                // diff 제한 (초기 길이의 ±50%)
-                float maxDiff = restLength * 0.5f;
-                diff = math.clamp(diff, -maxDiff, maxDiff);
-
-                float3 force = (delta / len) * diff * edgeSpring * deltaTime;
-                force = math.clamp(force, -maxSpringVelo, maxSpringVelo);
-                velo_edge += force * 0.5f;
-            }
-        }
-        velo += velo_edge;
-
-        // 충돌 처리
-        if (math.length(hitClosePoints[index]) > 0.01f)
-        {
-            float3 pos = pivot + scale * vertices[index];
-            float distance = math.length(hitClosePoints[index] - pos);
-            if (distance < 0.005f)
-            {
-                velo = float3.zero;
-                isAttaches[index] = true;
+                info.velocity_gravity = float3.zero;
+                info.velocity = float3.zero;
+                info.isAttach = true;
             }
             else if (distance < 0.05f)
             {
-                velo = math.lerp(velo, float3.zero, 30f * deltaTime);
-                float veloLeng = math.length(velo);
-                vert = math.lerp(vert, ((hitClosePoints[index] - pivot) / scale) + 0.1f * hitCloseNormals[index], (3f + veloLeng) * deltaTime);
+                info.velocity_gravity = math.lerp(info.velocity_gravity, float3.zero, 30f * elapsed);
+                info.velocity = math.lerp(info.velocity, float3.zero, 30f * elapsed);
+                // 위치 서서히 히트 포인트에 붇는 시각적 효과
+                float veloLeng = math.length(info.velocity);
+                info.vertex = math.lerp(info.vertex, ((info.hitPoint - pivot) / scale) + 0.1f * info.hitNormal, (3f + veloLeng) * elapsed);
             }
         }
-
         // 최종 속도 적용
-        vert += velo * deltaTime;
-
-        vertices[index] = vert;
-        velocites[index] = velo;
+        info.vertex += info.velocity * elapsed;
+        // 덮어쓰기
+        infos[index] = info;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
