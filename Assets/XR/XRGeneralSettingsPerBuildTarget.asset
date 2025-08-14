@@ -44,7 +44,7 @@ MonoBehaviour:
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
   m_Loaders:
-  - {fileID: 11400000, guid: bc146fe3c7e5ee945a0a8dfeebecaed2, type: 2}
+  - {fileID: 11400000, guid: 92091c10544778548b2cc6d946cfb4dc, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

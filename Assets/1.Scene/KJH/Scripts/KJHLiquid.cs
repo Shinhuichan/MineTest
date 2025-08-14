@@ -104,7 +104,15 @@ public class KJHLiquid : PoolBehaviour
     void OnDestroy() => Dispose();
     void UnInit()
     {
-        if (entityManager.Exists(entity)) entityManager.DestroyEntity(entity);
+        try
+        {
+            if (entityManager.Exists(entity)) entityManager.DestroyEntity(entity);
+        }
+        catch
+        {
+
+        }
+        
     }
     void Dispose()
     {
