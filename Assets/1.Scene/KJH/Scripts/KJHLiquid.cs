@@ -19,7 +19,7 @@ public class KJHLiquid : PoolBehaviour
     public float gravityForce = 3f;
     public float volumeSpringK = 5f;
     public float edgeSpringK = 50f;
-    public float maxSpeed_gravity;
+    public float maxSpeed;
     MeshFilter mf;
     MeshRenderer mr;
     MeshCollider mc;
@@ -48,12 +48,12 @@ public class KJHLiquid : PoolBehaviour
         public float3 velocity_gravity;
         public float3 velocity_volume;
         public float3 velocity_edge;
-        public bool isAttach;
+        public int isAttach;
         public float3 hitNormal;
         public float3 hitPoint;
-        public FixedList32Bytes<int> neighborIndex;
-        public FixedList32Bytes<float> neighborInitDistance;
-        public FixedList32Bytes<float> neighborDistance;
+        public FixedList64Bytes<int> neighborIndex;
+        public FixedList64Bytes<float> neighborInitDistance;
+        public FixedList64Bytes<float> neighborDistance;
     }
     void InitEntity()
     {
@@ -86,6 +86,40 @@ public class KJHLiquid : PoolBehaviour
             infos = new NativeArray<VertInfo>(copy.vertices.Length, Allocator.Persistent);
             rayComms = new NativeArray<RaycastCommand>(copy.vertices.Length, Allocator.Persistent);
             hits = new NativeArray<RaycastHit>(copy.vertices.Length, Allocator.Persistent);
+            // 가장 가까운 6개 찾기
+            for (int i = 0; i < copy.vertices.Length; i++)
+            {
+                // 각 루프마다 리스트와 해시셋 초기화
+                List<(float dist, int index)> nearestList = new List<(float, int)>();
+                HashSet<Vector3> addedPositions = new HashSet<Vector3>();
+                VertInfo info = new VertInfo();
+                info.neighborIndex = new FixedList64Bytes<int>();
+                info.neighborInitDistance = new FixedList64Bytes<float>();
+                info.neighborDistance = new FixedList64Bytes<float>();
+                for (int j = 0; j < copy.vertices.Length; j++)
+                {
+                    // 현재 정점은 건너뛰기
+                    if (i == j) continue;
+                    // 이미 추가된 위치의 정점은 건너뛰기
+                    if (addedPositions.Contains(copy.vertices[j]))
+                    {
+                        continue;
+                    }
+
+                    float dist = Vector3.Distance(copy.vertices[i], copy.vertices[j]);
+                    nearestList.Add((dist, j));
+                    addedPositions.Add(copy.vertices[j]);
+                }
+                nearestList.Sort((a, b) => a.dist.CompareTo(b.dist));
+                int neighborCount = math.min(7, nearestList.Count);
+                for (int n = 0; n < neighborCount; n++)
+                {
+                    info.neighborIndex.Add(nearestList[n].index);
+                    info.neighborInitDistance.Add(nearestList[n].dist);
+                    info.neighborDistance.Add(nearestList[n].dist);
+                }
+                infos[i] = info;
+            }
         }
         else
         {
@@ -94,7 +128,7 @@ public class KJHLiquid : PoolBehaviour
         for (int i = 0; i < copy.vertices.Length; i++)
         {
             vertices[i] = copy.vertices[i];
-            VertInfo info = new VertInfo();
+            VertInfo info = infos[i];
             info.initVertex = copy.vertices[i];
             info.vertex = copy.vertices[i];
             info.normal = copy.normals[i];
@@ -102,33 +136,9 @@ public class KJHLiquid : PoolBehaviour
             info.velocity_gravity = float3.zero;
             info.velocity_volume = float3.zero;
             info.velocity_edge = float3.zero;
-            info.isAttach = false;
+            info.isAttach = 0;
             info.hitNormal = float3.zero;
             info.hitPoint = float3.zero;
-
-            info.neighborIndex = new FixedList32Bytes<int>();
-            info.neighborInitDistance = new FixedList32Bytes<float>();
-            info.neighborDistance = new FixedList32Bytes<float>();
-            // 가장 가까운 7개 찾기
-            List<(float dist, int index)> nearestList = new List<(float, int)>();
-            for (int j = 0; j < copy.vertices.Length; j++)
-            {
-                if (i == j) continue;
-                float dist = Vector3.Distance(copy.vertices[i], copy.vertices[j]);
-                nearestList.Add((dist, j));
-            }
-            nearestList.Sort((a, b) => a.dist.CompareTo(b.dist));
-            int neighborCount = math.min(7, nearestList.Count);
-            for (int n = 0; n < neighborCount; n++)
-            {
-                info.neighborIndex.Add(nearestList[n].index);
-                info.neighborInitDistance.Add(nearestList[n].dist);
-                info.neighborDistance.Add(nearestList[n].dist);
-            }
-
-
-
-
             infos[i] = info;
         }
         verticesToArray = new Vector3[copy.vertices.Length];
@@ -233,7 +243,7 @@ public partial class KJHLiquidSystem : SystemBase
             var job1 = new KJHLiquidRayCommJob
             {
                 pivot = new float3(pivot.x, pivot.y, pivot.z),
-                scale = new float3(tr.localScale.x, tr.localScale.y, tr.localScale.z),
+                scale = new float3(tr.lossyScale.x, tr.lossyScale.y, tr.lossyScale.z),
                 infos = mono.infos,
                 rayComms = mono.rayComms,
                 layerMask = mono.collisionMask,
@@ -264,8 +274,8 @@ public partial class KJHLiquidSystem : SystemBase
 #if UNITY_EDITOR
             if (math.length(mono.infos[0].hitNormal) > 0.01f)
             {
-                Vector3 pos = pivot + new Vector3(tr.localScale.x * mono.infos[0].vertex.x,
-                tr.localScale.y * mono.infos[0].vertex.y, tr.localScale.z * mono.infos[0].vertex.z);
+                Vector3 pos = pivot + new Vector3(tr.lossyScale.x * mono.infos[0].vertex.x,
+                tr.lossyScale.y * mono.infos[0].vertex.y, tr.lossyScale.z * mono.infos[0].vertex.z);
                 float distance = math.length(mono.infos[0].hitPoint - new float3(pos.x, pos.y, pos.z));
                 if (distance < 0.13f)
                 {
@@ -280,6 +290,14 @@ public partial class KJHLiquidSystem : SystemBase
                     Debug.DrawLine(pos, mono.infos[0].hitPoint, Color.gray, 0.1f, true);
                 }
             }
+            //Debug.Log(mono.infos[11].neighborIndex.Length);
+            for (int n = 0; n < mono.infos[11].neighborIndex.Length; n++)
+            {
+                int nbIndex = mono.infos[11].neighborIndex[n];
+                var nbInfo = mono.infos[nbIndex];
+                Debug.DrawLine(pivot + (Vector3)mono.infos[11].vertex, pivot + (Vector3)nbInfo.vertex, Color.white);
+                Debug.Log($"{nbIndex}-> {nbInfo.vertex}");
+            }
 #endif
             #endregion
             #region Move Job
@@ -290,13 +308,13 @@ public partial class KJHLiquidSystem : SystemBase
             var job = new KJHLiquidMoveJob
             {
                 pivot = new float3(pivot.x, pivot.y, pivot.z),
-                scale = new float3(tr.localScale.x, tr.localScale.y, tr.localScale.z),
+                scale = new float3(tr.lossyScale.x, tr.lossyScale.y, tr.lossyScale.z),
                 elapsed = elapsed,
                 infos = mono.infos,
                 gravityForce = mono.gravityForce,
                 volumeSpringK = mono.volumeSpringK,
                 edgeSpringK = mono.edgeSpringK,
-                maxSpeed_gravity = mono.maxSpeed_gravity,
+                maxSpeed = mono.maxSpeed,
                 initVolume = mono.initVolume,
                 currVolume = currVolume,
             };
@@ -345,7 +363,7 @@ public partial struct KJHLiquidMoveJob : IJobParallelFor
     [ReadOnly] public float gravityForce;
     [ReadOnly] public float volumeSpringK;
     [ReadOnly] public float edgeSpringK;
-    [ReadOnly] public float maxSpeed_gravity;
+    [ReadOnly] public float maxSpeed;
     [ReadOnly] public float initVolume;
     [ReadOnly] public float currVolume;
     [NativeDisableParallelForRestriction] public NativeArray<KJHLiquid.VertInfo> infos;
@@ -353,37 +371,86 @@ public partial struct KJHLiquidMoveJob : IJobParallelFor
     {
         // 불러오기
         KJHLiquid.VertInfo info = infos[index];
-        if (info.isAttach) return;
+        if (info.isAttach == 2) return;
         uint seed = this.seed + (uint)index;
         // 중력
-        info.velocity_gravity += gravityForce * elapsed * math.down() / scale;
-        if (math.lengthsq(info.velocity_gravity) > maxSpeed_gravity * maxSpeed_gravity)
-            info.velocity_gravity = math.normalize(info.velocity_gravity) * maxSpeed_gravity;
-        info.velocity += info.velocity_gravity;
+        if (info.isAttach == 0)
+        {
+            info.velocity_gravity += gravityForce * elapsed * math.down() / scale;
+            info.velocity_gravity = ClampMagnitude(info.velocity_gravity, maxSpeed);
+            info.velocity += info.velocity_gravity;
+        }
+
+        // // 엣지 스프링 (이웃 기반)
+        // float3 edgeForceSum = float3.zero;
+        // for (int n = 0; n < info.neighborIndex.Length; n++)
+        // {
+        //     int nbIndex = info.neighborIndex[n];
+        //     var nbInfo = infos[nbIndex];
+        //     if (index == 23)
+        //     {
+        //         Debug.DrawLine(pivot + scale * info.vertex, pivot + scale * nbInfo.vertex);
+        //     }
+
+
+        //     // float3 delta = nbInfo.vertex - info.vertex;
+        //     // float dist = math.length(delta);
+        //     // if (dist > 1e-6f)
+        //     // {
+        //     //     float restLength = info.neighborInitDistance[n];
+        //     //     float diff = dist - restLength;
+        //     //     float maxDiff = restLength * 0.5f; // 폭발 방지
+        //     //     diff = math.clamp(diff, -maxDiff, maxDiff);
+        //     //     float3 dir = delta / dist;
+        //     //     float3 force = dir * diff * edgeSpringK * elapsed / scale;
+        //     //     force = math.clamp(force, -maxSpeed, maxSpeed);
+        //     //     edgeForceSum += force * 0.5f;
+        //     // }
+        // }
+        // info.velocity_edge += edgeForceSum;
+        // info.velocity += info.velocity_edge;
+
+
         // 진행하다가 전방에 충돌된 경우 (완전 비탄성 --> 벽에 달라붙어서 속도 0 --> 충돌 포인트에서 더이상 이동 하지않음)
-        if (math.length(info.hitNormal) > 0.01f)
+        if (math.length(info.hitNormal) > 0.01f || info.isAttach >= 1)
         {
             float3 pos = pivot + scale * info.vertex;
             float distance = math.length(info.hitPoint - pos);
             if (distance < 0.01f)
             {
+                info.isAttach = 2;
                 info.velocity_gravity = float3.zero;
+                info.velocity_edge = float3.zero;
+                info.velocity_volume = float3.zero;
                 info.velocity = float3.zero;
-                info.isAttach = true;
             }
             else if (distance < 0.05f)
             {
+                info.isAttach = 1;
                 info.velocity_gravity = math.lerp(info.velocity_gravity, float3.zero, 30f * elapsed);
+                info.velocity_edge = math.lerp(info.velocity_edge, float3.zero, 30f * elapsed);
+                info.velocity_volume = math.lerp(info.velocity_volume, float3.zero, 30f * elapsed);
                 info.velocity = math.lerp(info.velocity, float3.zero, 30f * elapsed);
                 // 위치 서서히 히트 포인트에 붇는 시각적 효과
                 float veloLeng = math.length(info.velocity);
                 info.vertex = math.lerp(info.vertex, ((info.hitPoint - pivot) / scale) + 0.1f * info.hitNormal, (3f + veloLeng) * elapsed);
             }
         }
+
         // 최종 속도 적용
-        info.vertex += info.velocity * elapsed;
+        if (info.isAttach == 0)
+        {
+            info.vertex += info.velocity * elapsed;
+        }
         // 덮어쓰기
         infos[index] = info;
+    }
+    float3 ClampMagnitude(float3 v, float maxLen)
+    {
+        float len = math.length(v);
+        if (len > maxLen)
+            return (v / len) * maxLen;
+        return v;
     }
 }
 

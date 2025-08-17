@@ -1,5 +1,5 @@
 using UnityEngine;
-public class MohsOreTrigger : MonoBehaviour
+public class MohsTest : MonoBehaviour
 {
     public int number;
     public Vector3 prevDisplacement = Vector3.zero;

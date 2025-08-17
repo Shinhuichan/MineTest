@@ -9,7 +9,7 @@ public class Pipette : MonoBehaviour
     public bool isLeftButton = false;
     public bool isRightButton = false;
     [SerializeField] private InputActionAsset inputAsset;
-    [SerializeField] private KJHLiquid liquidPrefab;
+    //[SerializeField] private KJHLiquid liquidPrefab;
     [SerializeField] private Transform spawnPos;
     Transform model;
     XRGrabInteractable xRGrab;
@@ -58,12 +58,12 @@ public class Pipette : MonoBehaviour
         {
             if (xRControllerParentName == "Left Controller" && isLeftButton)
             {
-                PoolManager.I.Spawn(liquidPrefab, spawnPos.position, Quaternion.identity, null, 40);
+                //PoolManager.I.Spawn(liquidPrefab, spawnPos.position, Quaternion.identity, null, 40);
                 yield return new WaitForSeconds(1f);
             }
             if (xRControllerParentName == "Right Controller" && isRightButton)
             {
-                PoolManager.I.Spawn(liquidPrefab, spawnPos.position, Quaternion.identity, null, 40);
+                //PoolManager.I.Spawn(liquidPrefab, spawnPos.position, Quaternion.identity, null, 40);
                 yield return new WaitForSeconds(1f);
             }
 
