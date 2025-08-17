@@ -10,27 +10,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.011
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.014
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.011
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.687
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.567
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalRotation.w
@@ -85,7 +85,7 @@ PrefabInstance:
       addedObject: {fileID: 3178628418987061333}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6900441122901451580}
+      addedObject: {fileID: 8477196686008709269}
   m_SourcePrefab: {fileID: 100100000, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
 --- !u!1 &7067272314205979246 stripped
 GameObject:
@@ -114,7 +114,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6014633393672178068, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
---- !u!114 &6900441122901451580
+--- !u!114 &8477196686008709269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,13 +123,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7067272314205979246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e082e26f09d9e9a4eadb1eb473819a07, type: 3}
+  m_Script: {fileID: 11500000, guid: b8c887f8ea8424949aab55c4055f6707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   poolManager: {fileID: 0}
-  springStrength: 50
-  springDamping: 2
-  contactThreshold: 0.02
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 1
+  gravityForce: 3
+  volumeSpringK: 0
+  edgeSpringK: 0
+  maxSpeed: 0.1
   copy: {fileID: 0}
-  verticesToArray: []
-  normalsToArray: []
+  initScale:
+    x: 0
+    y: 0
+    z: 0
+  initVolume: 0
+  attachTarget: {fileID: 0}
+  initTargetPos: {x: 0, y: 0, z: 0}
+  initTrPos: {x: 0, y: 0, z: 0}
