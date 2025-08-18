@@ -100,11 +100,11 @@ MonoBehaviour:
       type: 0
       typeString: 
     - title: Success Description
-      value: "\uC804\uAE30 \uC804\uB3C4\uC131 \uC2E4\uD5D8(\uC644\uB8CC)"
+      value: "[\uC644\uB8CC]"
       type: 0
       typeString: 
     - title: Failure Description
-      value: "\uC804\uAE30 \uC804\uB3C4\uC131 \uC2E4\uD5D8(\uC2E4\uD328)"
+      value: "[\uC2E4\uD328]"
       type: 0
       typeString: 
     - title: State
@@ -120,8 +120,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: Display Name
-      value: "\uD018\uC2A4\uD2B8: \uC804\uAE30 \uC804\uB3C4\uC131 \uC2E4\uD5D8\uC744
-        \uD558\uC2DC\uC624."
+      value: "\uD560 \uC77C: \uC804\uAE30 \uC804\uB3C4\uC131 \uC2E4\uD5D8"
       type: 0
       typeString: 
     - title: Track
@@ -496,7 +495,7 @@ MonoBehaviour:
         typeString: 
       - title: Dialogue Text
         value: "\uC624\uB298\uC740 \uB124\uAC00 \uC9C1\uC811 \uC2E4\uD5D8\uC744 \uD558\uBA74\uC11C
-          `\uAD11\uC11D\uC744 \uAD6C\uBD84\uD558\uB294 \uBC29\uBC95\uC744 \uBC30\uC6CC\uBCFC
+          \uAD11\uC11D\uC744 \uAD6C\uBD84\uD558\uB294 \uBC29\uBC95\uC744 \uBC30\uC6CC\uBCFC
           \uAC70\uC57C.\r"
         type: 0
         typeString: 
@@ -552,7 +551,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC2E4\uD5D8\uC740 \uB124 \uAC00\uC9C0\uB85C \uC9C4\uD589\uD560 \uAC70\uB2E4.\r"
+        value: "\uC2E4\uD5D8\uC740 \uCD1D 4\uAC00\uC9C0\uB85C \uC9C4\uD589\uD560
+          \uAC70\uB2E4.\r"
         type: 0
         typeString: 
       - title: Sequence
@@ -3154,7 +3154,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 93.885826, y: 0}
+    canvasScrollPosition: {x: 199, y: 0}
     canvasZoom: 1
   - id: 2
     fields:

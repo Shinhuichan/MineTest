@@ -2597,6 +2597,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 22585957457408707, guid: 24d4a5a0778559b4fb374ba2c69a242d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22585957457408707, guid: 24d4a5a0778559b4fb374ba2c69a242d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22585957457408707, guid: 24d4a5a0778559b4fb374ba2c69a242d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22585957457408707, guid: 24d4a5a0778559b4fb374ba2c69a242d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1489409301123166658, guid: 24d4a5a0778559b4fb374ba2c69a242d, type: 3}
       propertyPath: m_Name
       value: NoteBook
@@ -2645,6 +2661,22 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2135036468}
+    - target: {fileID: 7105666375436650185, guid: 24d4a5a0778559b4fb374ba2c69a242d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7105666375436650185, guid: 24d4a5a0778559b4fb374ba2c69a242d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7105666375436650185, guid: 24d4a5a0778559b4fb374ba2c69a242d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7105666375436650185, guid: 24d4a5a0778559b4fb374ba2c69a242d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
