@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   globalUserScript: 
   emphasisSettings:
-  - color: {r: 0.7529412, g: 0.7529412, b: 0.7529412, a: 1}
+  - color: {r: 0, g: 0, b: 0, a: 1}
     bold: 1
     italic: 0
     underline: 0
@@ -46,21 +46,48 @@ MonoBehaviour:
       type: 3
       typeString: CustomFieldType_Files
     - title: Description
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
+      value: 1
+      type: 5
+      typeString: CustomFieldType_Actor
     - title: IsPlayer
       value: True
       type: 2
       typeString: CustomFieldType_Boolean
-    portrait: {fileID: 0}
+    portrait: {fileID: 2800000, guid: 0dc3cb24472312b4bbe22e50041d6c7b, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
   - id: 2
     fields:
     - title: Name
-      value: "\uAD50\uC218\uB2D8"
+      value: "\uC120\uC0DD\uB2D8"
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 2
+      type: 5
+      typeString: CustomFieldType_Actor
+    - title: IsPlayer
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: "\uC120\uC0DD\uB2D8"
+      type: 0
+      typeString: 
+    portrait: {fileID: 2800000, guid: 8fbfa1bc77a0388499f83f32b410eea3, type: 3}
+    spritePortrait: {fileID: 0}
+    alternatePortraits: []
+    spritePortraits: []
+  items:
+  - id: 1
+    fields:
+    - title: Name
+      value: Electro Contuct
       type: 0
       typeString: 
     - title: Pictures
@@ -68,24 +95,203 @@ MonoBehaviour:
       type: 3
       typeString: CustomFieldType_Files
     - title: Description
-      value: 
+      value: "\uC900\uBE44\uB41C \uAD11\uBB3C\uC744 \uD1B5\uD574 \uC804\uAE30\uAC00
+        \uD1B5\uD558\uB294 \uAD11\uBB3C\uC778\uC9C0 \uD655\uC778\uD558\uC2DC\uC624."
       type: 0
-      typeString: CustomFieldType_Text
-    - title: IsPlayer
+      typeString: 
+    - title: Success Description
+      value: "\uC804\uAE30 \uC804\uB3C4\uC131 \uC2E4\uD5D8(\uC644\uB8CC)"
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: "\uC804\uAE30 \uC804\uB3C4\uC131 \uC2E4\uD5D8(\uC2E4\uD328)"
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    portrait: {fileID: 0}
-    spritePortrait: {fileID: 0}
-    alternatePortraits: []
-    spritePortraits: []
-  items: []
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: "\uD018\uC2A4\uD2B8: \uC804\uAE30 \uC804\uB3C4\uC131 \uC2E4\uD5D8\uC744
+        \uD558\uC2DC\uC624."
+      type: 0
+      typeString: 
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 1
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: active
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: 
+      type: 0
+      typeString: 
+  - id: 2
+    fields:
+    - title: Name
+      value: Micro Shape
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\uD604\uBBF8\uACBD \uAD00\uCC30 \uC2E4\uD5D8"
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+  - id: 3
+    fields:
+    - title: Name
+      value: Hardness
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\uACBD\uB3C4 \uC2E4\uD5D8"
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+  - id: 4
+    fields:
+    - title: Name
+      value: Chemical React
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\uD654\uD559 \uBC18\uC751 \uC2E4\uD5D8"
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
   locations: []
   variables:
   - id: 1
     fields:
     - title: Name
       value: isTalk
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 2
+    fields:
+    - title: Name
+      value: ElectroContuct
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 3
+    fields:
+    - title: Name
+      value: MicroShape
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 4
+    fields:
+    - title: Name
+      value: Hardness
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: 
+  - id: 5
+    fields:
+    - title: Name
+      value: ChemicalReact
       type: 0
       typeString: 
     - title: Initial Value
@@ -221,7 +427,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uBB50\uC57C, \uB098\uD55C\uD14C \uBCFC\uC77C\uC774\uB77C\uB3C4 \uC788\uC5B4?"
+        value: "\uBB50\uC57C, \uB098\uD55C\uD14C \uBCFC\uC77C\uC774\uB77C\uB3C4 \uC788\uC5B4?
+          \uD765."
         type: 0
         typeString: 
       - title: Sequence
@@ -456,7 +663,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uB450 \uBC88\uC9F8\uB294 [em1\uD654\uD559 \uBC18\uC751 \uC2E4\uD5D8[/em1].\n`\uC2DC\uC57D\uC744
+        value: "\uB450 \uBC88\uC9F8\uB294 [em1]\uD654\uD559 \uBC18\uC751 \uC2E4\uD5D8[/em1].\n`\uC2DC\uC57D\uC744
           \uB5A8\uC5B4\uB728\uB824\uC11C \uBC18\uC751\uC774 \uC788\uB294\uC9C0 \uBCF4\uB294
           \uAC70\uC9C0.\r'"
         type: 0
@@ -513,7 +720,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC138 \uBC88\uC9F8\uB294 [em1\uD604\uBBF8\uACBD \uAD00\uCC30[/em1].\n`\uACB0\uC815
+        value: "\uC138 \uBC88\uC9F8\uB294 [em1]\uD604\uBBF8\uACBD \uAD00\uCC30[/em1].\n`\uACB0\uC815
           \uAD6C\uC870\uB97C \uC790\uC138\uD788 \uD655\uC778\uD574\uBCF8\uB2E4.\r'"
         type: 0
         typeString: 
@@ -626,7 +833,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "\uAD50\uC218\uB2D8, \uC624\uB298\uC740 \uBB34\uC2A8 \uC2E4\uD5D8\uC744
+        value: "\uC120\uC0DD\uB2D8, \uC624\uB298\uC740 \uBB34\uC2A8 \uC2E4\uD5D8\uC744
           \uD558\uAC8C \uB418\uB294 \uC9C0 \uC54C\uB824\uC8FC\uC138\uC694."
         type: 0
         typeString: CustomFieldType_Text
@@ -738,7 +945,7 @@ MonoBehaviour:
         typeString: 
       - title: Dialogue Text
         value: "\uC774\uBC88\uC5D4 \uAD11\uBB3C\uB85C \uC2E4\uD5D8\uC744 \uD574\uBCFC\uAC70\uC57C.\n\uADF8\uB798\uC11C
-          \uC9C0\uAE08 \uC2E4\uD5D8\uD560 \uAD11\uBB3C\uC5D0 \uB300\uD574 \uC54C\uB824\uC904\uAC8C.\r\n"
+          \uC9C0\uAE08 \uC2E4\uD5D8\uD560 \uAD11\uBB3C\uC5D0 \uB300\uD574 \uC54C\uB824\uC904\uAC8C.\r"
         type: 0
         typeString: 
       - title: Sequence
@@ -1317,8 +1524,11 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: 
-      userScript: Variable["isTalk"] = true
+      conditionsString: CurrentQuestState("Electro Contuct") == "unassigned"
+      userScript: 'Variable["isTalk"] = true;
+
+        SetQuestState("Electro Contuct",
+        "active")'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1351,7 +1561,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "\uAD50\uC218\uB2D8, \uC9C8\uBB38\uD560 \uAC70\uB9AC\uAC00 \uC788\uC2B5\uB2C8\uB2E4."
+        value: "\uC120\uC0DD\uB2D8, \uC9C8\uBB38\uD560 \uAC70\uB9AC\uAC00 \uC788\uC2B5\uB2C8\uB2E4."
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
@@ -1461,6 +1671,12 @@ MonoBehaviour:
         originDialogueID: 23
         destinationConversationID: 1
         destinationDialogueID: 46
+        isConnector: 0
+        priority: 2
+      - originConversationID: 1
+        originDialogueID: 23
+        destinationConversationID: 1
+        destinationDialogueID: 48
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -2434,7 +2650,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: SetQuestState("Electro Contuct", "success")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2833,8 +3049,112 @@ MonoBehaviour:
         y: 621.1052
         width: 160
         height: 30
+    - id: 48
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: "\uC804\uAE30 \uC804\uB3C4\uC131 \uC2E4\uD5D8\uC744 \uC644\uB8CC\uD588\uC2B5\uB2C8\uB2E4."
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 1
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 1
+        originDialogueID: 48
+        destinationConversationID: 1
+        destinationDialogueID: 49
+        isConnector: 0
+        priority: 2
+      conditionsString: CurrentQuestState("Electro Contuct") == "success"
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 131.23465
+        y: 672.94904
+        width: 160
+        height: 30
+    - id: 49
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: "\uC88B\uB2E4. \uC218\uACE0\uD588\uB2E4."
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 1
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 134.06485
+        y: 724.8358
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 48, y: 0}
+    canvasScrollPosition: {x: 93.885826, y: 0}
     canvasZoom: 1
   - id: 2
     fields:
@@ -2897,7 +3217,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 1
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3207,7 +3527,7 @@ MonoBehaviour:
     syncItemsDatabase: {fileID: 0}
     syncLocationsDatabase: {fileID: 0}
     syncVariablesDatabase: {fileID: 0}
-  templateJson: '{"treatItemsAsQuests":true,"actorFields":[{"title":"Name","value":"","type":0,"typeString":""},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":""},{"title":"IsPlayer","value":"False","type":2,"typeString":"CustomFieldType_Boolean"}],"itemFields":[{"title":"Name","value":"","type":0,"typeString":""},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":""},{"title":"Is
+  templateJson: '{"treatItemsAsQuests":true,"actorFields":[{"title":"Name","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":"CustomFieldType_Text"},{"title":"IsPlayer","value":"False","type":2,"typeString":"CustomFieldType_Boolean"}],"itemFields":[{"title":"Name","value":"","type":0,"typeString":""},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":""},{"title":"Is
     Item","value":"True","type":2,"typeString":"CustomFieldType_Boolean"}],"questFields":[{"title":"Name","value":"","type":0,"typeString":""},{"title":"Pictures","value":"[]","type":3,"typeString":"CustomFieldType_Files"},{"title":"Description","value":"","type":0,"typeString":""},{"title":"Success
     Description","value":"","type":0,"typeString":""},{"title":"Failure Description","value":"","type":0,"typeString":""},{"title":"State","value":"unassigned","type":0,"typeString":""},{"title":"Is
     Item","value":"False","type":2,"typeString":"CustomFieldType_Boolean"}],"locationFields":[{"title":"Name","value":"","type":0,"typeString":""},{"title":"Description","value":"","type":0,"typeString":""}],"variableFields":[{"title":"Name","value":"","type":0,"typeString":""},{"title":"Initial
