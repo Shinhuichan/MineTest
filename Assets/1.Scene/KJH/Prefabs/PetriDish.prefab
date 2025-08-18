@@ -18,15 +18,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: efce2fd312cf16148bb45153adcb719e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.118294
+      value: 2.2832515
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: efce2fd312cf16148bb45153adcb719e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2
+      value: 1.9086
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: efce2fd312cf16148bb45153adcb719e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.08059484
+      value: 14.955627
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: efce2fd312cf16148bb45153adcb719e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -97,7 +97,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3914256498903171424}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 05c5feb309cb1b14b9e6605f8126a26b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -125,8 +125,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4222401566847400685}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 5
+  m_Drag: 0.2
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -143,7 +143,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &2900848650067587510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 1
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -309,7 +309,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8805196089247157784}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 05c5feb309cb1b14b9e6605f8126a26b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

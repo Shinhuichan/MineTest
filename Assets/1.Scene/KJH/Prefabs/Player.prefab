@@ -470,7 +470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7784203570635380841
 Transform:
   m_ObjectHideFlags: 0
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_Camera: {fileID: 948252677760307858}
   m_OriginBaseGameObject: {fileID: 1195726574738738853}
   m_CameraFloorOffsetObject: {fileID: 1972352562925820463}
-  m_RequestedTrackingOriginMode: 0
+  m_RequestedTrackingOriginMode: 1
   m_CameraYOffset: 1.65
 --- !u!143 &641292579793371105
 CharacterController:
@@ -939,7 +939,7 @@ CharacterController:
   m_Radius: 0.1
   m_SlopeLimit: 45
   m_StepOffset: 0.5
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!114 &2811706372812903291
@@ -1591,7 +1591,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6041368111265805477}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2213c36610e3b1c4bbf886810ed9db12, type: 3}
   m_Name: 
@@ -2754,12 +2754,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8429981633443581383, guid: 6c8af5c8012f01440af6cb2bc3eb987c, type: 3}
+      propertyPath: m_DefaultParameters.m_EaseInTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429981633443581383, guid: 6c8af5c8012f01440af6cb2bc3eb987c, type: 3}
+      propertyPath: m_DefaultParameters.m_EaseOutTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429981633443581383, guid: 6c8af5c8012f01440af6cb2bc3eb987c, type: 3}
       propertyPath: m_DefaultParameters.m_ApertureSize
-      value: 0.45
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 8429981633443581383, guid: 6c8af5c8012f01440af6cb2bc3eb987c, type: 3}
       propertyPath: m_DefaultParameters.m_FeatheringEffect
-      value: 0.12
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8429981633443581383, guid: 6c8af5c8012f01440af6cb2bc3eb987c, type: 3}
       propertyPath: m_LocomotionVignetteProviders.Array.size
