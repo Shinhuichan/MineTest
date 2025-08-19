@@ -93,11 +93,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
       propertyPath: m_LocalRotation.w
@@ -177,10 +177,11 @@ MonoBehaviour:
     m_Bits: 257
   gravityForce: 2.5
   gravityMaxSpeed: 0.6
-  stopRatio: 0.65
+  stopRatio: 0.55
   triggerThick: 0.01
   copy: {fileID: 0}
   mcMesh: {fileID: 0}
+  worldCenter: {x: 0, y: 0, z: 0}
 --- !u!4 &7590867841029707988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ca9e364ea7fd09249a8b2209c1135e34, type: 3}
