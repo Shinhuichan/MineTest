@@ -17,3 +17,4 @@ MonoBehaviour:
   hardness: 2.5
   microShape: {fileID: 0}
   electroConduct: 1
+  isToxicElements: 1

@@ -66,7 +66,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Close
+  m_Text: "\uB2EB\uAE30"
 --- !u!1 &102452
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +348,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quest Title
+  m_Text: "\uC2E4\uD5D8 \uC774\uB984"
 --- !u!114 &11468506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,8 +656,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 97.25, y: -14}
-  m_SizeDelta: {x: 194.5, y: 28}
+  m_AnchoredPosition: {x: 290, y: -14}
+  m_SizeDelta: {x: 580, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22244532
 CanvasRenderer:
@@ -859,7 +859,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -871,7 +871,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quest entry active.
+  m_Text: "\uC2E4\uD5D8\uC758 \uD65C\uC131\uD654 \uC5EC\uBD80"
 --- !u!114 &11445082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,10 +1122,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22493252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 227, y: 0}
-  m_SizeDelta: {x: 454, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 439.5, y: -30}
+  m_SizeDelta: {x: 879, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22230922
 CanvasRenderer:
@@ -1271,7 +1271,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -1283,7 +1283,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Completed Quests
+  m_Text: "\uC644\uB8CC\uB41C \uC2E4\uD5D8"
 --- !u!1 &112572
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,8 +1319,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 97.25, y: -14}
-  m_SizeDelta: {x: 194.5, y: 28}
+  m_AnchoredPosition: {x: 290, y: -14}
+  m_SizeDelta: {x: 580, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22291704
 CanvasRenderer:
@@ -1419,8 +1419,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90.75, y: -14}
-  m_SizeDelta: {x: 181.5, y: 28}
+  m_AnchoredPosition: {x: 283.5, y: -14}
+  m_SizeDelta: {x: 567, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22236094
 CanvasRenderer:
@@ -2377,7 +2377,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -2389,7 +2389,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Completed Quest
+  m_Text: "\uC644\uB8CC\uB41C \uC2E4\uD5D8"
 --- !u!114 &11454908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3005,7 +3005,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -3017,7 +3017,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quest entry successful.
+  m_Text: "\uC2E4\uD5D8\uC774 \uC131\uACF5\uD588\uC744 \uB54C"
 --- !u!114 &11428720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3083,8 +3083,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 196, y: -73.5}
-  m_SizeDelta: {x: 376, y: 69}
+  m_AnchoredPosition: {x: 581.5, y: -321}
+  m_SizeDelta: {x: 1147, y: 566}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22229710
 CanvasRenderer:
@@ -3379,7 +3379,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
@@ -3391,7 +3391,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quest description.
+  m_Text: "\uC2E4\uD5D8 \uC124\uBA85"
 --- !u!114 &11415722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3489,7 +3489,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -3501,7 +3501,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Active Quest
+  m_Text: "\uC218\uD589\uD574\uC57C\uB418\uB294 \uC2E4\uD5D8"
 --- !u!114 &11465210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3843,8 +3843,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textTable: {fileID: 0}
-  noActiveQuestsText: No Active Quests
-  noCompletedQuestsText: No Completed Quests
+  noActiveQuestsText: "\uD574\uC57C \uD558\uB294 \uC2E4\uD5D8\uC774 \uC5C6\uC2B5\uB2C8\uB2E4."
+  noCompletedQuestsText: "\uC644\uB8CC\uB41C \uC2E4\uD5D8\uC774 \uC5C6\uC2B5\uB2C8\uB2E4."
   checkVisibleField: 0
   questHeadingSource: 0
   abandonQuestState: 1
@@ -4354,8 +4354,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 196, y: -130}
-  m_SizeDelta: {x: 376, y: 28}
+  m_AnchoredPosition: {x: 581.5, y: -626}
+  m_SizeDelta: {x: 1147, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22258646
 CanvasRenderer:
@@ -4487,7 +4487,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -4499,7 +4499,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Active
+  m_Text: "\uD574\uC57C\uD558\uB294 \uC2E4\uD5D8"
 --- !u!1 &183820
 GameObject:
   m_ObjectHideFlags: 0
@@ -4604,7 +4604,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -4616,7 +4616,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quest entry failed.
+  m_Text: "\uC2E4\uD5D8\uC774 \uC2E4\uD328\uD588\uC744 \uB54C"
 --- !u!114 &11455794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4713,8 +4713,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 24
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -4725,7 +4725,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quest Journal
+  m_Text: "\uD604\uC7AC \uC9C4\uD589\uD574\uC57C \uD558\uB294 \uC2E4\uD5D8"
 --- !u!114 &11409764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4978,8 +4978,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 196, y: -19.5}
-  m_SizeDelta: {x: 376, y: 23}
+  m_AnchoredPosition: {x: 581.5, y: -19}
+  m_SizeDelta: {x: 1147, y: 22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22221542
 CanvasRenderer:
@@ -5104,7 +5104,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -5401,7 +5401,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -5413,7 +5413,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Active Quests
+  m_Text: "\uD574\uC57C \uD558\uB294 \uC2E4\uD5D8"
 --- !u!1 &195372
 GameObject:
   m_ObjectHideFlags: 0
@@ -5624,8 +5624,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 285.25, y: -14}
-  m_SizeDelta: {x: 181.5, y: 28}
+  m_AnchoredPosition: {x: 863.5, y: -14}
+  m_SizeDelta: {x: 567, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22205638
 CanvasRenderer:
@@ -6142,7 +6142,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: b0aa9e853fbd1a8459b8ecd873557787, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -6154,7 +6154,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Completed
+  m_Text: "\uC644\uB8CC\uB41C \uC2E4\uD5D8"
 --- !u!1 &199998
 GameObject:
   m_ObjectHideFlags: 0
