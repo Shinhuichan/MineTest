@@ -213,7 +213,7 @@ public partial class KJHLiquidDropSystem : SystemBase
             for (int i = 0; i < mono.hits.Length; i++)
             {
                 KJHLiquidDrop.VertInfo info = mono.infos[i];
-                if (mono.hits[i].collider != null && mono.hits[i].distance <= 0.5f && mono.hits[i].distance > 0f)
+                if (mono.hits[i].collider != null && mono.hits[i].distance <= 2f && mono.hits[i].distance > 0f)
                 {
                     info.hitNormal = new float3(mono.hits[i].normal.x, mono.hits[i].normal.y, mono.hits[i].normal.z);
                     info.hitPoint = new float3(mono.hits[i].point.x, mono.hits[i].point.y, mono.hits[i].point.z);
@@ -274,7 +274,7 @@ public partial struct KJHLiquidDropRayCommJob : IJobParallelFor
         queryParameters.hitTriggers = QueryTriggerInteraction.Ignore;
         queryParameters.hitBackfaces = false;
         queryParameters.hitMultipleFaces = false;
-        rayComms[index] = new RaycastCommand(pivot + scale * infos[index].vertex, direction, queryParameters, 1f);
+        rayComms[index] = new RaycastCommand(pivot + scale * infos[index].vertex, direction, queryParameters, 2f);
     }
 }
 // Job
@@ -302,13 +302,9 @@ public partial struct KJHLiquidDropMoveJob : IJobParallelFor
             {
                 if (math.length(info.attachVertex) < 0.001f)
                     info.attachVertex = info.vertex;
-                info.velocity_gravity = math.lerp(info.velocity_gravity, float3.zero, 30f * deltaTime);
-                info.velocity = math.lerp(info.velocity, float3.zero, 30f * deltaTime);
-                float veloLeng = math.length(info.velocity);
-                info.vertex = math.lerp(info.vertex, 0.5f * ((info.hitPoint - pivot) / scale + info.attachVertex), 0.8f * (2f + veloLeng) * deltaTime);
-                // 최종 속도 적용
-                info.velocity = info.velocity_gravity + info.velocity_edge + info.velocity_volume;
-                info.vertex += info.velocity * deltaTime;
+                info.velocity_gravity = float3.zero;
+                info.velocity = float3.zero;
+                info.vertex = math.lerp(info.vertex, 0.5f * ((info.hitPoint - pivot) / scale + info.attachVertex), 1.5f * deltaTime);
                 // 덮어쓰기
                 infos[index] = info;
                 return;
@@ -322,23 +318,27 @@ public partial struct KJHLiquidDropMoveJob : IJobParallelFor
         {
             float3 pos = pivot + scale * info.vertex;
             float distance = math.length(info.hitPoint - pos);
-            if (distance < 0.01f)
+            if (distance < 0.011f)
             {
                 info.isAttach = 2;
                 info.velocity_gravity = float3.zero;
                 info.velocity = float3.zero;
-                //info.vertex = math.lerp(info.vertex, (info.hitPoint - pivot) / scale + 0.01f * math.up(), 0.5f * Time.time);
+                info.vertex = ((info.hitPoint - pivot) / scale) + 0.01f * math.up();
             }
             else if (distance < 0.05f)
             {
                 info.isAttach = 1;
                 if (math.length(info.attachVertex) < 0.001f)
                     info.attachVertex = info.vertex;
-                info.velocity_gravity = math.lerp(info.velocity_gravity, float3.zero, 30f * deltaTime);
-                info.velocity = math.lerp(info.velocity, float3.zero, 30f * deltaTime);
+                info.velocity_gravity = float3.zero;
+                info.velocity = float3.zero;
                 // 위치 서서히 히트 포인트에 붇는 시각적 효과
                 float veloLeng = math.length(info.velocity);
-                info.vertex = math.lerp(info.vertex, (info.hitPoint - pivot) / scale, 0.8f * (2f + veloLeng) * deltaTime);
+                info.vertex = math.lerp(info.vertex, ((info.hitPoint - pivot) / scale) + 0.01f * math.up(), 0.8f * (2f + veloLeng) * deltaTime);
+            }
+            else if (info.isAttach >= 1)
+            {
+                info.isAttach = 0;
             }
         }
         // 최종 속도 적용
