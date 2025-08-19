@@ -5666,15 +5666,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: cade5e6a364152d47820f8a293e93e53, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.164
+      value: 0.018292397
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cade5e6a364152d47820f8a293e93e53, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.889
+      value: 0.8399999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cade5e6a364152d47820f8a293e93e53, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.533
+      value: -0.36185038
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cade5e6a364152d47820f8a293e93e53, type: 3}
       propertyPath: m_LocalRotation.w
