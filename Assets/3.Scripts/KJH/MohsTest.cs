@@ -1,17 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Mathematics;
-using Unity.Burst;
-using Unity.Jobs;
-using Unity.Entities;
-using Unity.Collections;
-using Unity.Transforms;
-using Random = UnityEngine.Random;
 using System;
-// --- IComponentData ---
-public struct MohsTestTag : IComponentData { }
-// --- MonoBehaviour ---
-[RequireComponent(typeof(MeshCollider))]
 public class MohsTest : MonoBehaviour
 {
     public int number;
@@ -61,7 +50,7 @@ public class MohsTest : MonoBehaviour
                     }
                     lr.SetPosition(lrIndex, transform.InverseTransformPoint(closet));
                 }
-                else
+                else if (number > info.oreData.hardness)
                 {
                     Collider targetColl = other.transform.GetComponent<Collider>();
                     targetLr = other.transform.GetComponent<LineRenderer>();
@@ -75,6 +64,11 @@ public class MohsTest : MonoBehaviour
                         SoundManager.I.PlaySFX("LiquidDrop", pos, null, 0.8f);
                     }
                     targetLr.SetPosition(lrIndex, other.transform.InverseTransformPoint(closet));
+
+                }
+                else if (number == info.oreData.hardness)
+                {
+                    
 
                 }
             }
