@@ -17,6 +17,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     [SerializeField] List<LaboratoryAccident> accidents = new List<LaboratoryAccident>();
     public List<Progress> progress;
     ActionBasedController[] controllers;
+    [ReadOnlyInspector][SerializeField] ResultUI resultUI;
     [System.Serializable]
     public class Progress
     {
@@ -29,6 +30,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         base.Awake();
         controllers = FindObjectsByType<ActionBasedController>(FindObjectsSortMode.InstanceID);
+        resultUI = FindAnyObjectByType<ResultUI>();
     }
     void Start()
     {
