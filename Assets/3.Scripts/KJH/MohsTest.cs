@@ -1,79 +1,63 @@
+using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
-using System;
 public class MohsTest : MonoBehaviour
 {
-    public int number;
-    Vector3 prevDisplacement = Vector3.zero;
-    Vector3 displacement = Vector3.zero;
-    Vector3 velocity;
-    MeshCollider mc;
-    LineRenderer lr;
-    LineRenderer targetLr;
-    int lrIndex;
-    //[SerializeField] List<Vector3> record = new List<Vector3>();
-    void Awake()
+    [SerializeField] List<Progress> progreses;
+    [System.Serializable]
+    public struct Progress
     {
-        TryGetComponent(out mc);
-        lr = GetComponentInParent<LineRenderer>();
+        public LineRenderer lr;
+        public Coroutine co;
     }
-    void OnEnable()
+    public bool Has(LineRenderer lr)
     {
-        MeshFilter meshFilter = transform.parent.GetComponent<MeshFilter>();
-        mc.sharedMesh = null;
-        mc.sharedMesh = meshFilter.sharedMesh;
-        Vector3[] temp = new Vector3[100];
-        Array.Fill(temp, Vector3.zero);
-        lr.SetPositions(temp);
+        int find = progreses.FindIndex(x => x.lr == lr);
+        if (find == -1)
+            return false;
+        else
+            return true;
     }
-    void OnTriggerStay(Collider other)
+    public void AddScratch(LineRenderer lr)
     {
-        if (other.TryGetComponent(out ObjectInfo info))
+        Progress pg = new Progress();
+        pg.lr = lr;
+        pg.co = StartCoroutine(AutoRemove(lr));
+        progreses.Add(pg);
+    }
+    public void ReCoroutine(LineRenderer lr)
+    {
+        int find = progreses.FindIndex(x => x.lr == lr);
+        if (find != -1)
         {
-            prevDisplacement = displacement;
-            displacement = transform.position - other.transform.position;
-            velocity = displacement - prevDisplacement;
-            if (velocity.magnitude > 0.005f)
-            {
-                if (number < info.oreData.hardness)
-                {
-                    Collider myColl = transform.parent.GetComponent<Collider>();
-                    Vector3 closet = myColl.ClosestPoint(other.transform.position);
-                    DebugExtension.DebugWireSphere(closet, Color.blue, 0.01f, 0.02f, true);
-                    lrIndex++;
-                    lrIndex %= 100;
-                    if (lrIndex % 30 == 0)
-                    {
-                        Vector3 pos = mc.ClosestPoint(other.transform.position);
-                        ParticleManager.I.PlayParticle("DustSmall", pos, Quaternion.identity, null);
-                        SoundManager.I.PlaySFX("LiquidDrop", pos, null, 0.8f);
-                    }
-                    lr.SetPosition(lrIndex, transform.InverseTransformPoint(closet));
-                }
-                else if (number > info.oreData.hardness)
-                {
-                    Collider targetColl = other.transform.GetComponent<Collider>();
-                    targetLr = other.transform.GetComponent<LineRenderer>();
-                    Vector3 closet = targetColl.ClosestPoint(transform.position);
-                    lrIndex++;
-                    lrIndex %= 100;
-                    if (lrIndex % 30 == 0)
-                    {
-                        Vector3 pos = other.ClosestPoint(transform.position);
-                        ParticleManager.I.PlayParticle("DustSmall", pos, Quaternion.identity, null);
-                        SoundManager.I.PlaySFX("LiquidDrop", pos, null, 0.8f);
-                    }
-                    targetLr.SetPosition(lrIndex, other.transform.InverseTransformPoint(closet));
-
-                }
-                else if (number == info.oreData.hardness)
-                {
-                    
-
-                }
-            }
+            Progress pg = progreses[find];
+            StopCoroutine(pg.co);
+            pg.co = StartCoroutine(AutoRemove(lr));
+            progreses[find] = pg;
         }
     }
+    IEnumerator AutoRemove(LineRenderer lr)
+    {
+        float time = Time.time;
+        YieldInstruction yi = new WaitForSeconds(1f);
+        while (true)
+        {
+            yield return yi;
+            if (Time.time - time < 20f) continue;
+            int find = progreses.FindIndex(x => x.lr == lr);
+            if (find != -1)
+                progreses.RemoveAt(find);
+            break;
+        }
+        Debug.Log($"시간이 오래지나서 {lr}의 긁힌자국 제거");
+    }
+
+
+
+
+
+
 
 
 

@@ -163,7 +163,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 9b4d2ffd60add1640aa835ca76cd6094, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1127,7 +1127,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 9b4d2ffd60add1640aa835ca76cd6094, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1636,7 +1636,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 9b4d2ffd60add1640aa835ca76cd6094, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2145,7 +2145,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 9b4d2ffd60add1640aa835ca76cd6094, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2760,7 +2760,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 9b4d2ffd60add1640aa835ca76cd6094, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3405,7 +3405,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 9b4d2ffd60add1640aa835ca76cd6094, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3982,7 +3982,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 9b4d2ffd60add1640aa835ca76cd6094, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4585,6 +4585,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5167622533633560186}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8527090463444258047}
   m_SourcePrefab: {fileID: 100100000, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
 --- !u!1 &1696843280670118099 stripped
 GameObject:
@@ -4612,6 +4615,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.47146088, y: 0.010710359, z: 0.23441541}
   m_Center: {x: -0.0009854734, y: 0.0053551793, z: -0.002741389}
+--- !u!114 &8527090463444258047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696843280670118099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8598574557f893418b2be63dd7c1fb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progreses: []
 --- !u!4 &2073825533013625449 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
