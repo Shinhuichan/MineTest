@@ -42,8 +42,9 @@ public class MohsTestTrigger : MonoBehaviour
                     count++;
                     if (count % 24 == 0)
                     {
-                        AddScratch(lr/*, transform.InverseTransformPoint(closet)*/);
-                        Vector3 pos = mc.ClosestPoint(other.transform.position);
+                        AddScratch(lr, transform.parent);/*, transform.InverseTransformPoint(closet)*/
+                        Collider collider = transform.parent.GetComponent<Collider>();
+                        Vector3 pos = collider.ClosestPoint(other.transform.position);
                         if (Random.value < 0.5f)
                             ParticleManager.I.PlayParticle("DustSmall", pos, Quaternion.identity, null);
                         SoundManager.I.PlaySFX("Scratch", pos, null, 0.8f);
@@ -58,7 +59,7 @@ public class MohsTestTrigger : MonoBehaviour
                     count++;
                     if (count % 24 == 0)
                     {
-                        AddScratch(targetLr/*, other.transform.InverseTransformPoint(closet)*/);
+                        AddScratch(targetLr, other.transform);/*, .transform.InverseTransformPoint(closet)*/
                         Vector3 pos = other.ClosestPoint(transform.position);
                         if (Random.value < 0.5f)
                             ParticleManager.I.PlayParticle("DustSmall", pos, Quaternion.identity, null);
@@ -74,7 +75,7 @@ public class MohsTestTrigger : MonoBehaviour
             }
         }
     }
-    public void AddScratch(LineRenderer lr/*, Vector3 pos*/)
+    public void AddScratch(LineRenderer lr, Transform other)
     {
         if (!mt.Has(lr))
         {
@@ -84,7 +85,11 @@ public class MohsTestTrigger : MonoBehaviour
         {
             mt.ReCoroutine(lr);
         }
-        // DebugExtension.DebugWireSphere(lr.transform.position + pos, Color.white, 0.005f, 1f, true);
+        Collider collider = other.GetComponent<Collider>();
+        Vector3 pos = collider.ClosestPoint(lr.transform.position);
+        DebugExtension.DebugWireSphere(lr.transform.position + pos, Color.white, 0.005f, 1f, true);
+
+
         // LayerMask layerMask = 1 << lr.gameObject.layer;
         // Collider collider = lr.GetComponent<Collider>();
         // Vector3 origin = lr.transform.position + 30f * (lr.transform.position + pos - collider.bounds.center).normalized;
@@ -95,7 +100,7 @@ public class MohsTestTrigger : MonoBehaviour
         //     DebugExtension.DebugWireSphere(hit.point, Color.blue, 0.005f, 1f, true);
         //     Debug.DrawLine(origin, hit.point, Color.blue, 1f);
         // }
-        
+
 
     }
 

@@ -6,11 +6,5 @@ public class ResultUI : MonoBehaviour
     public void ShowText(OreData oreData, int experimentNumber, string content)
     {
         
-
-
     }
-
-
-
-
 }
