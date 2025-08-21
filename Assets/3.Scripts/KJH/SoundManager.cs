@@ -71,7 +71,7 @@ public class SoundManager : SingletonBehaviour<SoundManager>
         ausBGM1.volume = 0f;
         ausBGM1.Stop();
     }
-    public SFX PlaySFX(string Name, Vector3 pos, Transform parent = null, float spatialBlend = 0.8f)
+    public SFX PlaySFX(string Name, Vector3 pos, Transform parent = null, float spatialBlend = 0.8f, float volume = 1f)
     {
         int find = -1;
         for (int i = 0; i < sfxList.Count; i++)
@@ -87,7 +87,8 @@ public class SoundManager : SingletonBehaviour<SoundManager>
         if (parent == null) parent = transform;
         PoolBehaviour pb = PoolManager.I?.Spawn(sfxPrefab, pos, Quaternion.identity, parent);
         SFX _pb = pb as SFX;
-        _pb.Play(sfxList[find], volumeSFX, sfxList[find].length, spatialBlend);
+        float vol = volumeSFX * volume;
+        _pb.Play(sfxList[find], vol, sfxList[find].length, spatialBlend);
         return _pb;
     }
     public SFX PlaySFX(string Name, Transform parent = null)

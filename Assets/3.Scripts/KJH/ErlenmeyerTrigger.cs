@@ -1,6 +1,13 @@
 using UnityEngine;
 public class ErlenmeyerTrigger : MonoBehaviour
 {
+    public enum Type
+    {
+        HCl,
+        H2O,
+    }
+    [SerializeField] KJHLiquidDrop[] allLiquids;
+    public Type type;
     [SerializeField] private Vector2 fillRange;
     public float fill = 1f;
     Liquid liquid;
