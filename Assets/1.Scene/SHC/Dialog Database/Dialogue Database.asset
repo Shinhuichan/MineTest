@@ -307,11 +307,11 @@ MonoBehaviour:
     - title: Title
       value: Sample Dialog(UI)
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Actor
       value: 1
       type: 5
@@ -426,12 +426,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uBB50\uC57C, \uB098\uD55C\uD14C \uBCFC\uC77C\uC774\uB77C\uB3C4 \uC788\uC5B4?
-          \uD765."
+        value: "\uBB50\uC57C, \uBB34\uC2A8 \uC77C\uC774\uC9C0?"
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -500,7 +501,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -556,7 +559,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -612,7 +617,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -669,7 +676,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -725,7 +734,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -782,7 +793,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -949,7 +962,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1005,7 +1020,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1061,7 +1078,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1118,7 +1137,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1175,7 +1196,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1232,7 +1255,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1288,7 +1313,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1312,8 +1339,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 769.2657
-        y: 179.10147
+        x: 770.29663
+        y: 178.07056
         width: 160
         height: 30
     - id: 17
@@ -1345,7 +1372,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1396,7 +1425,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC815\uB9D0 \uB2E4\uC591\uD55C \uAD11\uBB3C\uB4E4\uC774 \uC788\uAD70\uC694!"
+        value: "\uC815\uBCF4\uB4E4\uC774 \uB108\uBB34 \uB9CE\uC740\uB370\uC694..."
         type: 0
         typeString: 
       - title: Sequence
@@ -1451,13 +1480,15 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC774\uC81C \uC815\uBCF4\uB97C \uC798 \uAE30\uC5B5\uD574 \uB450\uACE0
-          \uC2E4\uD5D8\uD558\uBA74\uC11C `\uC5B4\uB5A4 \uAD11\uBB3C\uC778\uC9C0 \uB9DE\uD600\uBCF4\uB294
-          \uAC70\uB2E4.\r"
+        value: "\uC2E4\uD5D8\uD55C \uD6C4 \uAD11\uBB3C\uC758 \uC774\uB984\uC744 \uB9DE\uCD94\uBA74
+          \uB41C\uB2E4.\n\uBB3C\uC5B4\uBCF4\uACE0 \uC2F6\uC73C\uBA74 \uC5B8\uC81C\uB4E0\uC9C0
+          \uBB3C\uC5B4\uBCF4\uACE0.\r"
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1513,7 +1544,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1620,7 +1653,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 1
@@ -2048,7 +2083,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2405,7 +2442,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2463,7 +2502,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2519,7 +2560,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2575,7 +2618,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2632,7 +2677,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2656,7 +2703,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 504.72552
+        x: 505.75647
         y: 714.2897
         width: 160
         height: 30
@@ -2689,7 +2736,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2746,7 +2795,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2803,7 +2854,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2860,7 +2913,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2917,7 +2972,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -3027,7 +3084,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -3131,7 +3190,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: '{{default}};
+
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
