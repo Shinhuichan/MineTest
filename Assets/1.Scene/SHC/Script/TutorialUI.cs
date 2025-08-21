@@ -1,5 +1,4 @@
 using CustomInspector;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -26,7 +25,12 @@ public class TutorialUI : MonoBehaviour
     [Header("Show Component Setup")]
     public Image imageUI;
     public VideoPlayer videoPlayer;
-    public TextMeshProUGUI textUI;
+    public TextMesh textUI;
+
+    [Header("Button Setup")]
+    [SerializeField] GameObject prevButton;
+    [SerializeField] GameObject nextButton;
+    [SerializeField] GameObject nextSceneButton;
 
     [Header("UI Show Index")]
     [SerializeField, ReadOnly] private int currentIndex = 0;
@@ -36,6 +40,22 @@ public class TutorialUI : MonoBehaviour
         ShowIntroduce(currentIndex);
     }
 
+    private void IndexCheck()
+    {
+        if (currentIndex.Equals(0)) prevButton.SetActive(false);
+        else prevButton.SetActive(true);
+        if (currentIndex >= introduces.Length - 1)
+        {
+            nextButton.SetActive(false);
+            nextSceneButton.SetActive(true);
+        }
+        else
+        {
+            nextButton.SetActive(true);
+            nextSceneButton.SetActive(false);
+        }
+    }
+        
     public void ShowIntroduce(int index)
     {
         if (index < 0 || index >= introduces.Length) return;
@@ -68,6 +88,7 @@ public class TutorialUI : MonoBehaviour
         currentIndex++;
         if (currentIndex >= introduces.Length) currentIndex = 0;
         ShowIntroduce(currentIndex);
+        IndexCheck();
     }
 
     public void Prev()
@@ -75,6 +96,8 @@ public class TutorialUI : MonoBehaviour
         currentIndex--;
         if (currentIndex < 0) currentIndex = introduces.Length - 1;
         ShowIntroduce(currentIndex);
+        IndexCheck();
     }
+    
     #endregion
 }
