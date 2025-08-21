@@ -50,21 +50,21 @@ public class H2ODropTest : MonoBehaviour
                         if (str == "")
                             GameManager.I.EditBoardText(info.oreData, 0, "물 : 반응 없음");
                         else if (str.Contains("염산 :"))
-                            GameManager.I.EditBoardText(info.oreData, 0, str + "\n" + "물 : 반응 없음");
+                            GameManager.I.Clear(info.oreData, 0, str + "\n" + "물 : 반응 없음");
                     }
                     else if (react == 1)
                     {
                         if (str == "")
                             GameManager.I.EditBoardText(info.oreData, 0, "물 : 반응 없음");
                         else if (str.Contains("염산 :"))
-                            GameManager.I.EditBoardText(info.oreData, 0, str + "\n" + "물 : 반응 없음");
+                            GameManager.I.Clear(info.oreData, 0, str + "\n" + "물 : 반응 없음");
                     }
                     else if (react == 2)
                     {
                         if (str == "")
                             GameManager.I.EditBoardText(info.oreData, 0, "물 : 격렬한 반응");
                         else if (str.Contains("염산 :"))
-                            GameManager.I.EditBoardText(info.oreData, 0, str + "\n" + "물 : 격렬한 반응");
+                            GameManager.I.Clear(info.oreData, 0, str + "\n" + "물 : 격렬한 반응");
                     }
                 }
             }

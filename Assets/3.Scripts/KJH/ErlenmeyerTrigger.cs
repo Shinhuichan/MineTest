@@ -22,6 +22,14 @@ public class ErlenmeyerTrigger : MonoBehaviour
         if (other.transform.parent.parent.TryGetComponent(out Pipette pipette))
         {
             pipette.isInErlenmeyer = true;
+            if (type == Type.HCl)
+            {
+                pipette.liquidPrefab = allLiquids[0];
+            }
+            else
+            {
+                pipette.liquidPrefab = allLiquids[1];
+            }
             //Debug.Log("aaaa");
         }
     }
