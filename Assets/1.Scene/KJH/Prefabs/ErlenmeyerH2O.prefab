@@ -96,6 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed51424db944550458df1fb0ad335ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allLiquids:
+  - {fileID: 8477196686008709269, guid: 8d25255c73f9f684395094bd4a6c25be, type: 3}
+  - {fileID: 4310562875972125157, guid: f03674f33bdb302469205af3b77f78bb, type: 3}
+  type: 1
   fillRange: {x: 0.388, y: 0.55}
   fill: 1
 --- !u!1 &5473641458610504087
@@ -111,7 +115,7 @@ GameObject:
   - component: {fileID: 4061166348023005856}
   - component: {fileID: 6138798439980258171}
   m_Layer: 0
-  m_Name: Erlenmeyer
+  m_Name: ErlenmeyerH2O
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -268,7 +272,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3d7afda9be19c8e4699824b159aa2483, type: 2}
+  - {fileID: 2100000, guid: e76e5c323fafe774d842f2afcef64a71, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

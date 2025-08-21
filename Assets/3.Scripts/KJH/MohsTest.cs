@@ -39,18 +39,30 @@ public class MohsTest : MonoBehaviour
     }
     IEnumerator AutoRemove(LineRenderer lr)
     {
+        Color color = lr.sharedMaterial.color;
+        lr.sharedMaterial.color = new Color(color.r, color.g, color.b, 1f);
         float time = Time.time;
         YieldInstruction yi = new WaitForSeconds(1f);
         while (true)
         {
             yield return yi;
-            if (Time.time - time < 20f) continue;
+            if (Time.time - time < 10f) continue;
             int find = progreses.FindIndex(x => x.lr == lr);
             if (find != -1)
                 progreses.RemoveAt(find);
             break;
         }
-        Debug.Log($"시간이 오래지나서 {lr}의 긁힌자국 제거");
+        time = Time.time;
+        color = lr.sharedMaterial.color;
+        float maxTime = 6f;
+        while (Time.time - time < maxTime)
+        {
+            lr.sharedMaterial.color = new Color(color.r, color.g, color.b, 1f - ((Time.time - time) / maxTime));
+            yield return null;
+        }
+        lr.positionCount = 0;
+        lr.sharedMaterial.color = new Color(color.r, color.g, color.b, 1f);
+        //Debug.Log($"시간이 오래지나서 {lr}의 긁힌자국 제거");
     }
 
 

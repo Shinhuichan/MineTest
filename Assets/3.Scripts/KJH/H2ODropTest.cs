@@ -1,7 +1,7 @@
 using System.Collections;
 using Language.Lua;
 using UnityEngine;
-public class HClDropTest : MonoBehaviour
+public class H2ODropTest : MonoBehaviour
 {
     int count = 0;
     KJHLiquidDrop kJHLiquidDrop;
@@ -24,15 +24,9 @@ public class HClDropTest : MonoBehaviour
             {
                 react = 0;
             }
-            if (info.oreData.isReactingToChem == ChemicalType.Acid)
+            else if (info.oreData.isReactingToChem == ChemicalType.Acid)
             {
-                if (count % 30 == 0)
-                {
-                    Vector3 pos = other.ClosestPoint(kJHLiquidDrop.worldCenter);
-                    ParticleManager.I.PlayParticle("Bubble", pos, Quaternion.identity, null);
-                    SoundManager.I.PlaySFX("Bubble", pos, null, 0.8f, 0.8f);
-                    react = 1;
-                }
+                react = 1;
             }
             else if (info.oreData.isReactingToChem == ChemicalType.Water)
             {
@@ -49,31 +43,30 @@ public class HClDropTest : MonoBehaviour
                 kJHLiquidDrop.UnInit();
                 kJHLiquidDrop.Despawn();
                 string str = GameManager.I.GetBoardText(info.oreData, 0);
-                if (!str.Contains("염산 :"))
+                if (!str.Contains("물 :"))
                 {
                     if (react == 0)
                     {
                         if (str == "")
-                            GameManager.I.EditBoardText(info.oreData, 0, "염산 : 반응 없음");
-                        else if (str.Contains("물 :"))
-                            GameManager.I.EditBoardText(info.oreData, 0, "염산 : 반응 없음" + "\n" + str);
+                            GameManager.I.EditBoardText(info.oreData, 0, "물 : 반응 없음");
+                        else if (str.Contains("염산 :"))
+                            GameManager.I.EditBoardText(info.oreData, 0, str + "\n" + "물 : 반응 없음");
                     }
                     else if (react == 1)
                     {
                         if (str == "")
-                            GameManager.I.EditBoardText(info.oreData, 0, "염산 : 기포 반응");
-                        else if (str.Contains("물 :"))
-                            GameManager.I.EditBoardText(info.oreData, 0, "염산 : 기포 반응" + "\n" + str);
+                            GameManager.I.EditBoardText(info.oreData, 0, "물 : 반응 없음");
+                        else if (str.Contains("염산 :"))
+                            GameManager.I.EditBoardText(info.oreData, 0, str + "\n" + "물 : 반응 없음");
                     }
                     else if (react == 2)
                     {
                         if (str == "")
-                            GameManager.I.EditBoardText(info.oreData, 0, "염산 : 격렬한 반응");
-                        else if (str.Contains("물 :"))
-                            GameManager.I.EditBoardText(info.oreData, 0, "염산 : 격렬한 반응" + "\n" + str);
+                            GameManager.I.EditBoardText(info.oreData, 0, "물 : 격렬한 반응");
+                        else if (str.Contains("염산 :"))
+                            GameManager.I.EditBoardText(info.oreData, 0, str + "\n" + "물 : 격렬한 반응");
                     }
                 }
-
             }
         }
     }
