@@ -12573,6 +12573,7 @@ GameObject:
   - component: {fileID: 1551752317283813799}
   - component: {fileID: 642717053071029261}
   - component: {fileID: 8488285416808470514}
+  - component: {fileID: 2922171424646945042}
   m_Layer: 0
   m_Name: Teacher_withRig
   m_TagString: Untagged
@@ -12739,6 +12740,27 @@ MonoBehaviour:
     onUse:
       m_PersistentCalls:
         m_Calls: []
+--- !u!95 &2922171424646945042
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5476258619001060456}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: d7da2d76c4f4a4e4bbfce81e2bd6336f, type: 3}
+  m_Controller: {fileID: 9100000, guid: d50adc59c20ee03439d1c5331b34f864, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5548927124223918333
 GameObject:
   m_ObjectHideFlags: 0
