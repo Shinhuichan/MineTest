@@ -56,21 +56,21 @@ public class HClDropTest : MonoBehaviour
                         if (str == "")
                             GameManager.I.EditBoardText(info.oreData, 0, "염산 : 반응 없음");
                         else if (str.Contains("물 :"))
-                            GameManager.I.EditBoardText(info.oreData, 0, "염산 : 반응 없음" + "\n" + str);
+                            GameManager.I.Clear(info.oreData, 0, "염산 : 반응 없음" + "\n" + str);
                     }
                     else if (react == 1)
                     {
                         if (str == "")
                             GameManager.I.EditBoardText(info.oreData, 0, "염산 : 기포 반응");
                         else if (str.Contains("물 :"))
-                            GameManager.I.EditBoardText(info.oreData, 0, "염산 : 기포 반응" + "\n" + str);
+                            GameManager.I.Clear(info.oreData, 0, "염산 : 기포 반응" + "\n" + str);    
                     }
                     else if (react == 2)
                     {
                         if (str == "")
                             GameManager.I.EditBoardText(info.oreData, 0, "염산 : 격렬한 반응");
                         else if (str.Contains("물 :"))
-                            GameManager.I.EditBoardText(info.oreData, 0, "염산 : 격렬한 반응" + "\n" + str);
+                            GameManager.I.Clear(info.oreData, 0, "염산 : 격렬한 반응" + "\n" + str);
                     }
                 }
 

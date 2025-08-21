@@ -10,7 +10,7 @@ public class Pipette : MonoBehaviour
     public bool isInErlenmeyer = false;
     [ReadOnlyInspector][SerializeField] string xRControllerParentName;
     [SerializeField] private InputActionAsset inputAsset;
-    [SerializeField] private KJHLiquidDrop liquidPrefab;
+    public KJHLiquidDrop liquidPrefab;
     [SerializeField] private Vector2 fillRange;
     private Transform spawnPos;
     private Transform handle;
