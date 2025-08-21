@@ -1,6 +1,13 @@
 using UnityEngine;
 public class ErlenmeyerTrigger : MonoBehaviour
 {
+    public enum Type
+    {
+        HCl,
+        H2O,
+    }
+    [SerializeField] KJHLiquidDrop[] allLiquids;
+    public Type type;
     [SerializeField] private Vector2 fillRange;
     public float fill = 1f;
     Liquid liquid;
@@ -15,6 +22,14 @@ public class ErlenmeyerTrigger : MonoBehaviour
         if (other.transform.parent.parent.TryGetComponent(out Pipette pipette))
         {
             pipette.isInErlenmeyer = true;
+            if (type == Type.HCl)
+            {
+                pipette.liquidPrefab = allLiquids[0];
+            }
+            else
+            {
+                pipette.liquidPrefab = allLiquids[1];
+            }
             //Debug.Log("aaaa");
         }
     }

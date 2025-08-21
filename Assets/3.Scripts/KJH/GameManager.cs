@@ -15,7 +15,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 {
     protected override bool IsDontDestroy() => true;
     [SerializeField] List<LaboratoryAccident> accidents = new List<LaboratoryAccident>();
-    public List<Progress> progress;
+    public List<Progress> progreses;
     ActionBasedController[] controllers;
     [ReadOnlyInspector][SerializeField] ResultUI resultUI;
     [System.Serializable]
@@ -40,7 +40,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         accidents.Clear();
         ObjectInfo[] temp = FindObjectsByType<ObjectInfo>(FindObjectsSortMode.InstanceID);
-        progress.Clear();
+        progreses.Clear();
         for (int i = 0; i < temp.Length; i++)
         {
             Progress pr = new Progress();
@@ -48,60 +48,67 @@ public class GameManager : SingletonBehaviour<GameManager>
             pr.Name = temp[i].transform.name;
             pr.transform = temp[i].transform;
             pr.oreData = temp[i].oreData;
-            progress.Add(pr);
+            progreses.Add(pr);
         }
     }
-    public void ClearExperiment(OreData oreData, int experimentNumber)
+    public void Clear(OreData oreData, int experimentNumber, string boardText)
     {
         if (experimentNumber < 0 || experimentNumber > 3)
         {
             Debug.Log($"experimentNumber는 0(염산반응) , 1(경도) , 2(현미경) , 3(전기전도) 들만 가능합니다. ( {experimentNumber} ) ");
             return;
         }
-        int find = progress.FindIndex(x => x.oreData.type == oreData.type);
+        int find = progreses.FindIndex(x => x.oreData.type == oreData.type);
         if (find == -1)
         {
             Debug.Log($"{oreData.type.ToString()} 라는 광물은 현재 씬에 없습니다.");
             return;
         }
-        if (progress[find].isClear[experimentNumber])
+        if (progreses[find].isClear[experimentNumber])
         {
             Debug.Log("이미 완료한 실험입니다.");
             return;
         }
-
         // 실험 완료
-        progress[find].isClear[experimentNumber] = true;
-
+        progreses[find].isClear[experimentNumber] = true;
         // 햅틱 반응
         foreach (var ctrl in controllers)
         {
             ctrl.SendHapticImpulse(0.5f, 0.2f);
         }
-
-        Debug.Log($"광물 {oreData.type.ToString()}로 실험{experimentNumber}을 완료했습니다. (칠판 내용 갱신 등등.. 여기서 처리)");
-
+        Debug.Log($"광물 {oreData.type.ToString()}로 실험{experimentNumber}을 완료했습니다.");
+        resultUI.ShowText(oreData, experimentNumber, boardText);
     }
-    public void ShowText(Vector3 pos, string str)
+    public void EditBoardText(OreData oreData, int experimentNumber, string boardText)
     {
-
+        resultUI.ShowText(oreData, experimentNumber, boardText);
     }
-    public void FadeIn(float time)
+    public string GetBoardText(OreData oreData, int experimentNumber)
     {
-
+        return resultUI.GetText(oreData, experimentNumber);
     }
-    public void FadeOut(float time)
-    {
 
-    }
-    public void ChangeScene(string sceneName)
-    {
 
-    }
-    public void ChangeScene(int sceneIndex)
-    {
+    // public void ShowText(Vector3 pos, string str)
+    // {
 
-    }
+    // }
+    // public void FadeIn(float time)
+    // {
+
+    // }
+    // public void FadeOut(float time)
+    // {
+
+    // }
+    // public void ChangeScene(string sceneName)
+    // {
+
+    // }
+    // public void ChangeScene(int sceneIndex)
+    // {
+
+    // }
 
 
 

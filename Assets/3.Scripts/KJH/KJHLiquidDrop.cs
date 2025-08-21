@@ -304,7 +304,7 @@ public partial struct KJHLiquidDropMoveJob : IJobParallelFor
                     info.attachVertex = info.vertex;
                 info.velocity_gravity = float3.zero;
                 info.velocity = float3.zero;
-                info.vertex = math.lerp(info.vertex, 0.5f * ((info.hitPoint - pivot) / scale + info.attachVertex), 1.5f * deltaTime);
+                info.vertex = math.lerp(info.vertex, 0.5f * ((info.hitPoint - pivot) / scale + info.attachVertex), 3.5f * deltaTime);
                 // 덮어쓰기
                 infos[index] = info;
                 return;
@@ -334,7 +334,7 @@ public partial struct KJHLiquidDropMoveJob : IJobParallelFor
                 info.velocity = float3.zero;
                 // 위치 서서히 히트 포인트에 붇는 시각적 효과
                 float veloLeng = math.length(info.velocity);
-                info.vertex = math.lerp(info.vertex, ((info.hitPoint - pivot) / scale) + 0.01f * math.up(), 0.8f * (2f + veloLeng) * deltaTime);
+                info.vertex = math.lerp(info.vertex, ((info.hitPoint - pivot) / scale) + 0.01f * math.up(), (4f + veloLeng) * deltaTime);
             }
             else if (info.isAttach >= 1)
             {
