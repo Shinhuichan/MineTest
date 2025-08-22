@@ -3,13 +3,13 @@ using UnityEngine;
 
 public enum OreType
 {
-    Calcite = 0, // 방해석
-    Sodium, // 나트륨
-    Copper, // 구리
-    Graphite, // 흑연
-    Sphalerite, // 섬아연석
-    Radium, // 라듐
-    Uranium // 우라늄
+    방해석 = 0, // 방해석
+    나트륨, // 나트륨
+    구리, // 구리
+    흑연, // 흑연
+    섬아연석, // 섬아연석
+    라듐, // 라듐
+    우라늄 // 우라늄
 }
 
 [Flags]

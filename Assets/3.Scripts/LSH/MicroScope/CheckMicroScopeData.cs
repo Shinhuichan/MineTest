@@ -33,7 +33,6 @@ public class CheckMicroScopeData : MonoBehaviour
         var go = (args.interactableObject as Component)?.gameObject;
         if (go == null) return;
 
-
         var objectInfo = go.GetComponent<ObjectInfo>();
         var progress = go.GetComponent<ExperimentProgress_H>(); // 진행상태
 
