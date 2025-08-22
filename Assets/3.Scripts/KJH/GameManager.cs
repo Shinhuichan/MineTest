@@ -19,7 +19,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     ActionBasedController[] controllers;
     [ReadOnlyInspector][SerializeField] ResultUI resultUI;
     [System.Serializable]
-    public class Progress
+    public class Progress       
     {
         public string Name;
         public Transform transform;
@@ -55,7 +55,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         if (experimentNumber < 0 || experimentNumber > 3)
         {
-            Debug.Log($"experimentNumber는 0(염산반응) , 1(경도) , 2(현미경) , 3(전기전도) 들만 가능합니다. ( {experimentNumber} ) ");
+            Debug.Log($"experimentNumber는 0(화학반응) , 1(경도) , 2(현미경) , 3(전기전도) 들만 가능합니다. ( {experimentNumber} ) ");
             return;
         }
         int find = progreses.FindIndex(x => x.oreData.type == oreData.type);
@@ -78,7 +78,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
         Debug.Log($"광물 {oreData.type.ToString()}로 실험{experimentNumber}을 완료했습니다.");
         resultUI.ShowText(oreData, experimentNumber, boardText);
-    }
+    } 
     public void EditBoardText(OreData oreData, int experimentNumber, string boardText)
     {
         resultUI.ShowText(oreData, experimentNumber, boardText);
@@ -101,14 +101,14 @@ public class GameManager : SingletonBehaviour<GameManager>
     // {
 
     // }
-    // public void ChangeScene(string sceneName)
-    // {
-
-    // }
-    // public void ChangeScene(int sceneIndex)
-    // {
-
-    // }
+    public void ChangeScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+    public void ChangeScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+    }
 
 
 
