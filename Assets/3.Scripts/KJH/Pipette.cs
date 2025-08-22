@@ -8,6 +8,7 @@ public class Pipette : MonoBehaviour
     public bool isLeftButton = false;
     public bool isRightButton = false;
     public bool isInErlenmeyer = false;
+    [HideInInspector] public ErlenmeyerTrigger erl;
     [ReadOnlyInspector][SerializeField] string xRControllerParentName;
     [SerializeField] private InputActionAsset inputAsset;
     public KJHLiquidDrop liquidPrefab;
@@ -70,42 +71,36 @@ public class Pipette : MonoBehaviour
         isGrab = false;
         xRControllerParentName = "";
         StopCoroutine(nameof(GrabHolding));
-        isHold = false;
+        isClick = false;
+        isSpawn = false;
     }
-    bool isHold;
+    bool isClick;
     bool isSpawn = false;
     IEnumerator GrabHolding()
     {
         yield return null;
         float timeStep = 0.03f;
         YieldInstruction yi = new WaitForSeconds(timeStep);
-        isSpawn = false;
         while (true)
         {
             #region Button Holding
             if ((xRControllerParentName == "Left Controller" && isLeftButton)
             || (xRControllerParentName == "Right Controller" && isRightButton))
             {
-                isHold = true;
+                if (!isSpawn)
+                {
+                    StartCoroutine("SpawnDrop");
+                    isSpawn = true;
+                }
+                isClick = true;
                 float speed = 1.15f;
                 capacity -= speed * timeStep;
                 capacity = Mathf.Clamp01(capacity);
                 handle.localScale = Vector3.Lerp(handle.localScale, new Vector3(0.64f, 0.76f, 0.61f), 2.6f * timeStep);
-                if (!isSpawn && fill >= 0.5f)
-                {
-                    isSpawn = true;
-                    if (fill > 0.48f / fillRange.y)
-                        fill = (0.471f / fillRange.y);
-                    else
-                        fill = 0f;
-                    fill = Mathf.Clamp01(fill);
-                    PoolManager.I.Spawn(liquidPrefab, spawnPos.position, Quaternion.identity, null, 40);
-                    RefreshFill();
-                }
             }
             else
             {
-                isHold = false;
+                isClick = false;
                 isSpawn = false;
             }
             #endregion
@@ -115,7 +110,7 @@ public class Pipette : MonoBehaviour
     void Update()
     {
         if (capacity >= 1f) return;
-        if (isHold) return;
+        if (isClick) return;
         capacity += 0.88f * Time.deltaTime;
         capacity = Mathf.Clamp01(capacity);
         handle.localScale = Vector3.Lerp(handle.localScale, Vector3.one, Time.deltaTime);
@@ -123,6 +118,8 @@ public class Pipette : MonoBehaviour
         {
             fill += 0.8f * Time.deltaTime;
             fill = Mathf.Clamp01(fill);
+            erl.fill -= 0.096f * Time.deltaTime;
+            erl.Refresh();
             RefreshFill();
         }
     }
@@ -131,10 +128,53 @@ public class Pipette : MonoBehaviour
     [ReadOnlyInspector] public float fill;
     void RefreshFill()
     {
-        liquid.fillAmount = (1-fill) * fillRange.x  + fill * fillRange.y;
+        liquid.fillAmount = (1 - fill) * fillRange.x + fill * fillRange.y;
     }
-
-
+    IEnumerator SpawnDrop()
+    {
+        while (true)
+        {
+            yield return null;
+            if (!isClick) break;
+            if (capacity < 0.5f) break;
+        }
+        float temp = (1f - capacity);
+        temp = Mathf.Clamp(temp, 0.05f, 0.5f);
+        if (temp > 0.15f && temp < 0.3f) temp = 0.3f;
+        if (temp > 0.05f && temp < 0.15f) temp = 0.05f;
+        float amount = 0.4f * (0.5f - temp) / 0.45f + 1.5f * (temp - 0.05f) / 0.45f;
+        if (fill > 0)
+        {
+            if (fill < 0.1f)
+            {
+                fill = 0f;
+                fill = Mathf.Clamp01(fill);
+                amount = 0.25f;
+                var pb = PoolManager.I.Spawn(liquidPrefab, spawnPos.position, Quaternion.identity, null, 40);
+                pb.transform.localScale = amount * Vector3.one;
+                RefreshFill();
+            }
+            else if (fill < 0.5f)
+            {
+                amount = Mathf.Min(amount, 0.8f);
+                fill -= amount * 0.1f;
+                fill = Mathf.Clamp01(fill);
+                var pb = PoolManager.I.Spawn(liquidPrefab, spawnPos.position, Quaternion.identity, null, 40);
+                pb.transform.localScale = amount * Vector3.one;
+                if (fill < 0.69f) fill = 0;
+                RefreshFill();
+            }
+            else
+            {
+                fill -= amount * 0.1f;
+                fill = Mathf.Clamp01(fill);
+                var pb = PoolManager.I.Spawn(liquidPrefab, spawnPos.position, Quaternion.identity, null, 40);
+                pb.transform.localScale = amount * Vector3.one;
+                if (fill < 0.69f) fill = 0;
+                RefreshFill();
+            }
+        }
+    }
 
 
 

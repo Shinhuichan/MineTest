@@ -3,6 +3,7 @@ using Language.Lua;
 using UnityEngine;
 public class HClDropTest : MonoBehaviour
 {
+    public float amount = 1f;
     int count = 0;
     KJHLiquidDrop kJHLiquidDrop;
     void Awake()

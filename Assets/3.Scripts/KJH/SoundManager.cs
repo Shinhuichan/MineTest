@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 public class SoundManager : SingletonBehaviour<SoundManager>
 {
-    protected override bool IsDontDestroy() => true;
+    protected override bool IsDontDestroy() => false;
     [SerializeField] List<AudioClip> bgmList = new List<AudioClip>();
     [SerializeField] List<AudioClip> sfxList = new List<AudioClip>();
     [SerializeField] List<AudioClip> ambienceList = new List<AudioClip>();

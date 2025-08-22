@@ -3,6 +3,7 @@ using Language.Lua;
 using UnityEngine;
 public class H2ODropTest : MonoBehaviour
 {
+    public float amount = 0f;
     int count = 0;
     KJHLiquidDrop kJHLiquidDrop;
     void Awake()
@@ -13,6 +14,7 @@ public class H2ODropTest : MonoBehaviour
     {
         count = 0;
         StartCoroutine(nameof(AutoRemove));
+        amount = 0f;
     }
     int react = 0;
     void OnTriggerStay(Collider other)
@@ -20,6 +22,10 @@ public class H2ODropTest : MonoBehaviour
         if (other.TryGetComponent(out ObjectInfo info))
         {
             count++;
+            if (amount == 0)
+            {
+                amount = transform.localScale.x;
+            }
             if (info.oreData.isReactingToChem == ChemicalType.None)
             {
                 react = 0;
@@ -38,7 +44,7 @@ public class H2ODropTest : MonoBehaviour
                     react = 2;
                 }
             }
-            if (count > 250)
+            if (count > 250 - (amount * 100))
             {
                 kJHLiquidDrop.UnInit();
                 kJHLiquidDrop.Despawn();

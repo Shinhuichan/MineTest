@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ParticleManager : SingletonBehaviour<ParticleManager>
 {
-    protected override bool IsDontDestroy() => true;
+    protected override bool IsDontDestroy() => false;
     [SerializeField] List<Particle> particleList = new List<Particle>();
     Transform canvas;
     public Particle PlayParticle(string Name, Vector3 pos, Quaternion rot, Transform parent = null)

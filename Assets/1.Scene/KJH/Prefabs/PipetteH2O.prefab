@@ -307,6 +307,7 @@ MonoBehaviour:
   isLeftButton: 0
   isRightButton: 0
   isInErlenmeyer: 0
+  erl: {fileID: 0}
   xRControllerParentName: 
   inputAsset: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   liquidPrefab: {fileID: 4310562875972125157, guid: f03674f33bdb302469205af3b77f78bb, type: 3}

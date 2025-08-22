@@ -33,7 +33,7 @@ public class MohsTest : MonoBehaviour
         {
             Progress pg = progreses[find];
             StopCoroutine(pg.co);
-            pg.co = StartCoroutine(AutoRemove(lr));
+            pg.co = StartCoroutine(nameof(AutoRemove),lr);
             progreses[find] = pg;
         }
     }
@@ -46,7 +46,7 @@ public class MohsTest : MonoBehaviour
         while (true)
         {
             yield return yi;
-            if (Time.time - time < 10f) continue;
+            if (Time.time - time < 16f) continue;
             int find = progreses.FindIndex(x => x.lr == lr);
             if (find != -1)
                 progreses.RemoveAt(find);
@@ -54,7 +54,7 @@ public class MohsTest : MonoBehaviour
         }
         time = Time.time;
         color = lr.sharedMaterial.color;
-        float maxTime = 6f;
+        float maxTime = 5f;
         while (Time.time - time < maxTime)
         {
             lr.sharedMaterial.color = new Color(color.r, color.g, color.b, 1f - ((Time.time - time) / maxTime));

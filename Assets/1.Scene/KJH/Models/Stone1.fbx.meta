@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 6b6f5d16708530042b7babaf5579a769
+guid: a093975269afe544abe994e395417e6e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NameBend
+    second: {fileID: 2100000, guid: d64084d954c6ce84d9dcfde75d4149d2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

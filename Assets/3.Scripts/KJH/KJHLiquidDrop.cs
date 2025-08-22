@@ -28,6 +28,7 @@ public class KJHLiquidDrop : PoolBehaviour
     #region Entity Setting
     EntityManager entityManager;
     Entity entity;
+    public float initScale;
     [HideInInspector] public NativeArray<float3> vertices;
     [HideInInspector] public NativeArray<VertInfo> infos;
     [HideInInspector] public NativeArray<RaycastCommand> rayComms;
@@ -107,6 +108,7 @@ public class KJHLiquidDrop : PoolBehaviour
         }
         verticesToArray = new Vector3[copy.vertices.Length];
         seed = (uint)Random.Range(0, 10000);
+        initScale = 0f;
         InitEntity();
     }
     public void UnInit()
@@ -193,8 +195,12 @@ public partial class KJHLiquidDropSystem : SystemBase
         {
             Transform tr = mono.transform;
             Vector3 pivot = tr.position;
+            if (mono.initScale == 0)
+            {
+                mono.initScale = mono.transform.localScale.x;
+            }
             #region Raycast Command Start Job
-            var job1 = new KJHLiquidDropRayCommJob
+                var job1 = new KJHLiquidDropRayCommJob
             {
                 pivot = new float3(pivot.x, pivot.y, pivot.z),
                 scale = new float3(tr.lossyScale.x, tr.lossyScale.y, tr.lossyScale.z),

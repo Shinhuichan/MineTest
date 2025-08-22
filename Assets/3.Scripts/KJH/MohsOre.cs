@@ -19,6 +19,13 @@ public class MohsOre : MonoBehaviour
         myLr = GetComponentInParent<LineRenderer>();
         mt = GetComponentInParent<MohsTest>();
     }
+    void OnEnable()
+    {
+        Material mat = myLr.material;
+        myLr.material = Instantiate(mat);
+        myLr.material.color = myLr.startColor;
+        myLr.material.SetColor("_Color", myLr.startColor);
+    }
     Vector3 prevDisplacement;
     Vector3 currDisplacement;
     Vector3 velocity;
@@ -81,6 +88,11 @@ public class MohsOre : MonoBehaviour
                                 if (count > 35)
                                 {
                                     string str = GameManager.I.GetBoardText(info.oreData, 1);
+                                    if (str == info.oreData.hardness.ToString())
+                                    {
+                                        //Debug.Log("이미 완료한 실험");
+                                        return;
+                                    }
                                     string str2 = "";
                                     if (str == "")
                                         str = "?";
@@ -93,6 +105,24 @@ public class MohsOre : MonoBehaviour
                                     float.TryParse(str2, out temp);
                                     temp = Mathf.Max(temp, number);
                                     GameManager.I.EditBoardText(info.oreData, 1, $"{temp}~{str}");
+                                    float temp2 = 999;
+                                    if (float.TryParse(str, out temp2))
+                                    {
+                                        if (info.oreData.hardness % 1 == 0)
+                                        {
+                                            if (Mathf.Abs(temp - temp2) == 2)
+                                            {
+                                                GameManager.I.Clear(info.oreData, 1, info.oreData.hardness.ToString());
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Mathf.Abs(temp - temp2) == 1)
+                                            {
+                                                GameManager.I.Clear(info.oreData, 1, info.oreData.hardness.ToString());
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             else if (number > info.oreData.hardness)
@@ -115,6 +145,11 @@ public class MohsOre : MonoBehaviour
                                 if (count > 35)
                                 {
                                     string str = GameManager.I.GetBoardText(info.oreData, 1);
+                                    if (str == info.oreData.hardness.ToString())
+                                    {
+                                        //Debug.Log("이미 완료한 실험");
+                                        return;
+                                    }
                                     string str2 = "";
                                     if (str == "")
                                         str = "?";
@@ -128,13 +163,37 @@ public class MohsOre : MonoBehaviour
                                     if (temp == 0) temp = 999;
                                     temp = Mathf.Min(temp, number);
                                     GameManager.I.EditBoardText(info.oreData, 1, $"{str}~{temp}");
+                                    float temp2 = 999;
+                                    if (float.TryParse(str, out temp2))
+                                    {
+                                        if (info.oreData.hardness % 1 == 0)
+                                        {
+                                            if (Mathf.Abs(temp - temp2) == 2)
+                                            {
+                                                GameManager.I.Clear(info.oreData, 1, info.oreData.hardness.ToString());
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (Mathf.Abs(temp - temp2) == 1)
+                                            {
+                                                GameManager.I.Clear(info.oreData, 1, info.oreData.hardness.ToString());
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             else if (number == info.oreData.hardness)
                             {
                                 if (count > 35)
                                 {
-
+                                    string str = GameManager.I.GetBoardText(info.oreData, 1);
+                                    if (str == info.oreData.hardness.ToString())
+                                    {
+                                        Debug.Log("이미 완료한 실험");
+                                        return;
+                                    }
+                                    
                                 }
                             }
                         }
@@ -177,18 +236,14 @@ public class MohsOre : MonoBehaviour
             mt.AddScratch(lr);
         else
             mt.ReCoroutine(lr);
-        if (lr.positionCount > 200)
-        {
 
-        }
-        else
-        {
-            int n = lr.positionCount;
-            lr.positionCount = n + 1;
-            Collider collider = lr.GetComponent<Collider>();
-            contactPoint = collider.ClosestPoint(contactPoint);
-            lr.SetPosition(n, lr.transform.InverseTransformPoint(contactPoint));
-        }
+
+        int n = lr.positionCount;
+        lr.positionCount = n + 1;
+        Collider collider = lr.GetComponentInChildren<Collider>();
+        contactPoint = collider.ClosestPoint(contactPoint);
+        lr.SetPosition(n, lr.transform.InverseTransformPoint(contactPoint));
+
         yield return null;
         coroutine = null;
     }
