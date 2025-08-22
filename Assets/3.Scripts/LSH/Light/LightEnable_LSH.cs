@@ -58,9 +58,10 @@ public class LightEnable_LSH : MonoBehaviour
             socket.selectExited.RemoveListener(OnSelectExited);
         }
     }
-
+    SFX sfx;
     private void OnSelectEntered(SelectEnterEventArgs args)
     {
+        sfx = SoundManager.I.PlaySFX("fan", transform.position, null, 0.8f, 0.8f);
         var go = (args.interactableObject as Component)?.gameObject;
         if (go == null) return;
 
@@ -72,7 +73,6 @@ public class LightEnable_LSH : MonoBehaviour
         {
             isPowered = true;
             poweredElapsed = 0f;              // 워밍업 타이머 리셋
-
         }
         else
         {
@@ -80,11 +80,13 @@ public class LightEnable_LSH : MonoBehaviour
         }
     }
 
+
     private void OnSelectExited(SelectExitEventArgs args)
     {
         // 소켓에서 빠지면 전원 Off (감속)
         isPowered = false;
         Data = null;
+        sfx?.Despawn();
     }
 
     void Update()

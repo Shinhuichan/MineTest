@@ -121,5 +121,4 @@ public class SoundManager : SingletonBehaviour<SoundManager>
         PlayerPrefs.SetFloat("volumeSFX", volumeSFX);
         PlayerPrefs.Save();
     }
-
 }
