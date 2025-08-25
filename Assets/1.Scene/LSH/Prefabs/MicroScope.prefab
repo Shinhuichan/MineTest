@@ -181,6 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkImage: {fileID: 0}
+  particlePrefab: {fileID: 2219189024081856779, guid: 895c6d094b6b213418cddcfb520298e9, type: 3}
+  fxAnchor: {fileID: 2619593772591492310}
 --- !u!1 &8967612001073526997
 GameObject:
   m_ObjectHideFlags: 0
