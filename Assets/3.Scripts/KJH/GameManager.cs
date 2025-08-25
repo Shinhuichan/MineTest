@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
+
 [System.Serializable]
 public struct LaboratoryAccident
 {
@@ -91,6 +92,20 @@ public class GameManager : SingletonBehaviour<GameManager>
     public string GetBoardText(OreData oreData, int experimentNumber)
     {
         return resultUI.GetText(oreData, experimentNumber);
+    }
+
+    public bool IsCurrentTestClear(int experimentNumber)
+    {
+        if (experimentNumber < 0 || experimentNumber > 3) return false;
+
+        int total = progreses.Count;
+        int clear = 0;
+        foreach (var pr in progreses)
+            if (pr.isClear[experimentNumber]) clear++;
+
+        // 모든 광석이 실험이 됐는지 확인.
+        Debug.Log($"실제로 한 실험 : {clear} == 해야되는 실험 : {total}");
+        return clear == total;
     }
 
     // public void ShowText(Vector3 pos, string str)

@@ -1,28 +1,40 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SequenceController : MonoBehaviour
 {
-    [SerializeField] DialogueSystemTrigger dialogueTrigger;
-    public bool IsCurrentTestClear(int experimentNumber)
+    [SerializeField] DialogueSystemTrigger trigger;       // ← Inspector에서 지정
+    [SerializeField] Transform actor;                // 교수님 등 화자
+    [SerializeField] Transform conversant;           // 플레이어(카메라 등)
+    [SerializeField] GameObject[] testObjects;
+    int testCount = 0;
+    bool alreadyTalk = false;
+
+    bool IsReady => GameManager.I != null && GameManager.I.progreses != null && GameManager.I.progreses.Count > 0;
+    void LateUpdate()
     {
-        int total = GameManager.I?.progreses?.Count ?? 0;
-        if (total <= 0) return false;
-
-        // 범위 체크(0~3만 허용)
-        if (experimentNumber < 0 || experimentNumber > 3) return false;
-
-        int clearCount = 0;
-        foreach (var pr in GameManager.I.progreses)
-            if (pr.isClear[experimentNumber]) clearCount++;
-
-        return clearCount == total;
+        if (!alreadyTalk)
+            CallPlayer(testCount);
     }
 
     public void CallPlayer(int experimentNumber)
     {
-        if (dialogueTrigger == null) return;
-        if (IsCurrentTestClear(experimentNumber))
-            dialogueTrigger.OnUse();
+        if (!GameManager.I.IsCurrentTestClear(experimentNumber)) return;
+        if (trigger != null)
+        {
+            trigger.OnUse();
+            Debug.Log("대화");
+            alreadyTalk = true;
+            return;
+        }
+    }
+    public void TestEnd()
+    {
+        testObjects[testCount].SetActive(false);
+        if (testCount < 4) { testCount++; }
+        else return;
+        testObjects[testCount].SetActive(true);
+        alreadyTalk = false;
     }
 }
