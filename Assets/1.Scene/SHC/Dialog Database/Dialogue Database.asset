@@ -95,8 +95,7 @@ MonoBehaviour:
       type: 3
       typeString: CustomFieldType_Files
     - title: Description
-      value: "\uC900\uBE44\uB41C \uAD11\uBB3C\uC744 \uD1B5\uD574 \uC804\uAE30\uAC00
-        \uD1B5\uD558\uB294 \uAD11\uBB3C\uC778\uC9C0 \uD655\uC778\uD558\uC2DC\uC624."
+      value: "\uC804\uB3C4\uC131 \uC2E4\uD5D8"
       type: 0
       typeString: 
     - title: Success Description
@@ -1711,12 +1710,6 @@ MonoBehaviour:
         destinationDialogueID: 46
         isConnector: 0
         priority: 2
-      - originConversationID: 1
-        originDialogueID: 23
-        destinationConversationID: 1
-        destinationDialogueID: 48
-        isConnector: 0
-        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -2026,7 +2019,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC544\uB1E8. \uC2E4\uD5D8 \uAD00\uB828\uC73C\uB85C\uB294 \uC5C6\uC5B4\uC694.\r"
+        value: "\uC544. \uC2E4\uD5D8\uACFC \uAD00\uB828\uB41C \uC9C8\uBB38\uC740
+          \uC544\uB2D9\uB2C8\uB2E4.\r"
         type: 0
         typeString: 
       - title: Sequence
@@ -3114,112 +3108,6 @@ MonoBehaviour:
         y: 621.1052
         width: 160
         height: 30
-    - id: 48
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: "\uC804\uAE30 \uC804\uB3C4\uC131 \uC2E4\uD5D8\uC744 \uC644\uB8CC\uD588\uC2B5\uB2C8\uB2E4."
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 1
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 1
-        originDialogueID: 48
-        destinationConversationID: 1
-        destinationDialogueID: 49
-        isConnector: 0
-        priority: 2
-      conditionsString: CurrentQuestState("Electro Contuct") == "success"
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 133.58759
-        y: 674.1255
-        width: 160
-        height: 30
-    - id: 49
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: "\uC88B\uB2E4. \uC218\uACE0\uD588\uB2E4."
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: '{{default}};
-
-          AnimatorPlay(Talk)'
-        type: 0
-        typeString: 
-      conversationID: 1
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 134.06485
-        y: 724.8358
-        width: 160
-        height: 30
     - id: 50
       fields:
       - title: Title
@@ -3279,8 +3167,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 6}
-    canvasZoom: 1.0000001
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.85000026
   - id: 2
     fields:
     - title: Title
