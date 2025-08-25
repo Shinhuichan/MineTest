@@ -1892,19 +1892,38 @@ MonoBehaviour:
       \uC218 \uC788\uC2B5\uB2C8\uB2E4."
   - type: 1
     sprite: {fileID: 0}
-    videoClip: {fileID: 32900000, guid: 47f09f528bce8bd4e9ef3adc4055392c, type: 3}
-    introduceText: "\uC544\uBB34 \uCEE8\uD2B8\uB864\uB7EC\uC758 \uAC80\uC9C0\uB85C
-      Trigger \uBC84\uD2BC\uC744 \uB20C\uB7EC\uC11C\n\uC2A4\uD3EC\uC774\uB4DC\uC5D0
-      \uC2DC\uC57D\uC744 \uD761\uC785\uD558\uAC70\uB098\n\uC2DC\uC57D\uC744 \uAD11\uC11D\uC5D0
-      \uD22C\uD558\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    videoClip: {fileID: 32900000, guid: e0cb9c970d824bf41bafa2c2e12c7afe, type: 3}
+    introduceText: "\uC591\uC190 \uCEE8\uD2B8\uB864\uB7EC\uC758 \uC911\uC9C0\uB85C
+      Grip \uBC84\uD2BC\uC744 \uD65C\uC131\uD654 \uD574\n\uAD11\uBB3C\uACFC \uACBD\uB3C4\uC11D\uC744
+      \uC7A1\uC2B5\uB2C8\uB2E4.\n\uC774\uD6C4 \uC11C\uB85C \uBE44\uBCBC \uAD11\uBB3C\uC758
+      \uACBD\uB3C4\uB97C \uD655\uC778\uD569\uB2C8\uB2E4"
   - type: 1
     sprite: {fileID: 0}
-    videoClip: {fileID: 32900000, guid: 47f09f528bce8bd4e9ef3adc4055392c, type: 3}
-    introduceText: "\uAD11\uC11D\uC744 \uC7A1\uC740 \uC0C1\uD0DC\uC5D0\uC11C \uD604\uBBF8\uACBD\uAC19\uC740
-      \uC7A5\uC18C\uC5D0 \uB46C\uC57C\uD558\uB294 \uACBD\uC6B0,\n\uADFC\uCC98\uB85C
-      \uAC00\uC9C0\uACE0 \uAC00\uBA74 \uBBF8\uB9AC \uC9C0\uC815\uB418\uC788\uB294
-      \uACF3\uC5D0 \uB2EC\uB77C\uBD99\uC744 \uC218 \uC788\uAC8C\n\uAC00\uC774\uB4DC
-      \uD615\uD0DC\uB85C \uD655\uC778\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    videoClip: {fileID: 32900000, guid: 86abe51bc2a9bc44bb64f69a4a116ec4, type: 3}
+    introduceText: "\uCEE8\uD2B8\uB864\uB7EC\uC758 \uC911\uC9C0\uB85C Grip \uBC84\uD2BC\uC744
+      \uB20C\uB7EC\uC11C \n\uAD11\uBB3C\uC744 \uC7A1\uC544 \uD604\uBBF8\uACBD \uADFC\uCC98
+      \uD30C\uB780\uC0C9\uC73C\uB85C \uD45C\uC2DC\uB418\uB294 \uACF3\uC5D0 \uB193\uC73C\uC138\uC694."
+  - type: 1
+    sprite: {fileID: 0}
+    videoClip: {fileID: 32900000, guid: 728ecd425398b6a4198b5ce4ecd933e1, type: 3}
+    introduceText: "\uCEE8\uD2B8\uB864\uB7EC\uC758 \uC911\uC9C0\uB85C Grip \uBC84\uD2BC\uC744
+      \uB20C\uB7EC\uC11C\n\uAD11\uBB3C\uC744 \uC7A1\uC544 \uD68C\uB85C \uADFC\uCC98
+      \uD30C\uB780\uC0C9\uC73C\uB85C \uD45C\uC2DC\uB418\uB294 \uACF3\uC5D0 \uB193\uC73C\uC138\uC694."
+  - type: 1
+    sprite: {fileID: 0}
+    videoClip: {fileID: 32900000, guid: 382266587369a5d4a9490d8a9755440f, type: 3}
+    introduceText: "\uCEE8\uD2B8\uB864\uB7EC\uC758 \uC911\uC9C0\uB85C Grip \uBC84\uD2BC\uC744
+      \uD65C\uC131\uD654 \uD574 \uC2A4\uD3EC\uC774\uD2B8 \uC7A1\uC2B5\uB2C8\uB2E4.\n\uC774\uD6C4
+      \uAC80\uC9C0\uB85C Trigger \uBC84\uD2BC\uC744 \uB204\uB974\uACE0 \uB54C\n\uC2A4\uD3EC\uC774\uB4DC\uC5D0
+      \uC2DC\uC57D\uC744 \uBE68\uC544\uB4DC\uB9B0 \uD6C4\n\uC704 \uD589\uC704\uB97C
+      \uBC18\uBCF5\uD574 \uC2DC\uC57D\uC744 \uAD11\uC11D\uC5D0 \uB5A8\uC5B4\uD2B8\uB9BD\uB2C8\uB2E4"
+  - type: 1
+    sprite: {fileID: 0}
+    videoClip: {fileID: 32900000, guid: c1ad7ce6e40c1b64e8450ba005399a38, type: 3}
+    introduceText: "\uC67C\uCABD \uCEE8\uD2B8\uB864\uB7EC\uC758 Trigger \uBC84\uD2BC\uC744
+      \uD65C\uC131\uD654 \uD574 \uC120\uC0DD\uB2D8\uACFC \uB300\uD654\uD558\uC138\uC694\n\uC120\uC0DD\uB2D8\uC5D0\uAC8C
+      \uC9C8\uBB38\uC744 \uD574 \uC815\uBCF4\uB97C \uD68D\uB4DD\uD558\uAC70\uB098\n\uB2E4\uC74C
+      \uC2E4\uD5D8\uC73C\uB85C \uB118\uC5B4\uAC08 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
   imageUI: {fileID: 113589846}
   videoPlayer: {fileID: 1806332048}
   textUI: {fileID: 1185541953}
@@ -3686,7 +3705,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.125, y: 2.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!102 &1185541953
@@ -3701,8 +3720,8 @@ TextMesh:
   m_OffsetZ: 0
   m_CharacterSize: 0.5
   m_LineSpacing: 1
-  m_Anchor: 0
-  m_Alignment: 0
+  m_Anchor: 4
+  m_Alignment: 1
   m_TabSize: 4
   m_FontSize: 0
   m_FontStyle: 0
@@ -5905,17 +5924,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806332047}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1398179067}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0.8399999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1822897343
 GameObject:
