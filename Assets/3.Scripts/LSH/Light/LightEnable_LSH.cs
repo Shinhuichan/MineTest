@@ -68,18 +68,20 @@ public class LightEnable_LSH : MonoBehaviour
         var go = (args.interactableObject as Component)?.gameObject;
         if (go == null) return;
 
-        var obj = go.GetComponent<ItemObject>();
-        Data = obj != null ? obj.data : null;
+        var obj = go.GetComponent<OreData>();
+        Data = obj != null ? obj : null;
 
         // 전도성 아이템이면 전원 On
         if (Data != null && Data.electroConduct)
         {
             isPowered = true;
             poweredElapsed = 0f;              // 워밍업 타이머 리셋
+            GameManager.I.Clear(Data, 3, "O");
         }
         else
         {
             isPowered = false;
+            GameManager.I.Clear(Data, 3, "X");
         }
 
         PlayParticle();
