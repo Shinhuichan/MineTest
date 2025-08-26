@@ -104,7 +104,7 @@ public class GameManager : SingletonBehaviour<GameManager>
             if (pr.isClear[experimentNumber]) clear++;
 
         // 모든 광석이 실험이 됐는지 확인.
-        Debug.Log($"실제로 한 실험 : {clear} == 해야되는 실험 : {total}");
+        // Debug.Log($"실제로 한 실험 : {clear} == 해야되는 실험 : {total}");
         return clear == total;
     }
 
