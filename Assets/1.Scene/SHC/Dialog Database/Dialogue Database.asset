@@ -1561,10 +1561,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: CurrentQuestState("Electro Contuct") == "unassigned"
-      userScript: 'Variable["isTalk"] = true;
-
-        SetQuestState("Electro Contuct",
-        "active")'
+      userScript: Variable["isTalk"] = true;
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1702,13 +1699,13 @@ MonoBehaviour:
       - originConversationID: 1
         originDialogueID: 23
         destinationConversationID: 1
-        destinationDialogueID: 29
+        destinationDialogueID: 51
         isConnector: 0
         priority: 2
       - originConversationID: 1
         originDialogueID: 23
         destinationConversationID: 1
-        destinationDialogueID: 51
+        destinationDialogueID: 29
         isConnector: 0
         priority: 2
       - originConversationID: 1
