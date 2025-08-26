@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b946654020106004cbcafab1c6ebbef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmList: []
+  bgmList:
+  - {fileID: 8300000, guid: 6f3a4a7abd8bca0498616ed6a37fb858, type: 3}
   sfxList:
   - {fileID: 8300000, guid: b5e8551cea4e50344aa584407a74aa52, type: 3}
   - {fileID: 8300000, guid: 10ca8d166cdb8c640bddcebbe710c74b, type: 3}

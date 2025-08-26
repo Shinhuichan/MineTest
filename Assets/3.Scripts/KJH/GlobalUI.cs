@@ -7,7 +7,6 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     protected override bool IsDontDestroy() => false;
     Transform pivot;
     Camera camera;
-    
     protected override void Awake()
     {
         pivot = transform.GetChild(0);
@@ -29,9 +28,13 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     {
         fadeMr.color = new Color(0f, 0f, 0f, 0.3f);
     }
+    IEnumerator Start()
+    {
+        yield return new WaitForSeconds(1f);
+        Narration("먼저 선생님과 대화부터 해보자..", 3.2f);
+    }
     [HideInInspector] public bool isShowMohsSameHardness;
     [HideInInspector] public bool isShowExplosionText;
-
     #region Fade
     GameObject fade;
     MeshRenderer fadeRdr;
@@ -118,8 +121,9 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
             Narration("어..? 어? 너무 많이 부었나..", 4f);
             isShowExplosionText = true;
         }
+        yield return new WaitForSeconds(1.5f);
         GameManager.I.StopPlayer();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         ParticleManager.I.PlayParticle("Explosion", pos, Quaternion.identity, null);
         SoundManager.I.PlaySFX("Explosion", pos, null, 0.4f, 1.2f);
         yield return new WaitForSeconds(1.5f);

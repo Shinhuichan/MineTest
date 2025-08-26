@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 using Unity.XR.CoreUtils;
+using UnityEngine.InputSystem.XR;
 [System.Serializable]
 public struct LaboratoryAccident
 {
@@ -125,15 +126,31 @@ public class GameManager : SingletonBehaviour<GameManager>
     XROrigin xROrigin;
     public void StopPlayer()
     {
-
+        Transform loco = xROrigin.transform.Find("Locomotion System");
+        loco.Find("Turn").gameObject.SetActive(false);
+        loco.Find("Move").gameObject.SetActive(false);
+        xROrigin.transform.Find("Camera Offset/Left Controller").gameObject.SetActive(false);
+        xROrigin.transform.Find("Camera Offset/Left Controller Stabilized").gameObject.SetActive(false);
+        xROrigin.transform.Find("Camera Offset/Right Controller").gameObject.SetActive(false);
+        xROrigin.transform.Find("Camera Offset/Right Controller Stabilized").gameObject.SetActive(false);
+        TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
+        tpd.enabled = false;
     }
     public void ResumePlayer()
     {
-
+        Transform loco = xROrigin.transform.Find("Locomotion System");
+        loco.Find("Turn").gameObject.SetActive(true);
+        loco.Find("Move").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Left Controller").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Left Controller Stabilized").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Right Controller").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Right Controller Stabilized").gameObject.SetActive(true);
+        TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
+        tpd.enabled = true;
     }
     public void LookTarget()
     {
-
+        
     }
 
 
