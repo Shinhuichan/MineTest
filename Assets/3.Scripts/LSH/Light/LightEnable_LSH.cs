@@ -28,6 +28,9 @@ public class LightEnable_LSH : MonoBehaviour
     private OreData Data;
     private XRSocketInteractor socket;
 
+    public ParticleSystem particlePrefab;
+    [SerializeField] private Transform fxAnchor;
+
     private bool isPowered = false;      // 소켓에 ‘전도성’ 아이템이 꽂혀 전원이 들어왔는가
     private float poweredElapsed = 0f;   // 전원 인가 후 경과 시간
     private float currentSpeed = 0f;     // 현재 실제 회전 속도 (deg/sec)
@@ -78,6 +81,8 @@ public class LightEnable_LSH : MonoBehaviour
         {
             isPowered = false;
         }
+
+        PlayParticle();
     }
 
 
@@ -117,5 +122,23 @@ public class LightEnable_LSH : MonoBehaviour
 
         if (!isPowered && currentSpeed <= 0.01f)
             currentSpeed = 0f;
+    }
+
+    private void PlayParticle()
+    {
+        if (particlePrefab == null) return;
+
+        var fx = Instantiate(particlePrefab, fxAnchor.position, fxAnchor.rotation);
+
+        fx.Play(true);
+
+        var main = fx.main;
+        float life =
+            main.duration +
+            (main.startLifetime.mode == ParticleSystemCurveMode.TwoConstants
+                ? main.startLifetime.constantMax
+                : main.startLifetime.constant) + 0.25f;
+        Destroy(fx.gameObject, life);
+        return;
     }
 }

@@ -95,8 +95,7 @@ MonoBehaviour:
       type: 3
       typeString: CustomFieldType_Files
     - title: Description
-      value: "\uC900\uBE44\uB41C \uAD11\uBB3C\uC744 \uD1B5\uD574 \uC804\uAE30\uAC00
-        \uD1B5\uD558\uB294 \uAD11\uBB3C\uC778\uC9C0 \uD655\uC778\uD558\uC2DC\uC624."
+      value: "\uC804\uB3C4\uC131 \uC2E4\uD5D8"
       type: 0
       typeString: 
     - title: Success Description
@@ -552,8 +551,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uCD1D \uB124 \uAC00\uC9C0 \uACFC\uC815\uC744 \uD1B5\uD574 \uAD11\uBB3C\uC744
-          \uC54C\uC544\uBCFC \uD150\uB370\uC694."
+        value: "\uCD1D \uB124 \uAC00\uC9C0 \uC2E4\uD5D8\uB4E4\uC744 \uD1B5\uD574
+          \uAD11\uBB3C\uC744 \uC54C\uC544\uBCFC \uD150\uB370\uC694."
         type: 0
         typeString: 
       - title: Sequence
@@ -584,7 +583,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 568
-        y: 231
+        y: 232
         width: 160
         height: 30
     - id: 4
@@ -668,8 +667,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uB458\uC9F8, \uD604\uBBF8\uACBD\uC744 \uD1B5\uD55C \uACB0\uC815
-          \uAD6C\uC870 \uD655\uC778"
+        value: "\uB458\uC9F8, \uD604\uBBF8\uACBD\uC73C\uB85C \uACB0\uC815 \uAD6C\uC870\uB97C
+          \uAD00\uCC30\uD558\uB294 \uC2E4\uD5D8"
         type: 0
         typeString: 
       - title: Sequence
@@ -726,8 +725,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC14B\uC9F8, \uD604\uBBF8\uACBD\uC744 \uD1B5\uD55C \uACB0\uC815
-          \uAD6C\uC870 \uD655\uC778"
+        value: "\uC14B\uC9F8, \uC804\uB3C4\uC131\uC744 \uD655\uC778\uD558\uB294 \uC2E4\uD5D8"
         type: 0
         typeString: 
       - title: Sequence
@@ -784,8 +782,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uB9C8\uC9C0\uB9C9\uC73C\uB85C \uC804\uB3C4 \uC720\uBB34\uB97C \uD655\uC778\uD558\uB294
-          \uACFC\uC815\uAE4C\uC9C0 \uD568\uAED8 \uD574 \uBCFC \uAC83\uC785\uB2C8\uB2E4."
+        value: "\uB9C8\uC9C0\uB9C9\uC73C\uB85C \uAD11\uC11D\uC758 \uD654\uD559 \uBC18\uC751
+          \uC2E4\uD5D8\uC744 \uC9C4\uD589 \uD574 \uBCFC \uAC83\uC785\uB2C8\uB2E4."
         type: 0
         typeString: 
       - title: Sequence
@@ -898,7 +896,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC774\uBC88\uC5D0 \uC2E4\uD5D8\uD560 \uAD11\uBB3C\uC758 \uC885\uB958\uB294
+        value: "\uC774\uBC88\uC5D0 \uC2E4\uD5D8\uD560 \uAD11\uC11D\uC758 \uC885\uB958\uB294
           \uC5B4\uB5BB\uAC8C \uB418\uB098\uC694?"
         type: 0
         typeString: 
@@ -954,10 +952,10 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uAD11\uBB3C\uC758 \uC774\uB984\uC744 \uC54C\uACE0 \uC2E4\uD5D8\uC744
+        value: "\uAD11\uC11D\uC758 \uC774\uB984\uC744 \uBBF8\uB9AC \uC54C\uACE0 \uC2E4\uD5D8\uC744
           \uD558\uBA74 \uC7AC\uBBF8\uAC00 \uC5C6\uACA0\uC8E0?\n\uC774\uBC88\uC5D0\uB294
-          \uC2E4\uD5D8\uC744 \uD1B5\uD574 \uAD11\uBB3C\uC758 \uC774\uB984\uC744 \uB9DE\uCDE8\uBCF4\uB294
-          \uC2DC\uAC04\uC744 \uAC00\uC9C8 \uAC81\uB2C8\uB2E4."
+          \uC2E4\uD5D8\uC744 \uD1B5\uD574 \uAD11\uC11D\uC758 \uC774\uB984\uC744 \uD655\uC778\uD560
+          \uC608\uC815\uC785\uB2C8."
         type: 0
         typeString: 
       - title: Sequence
@@ -1485,7 +1483,7 @@ MonoBehaviour:
         typeString: 
       - title: Dialogue Text
         value: "\uD558\uD558, \uC815\uBCF4\uAC00 \uAE30\uC5B5\uB098\uC9C0 \uC54A\uAC70\uB098
-          \uD5F7\uAC08\uB9B0\uB2E4\uBA74 \uC5B8\uC81C\uB4E0\uC9C0 \uC800\uC5D0\uAC8C
+          \uD5F7\uAC08\uB9AC\uC2E0\uB2E4\uBA74 \uC5B8\uC81C\uB4E0\uC9C0 \uC800\uC5D0\uAC8C
           \uC9C8\uBB38\uD574\uC8FC\uC138\uC694."
         type: 0
         typeString: 
@@ -1710,12 +1708,6 @@ MonoBehaviour:
         originDialogueID: 23
         destinationConversationID: 1
         destinationDialogueID: 46
-        isConnector: 0
-        priority: 2
-      - originConversationID: 1
-        originDialogueID: 23
-        destinationConversationID: 1
-        destinationDialogueID: 48
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -2027,7 +2019,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC544\uB1E8. \uC2E4\uD5D8 \uAD00\uB828\uC73C\uB85C\uB294 \uC5C6\uC5B4\uC694.\r"
+        value: "\uC544. \uC2E4\uD5D8\uACFC \uAD00\uB828\uB41C \uC9C8\uBB38\uC740
+          \uC544\uB2D9\uB2C8\uB2E4.\r"
         type: 0
         typeString: 
       - title: Sequence
@@ -2974,7 +2967,7 @@ MonoBehaviour:
       - title: Dialogue Text
         value: "\uC12C\uC544\uC5F0\uC11D\uC740 \uC2DC\uC57D A\uC5D0 \uBC18\uC751\uD569\uB2C8\uB2E4.\n\uAC15\uB3C4\uB294
           3.5, \uACB0\uC815 \uAD6C\uC870\uB294 \uC721\uBC29\uC815\uACC4, \uADF8\uB9AC\uACE0
-          \uC804\uB3C4\uCCB4\uC785\uB2E4."
+          \uC804\uB3C4\uCCB4\uC785\uB2C8\uB2E4."
         type: 0
         typeString: 
       - title: Sequence
@@ -3115,112 +3108,6 @@ MonoBehaviour:
         y: 621.1052
         width: 160
         height: 30
-    - id: 48
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: "\uC804\uAE30 \uC804\uB3C4\uC131 \uC2E4\uD5D8\uC744 \uC644\uB8CC\uD588\uC2B5\uB2C8\uB2E4."
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 1
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 1
-        originDialogueID: 48
-        destinationConversationID: 1
-        destinationDialogueID: 49
-        isConnector: 0
-        priority: 2
-      conditionsString: CurrentQuestState("Electro Contuct") == "success"
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 133.58759
-        y: 674.1255
-        width: 160
-        height: 30
-    - id: 49
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: "\uC88B\uB2E4. \uC218\uACE0\uD588\uB2E4."
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: '{{default}};
-
-          AnimatorPlay(Talk)'
-        type: 0
-        typeString: 
-      conversationID: 1
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 134.06485
-        y: 724.8358
-        width: 160
-        height: 30
     - id: 50
       fields:
       - title: Title
@@ -3280,8 +3167,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 412.29703, y: 0}
-    canvasZoom: 0.7600002
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.85000026
   - id: 2
     fields:
     - title: Title

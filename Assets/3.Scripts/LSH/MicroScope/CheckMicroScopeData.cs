@@ -6,7 +6,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class CheckMicroScopeData : MonoBehaviour
 {
     public Image checkImage;
-    
+
+    public ParticleSystem particlePrefab;
+    [SerializeField] private Transform fxAnchor;
+
     private ObjectData Data;
 
     private XRSocketInteractor socket;
@@ -52,12 +55,30 @@ public class CheckMicroScopeData : MonoBehaviour
             }
         }
 
-      
+        PlayParticle();
     }
 
     private void OnSelectExited(SelectExitEventArgs args)
     {
         checkImage.sprite = null;
         Data = null;
+    }
+
+    private void PlayParticle()
+    {
+        if (particlePrefab == null) return;
+
+        var fx = Instantiate(particlePrefab, fxAnchor.position, fxAnchor.rotation);
+
+        fx.Play(true);
+
+        var main = fx.main;
+        float life =
+            main.duration +
+            (main.startLifetime.mode == ParticleSystemCurveMode.TwoConstants
+                ? main.startLifetime.constantMax
+                : main.startLifetime.constant) + 0.25f;
+        Destroy(fx.gameObject, life);
+        return;
     }
 }

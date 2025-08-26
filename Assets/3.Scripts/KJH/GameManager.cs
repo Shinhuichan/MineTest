@@ -1,10 +1,9 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
+
 [System.Serializable]
 public struct LaboratoryAccident
 {
@@ -72,13 +71,20 @@ public class GameManager : SingletonBehaviour<GameManager>
         // 실험 완료
         progreses[find].isClear[experimentNumber] = true;
         // 햅틱 반응
-        foreach (var ctrl in controllers)
+        if (controllers != null)
         {
-            ctrl.SendHapticImpulse(0.5f, 0.2f);
+            foreach (var ctrl in controllers)
+            {
+                ctrl.SendHapticImpulse(0.5f, 0.2f);
+            }
         }
+            
         Debug.Log($"광물 {oreData.type.ToString()}로 실험{experimentNumber}을 완료했습니다.");
-        resultUI.ShowText(oreData, experimentNumber, boardText);
-    } 
+        if (resultUI != null)
+        {
+            resultUI.ShowText(oreData, experimentNumber, boardText);
+        }
+    }
     public void EditBoardText(OreData oreData, int experimentNumber, string boardText)
     {
         resultUI.ShowText(oreData, experimentNumber, boardText);
@@ -88,6 +94,19 @@ public class GameManager : SingletonBehaviour<GameManager>
         return resultUI.GetText(oreData, experimentNumber);
     }
 
+    public bool IsCurrentTestClear(int experimentNumber)
+    {
+        if (experimentNumber < 0 || experimentNumber > 3) return false;
+
+        int total = progreses.Count;
+        int clear = 0;
+        foreach (var pr in progreses)
+            if (pr.isClear[experimentNumber]) clear++;
+
+        // 모든 광석이 실험이 됐는지 확인.
+        Debug.Log($"실제로 한 실험 : {clear} == 해야되는 실험 : {total}");
+        return clear == total;
+    }
 
     // public void ShowText(Vector3 pos, string str)
     // {
@@ -109,10 +128,4 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         SceneManager.LoadScene(sceneIndex);
     }
-
-
-
-
-
-
 }
