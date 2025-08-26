@@ -7,7 +7,7 @@ public class ResetButton : MonoBehaviour
     Vector3[] initPoses;
     Quaternion[] initRotations;
     Vector3[] initScales;
-    bool[] initIsActive;
+    //bool[] initIsActive;
     bool isPlaying = false;
     void OnEnable()
     {
@@ -19,13 +19,13 @@ public class ResetButton : MonoBehaviour
         initPoses = new Vector3[initTrs.Length];
         initRotations = new Quaternion[initTrs.Length];
         initScales = new Vector3[initTrs.Length];
-        initIsActive = new bool[initTrs.Length];
+        //initIsActive = new bool[initTrs.Length];
         for (int i = 0; i < initTrs.Length; i++)
         {
             initPoses[i] = initTrs[i].position;
             initRotations[i] = initTrs[i].rotation;
             initScales[i] = initTrs[i].localScale;
-            initIsActive[i] = initTrs[i].gameObject.activeSelf;
+            //initIsActive[i] = initTrs[i].gameObject.activeSelf;
             yield return null;
         }
     }
@@ -36,21 +36,31 @@ public class ResetButton : MonoBehaviour
     }
     public void ButtonExit()
     {
-        StopCoroutine(nameof(ButtonHolding));
+        //StopCoroutine(nameof(ButtonHolding));
+        if (isFade)
+        {
+            GlobalUI.I.FadeIn(0.3f);
+        }
     }
+    bool isFade;
     IEnumerator ButtonHolding()
     {
         yield return new WaitForSeconds(1.9f);
         GlobalUI.I.FadeOut(0.6f);
-        yield return new WaitForSeconds(1f);
+        isFade = true;
         for (int i = 0; i < initTrs.Length; i++)
         {
             initTrs[i].position = initPoses[i];
             initTrs[i].rotation = initRotations[i];
             initTrs[i].localScale = initScales[i];
-            initTrs[i].gameObject.SetActive(initIsActive[i]);
+            if (initTrs[i].TryGetComponent(out ErlenmeyerTrigger erlenmeyer))
+            {
+                erlenmeyer.fill = 1f;
+                erlenmeyer.Refresh();
+            }
         }
         yield return new WaitForSeconds(0.3f);
         GlobalUI.I.FadeIn(0.6f);
+        isFade = false;
     }
 }

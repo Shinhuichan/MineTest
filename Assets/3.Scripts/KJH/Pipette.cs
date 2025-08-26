@@ -113,11 +113,11 @@ public class Pipette : MonoBehaviour
         if (isClick) return;
         capacity += 0.88f * Time.deltaTime;
         capacity = Mathf.Clamp01(capacity);
-        handle.localScale = Vector3.Lerp(handle.localScale, Vector3.one, Time.deltaTime);
+        handle.localScale = Vector3.Lerp(handle.localScale, 1.12f * Vector3.one, Time.deltaTime);
         if (capacity < 1f && isInErlenmeyer)
         {
-            fill += 0.8f * Time.deltaTime;
-            fill = Mathf.Clamp01(fill);
+            fill += 0.5f * Time.deltaTime;
+            fill = Mathf.Clamp(fill, 0.75f, 1f);
             erl.fill -= 0.096f * Time.deltaTime;
             erl.Refresh();
             RefreshFill();
@@ -154,10 +154,10 @@ public class Pipette : MonoBehaviour
                 pb.transform.localScale = amount * Vector3.one;
                 RefreshFill();
             }
-            else if (fill < 0.5f)
+            else if (fill < 0.8f)
             {
                 amount = Mathf.Min(amount, 0.8f);
-                fill -= amount * 0.1f;
+                fill -= amount * 0.12f + 0.08f;
                 fill = Mathf.Clamp01(fill);
                 var pb = PoolManager.I.Spawn(liquidPrefab, spawnPos.position, Quaternion.identity, null, 40);
                 pb.transform.localScale = amount * Vector3.one;
@@ -166,7 +166,7 @@ public class Pipette : MonoBehaviour
             }
             else
             {
-                fill -= amount * 0.1f;
+                fill -= amount * 0.08f;
                 fill = Mathf.Clamp01(fill);
                 var pb = PoolManager.I.Spawn(liquidPrefab, spawnPos.position, Quaternion.identity, null, 40);
                 pb.transform.localScale = amount * Vector3.one;

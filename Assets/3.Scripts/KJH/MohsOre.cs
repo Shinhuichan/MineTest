@@ -1,12 +1,13 @@
 using System.Collections;
-using Language.Lua;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 public class MohsOre : MonoBehaviour
 {
     public int number;
     [SerializeField] LayerMask myLayerMask;
     MohsTest mt;
     [ReadOnlyInspector][SerializeField] int count = 1;
+    XRGrabInteractable xRGrab;
     MeshCollider mc;
     LineRenderer myLr;
     Vector3 contactPoint;
@@ -16,6 +17,7 @@ public class MohsOre : MonoBehaviour
     void Awake()
     {
         TryGetComponent(out mc);
+        TryGetComponent(out xRGrab);
         myLr = GetComponentInParent<LineRenderer>();
         mt = GetComponentInParent<MohsTest>();
     }
@@ -53,7 +55,7 @@ public class MohsOre : MonoBehaviour
                     if (velocity.magnitude > 0.005f && velocity.magnitude < 0.1f)
                     {
                         count++;
-                        if (count % 40 == 0)
+                        if (count % 30 == 0)
                         {
                             if (number != info.oreData.hardness)
                             {
@@ -65,7 +67,7 @@ public class MohsOre : MonoBehaviour
                                 SoundManager.I.PlaySFX("Scratch", contactPoint, null, 0.7f, 0.2f);
                             }
                         }
-                        if (count % 7 == 0)
+                        if (count % 6 == 0)
                         {
                             //DebugExtension.DebugWireSphere(contactPoint, 0.012f, 0.5f, true);
                             if (number < info.oreData.hardness)
@@ -84,6 +86,14 @@ public class MohsOre : MonoBehaviour
                                 {
                                     if (coroutine == null)
                                         coroutine = StartCoroutine(AddScratch(myLr, targetFix, myLayerMask));
+
+                                    if (xRGrab.firstInteractorSelecting != null)
+                                    {
+                                        //Debug.Log(xRGrab.firstInteractorSelecting.transform.parent);
+                                        ActionBasedController abc = xRGrab.firstInteractorSelecting.transform.parent.GetComponent<ActionBasedController>();
+                                        abc.SendHapticImpulse(0.5f, 0.2f);
+                                    }
+
                                 }
                                 if (count > 35)
                                 {
@@ -141,6 +151,15 @@ public class MohsOre : MonoBehaviour
                                 {
                                     if (coroutine == null)
                                         coroutine = StartCoroutine(AddScratch(targetLr, transform, targetlayerMask));
+                                    XRGrabInteractable _xRGrab = info.GetComponent<XRGrabInteractable>();
+                                    if (_xRGrab != null)
+                                    {
+                                        if (_xRGrab.firstInteractorSelecting != null)
+                                        {
+                                            ActionBasedController abc = _xRGrab.firstInteractorSelecting.transform.parent.GetComponent<ActionBasedController>();
+                                            abc.SendHapticImpulse(0.5f, 0.2f);
+                                        }
+                                    }
                                 }
                                 if (count > 35)
                                 {
@@ -190,10 +209,18 @@ public class MohsOre : MonoBehaviour
                                     string str = GameManager.I.GetBoardText(info.oreData, 1);
                                     if (str == info.oreData.hardness.ToString())
                                     {
-                                        Debug.Log("이미 완료한 실험");
+                                        //Debug.Log("이미 완료한 실험");
                                         return;
                                     }
-                                    
+                                    else
+                                    {
+                                        if (!GlobalUI.I.isShowMohsSameHardness)
+                                        {
+                                            GlobalUI.I.Narration("경도가 거의 같아서 서로 잘 안긁히는 것 같다.\n다른 광물로 해보자.", 6f);
+                                            GlobalUI.I.isShowMohsSameHardness = true;
+                                        }   
+                                    }
+
                                 }
                             }
                         }
@@ -236,16 +263,22 @@ public class MohsOre : MonoBehaviour
             mt.AddScratch(lr);
         else
             mt.ReCoroutine(lr);
-
-
         int n = lr.positionCount;
         lr.positionCount = n + 1;
         Collider collider = lr.GetComponentInChildren<Collider>();
         contactPoint = collider.ClosestPoint(contactPoint);
         lr.SetPosition(n, lr.transform.InverseTransformPoint(contactPoint));
-
         yield return null;
         coroutine = null;
+
+
+        // if (controllers != null)
+        // {
+        //     foreach (var ctrl in controllers)
+        //     {
+        //         ctrl.SendHapticImpulse(0.5f, 0.2f);
+        //     }
+        // } 
     }
 
 
