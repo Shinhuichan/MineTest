@@ -88,6 +88,8 @@ MonoBehaviour:
   decel: 500
   warmupSeconds: 1
   pivot: {fileID: 4922967578070031710}
+  particlePrefab: {fileID: 2219189024081856779, guid: 895c6d094b6b213418cddcfb520298e9, type: 3}
+  fxAnchor: {fileID: 4142419614328269339}
 --- !u!1 &1927746023596178666
 GameObject:
   m_ObjectHideFlags: 0

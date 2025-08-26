@@ -9,4 +9,5 @@ public class ObjectInfo : MonoBehaviour
     public string description;
     public Sprite objImage;
     public OreData oreData;
+    [ReadOnlyInspector] public float chemistryCount = 0f;
 }

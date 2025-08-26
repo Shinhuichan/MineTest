@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accidents: []
-  progress: []
+  progreses: []
+  resultUI: {fileID: 0}

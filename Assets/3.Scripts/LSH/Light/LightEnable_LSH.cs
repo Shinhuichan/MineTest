@@ -28,6 +28,9 @@ public class LightEnable_LSH : MonoBehaviour
     private OreData Data;
     private XRSocketInteractor socket;
 
+    public ParticleSystem particlePrefab;
+    [SerializeField] private Transform fxAnchor;
+
     private bool isPowered = false;      // 소켓에 ‘전도성’ 아이템이 꽂혀 전원이 들어왔는가
     private float poweredElapsed = 0f;   // 전원 인가 후 경과 시간
     private float currentSpeed = 0f;     // 현재 실제 회전 속도 (deg/sec)
@@ -58,33 +61,39 @@ public class LightEnable_LSH : MonoBehaviour
             socket.selectExited.RemoveListener(OnSelectExited);
         }
     }
-
+    SFX sfx;
     private void OnSelectEntered(SelectEnterEventArgs args)
     {
+        sfx = SoundManager.I.PlaySFX("fan", transform.position, null, 0.8f, 0.8f);
         var go = (args.interactableObject as Component)?.gameObject;
         if (go == null) return;
 
-        var obj = go.GetComponent<ItemObject>();
-        Data = obj != null ? obj.data : null;
+        var obj = go.GetComponent<OreData>();
+        Data = obj != null ? obj : null;
 
         // 전도성 아이템이면 전원 On
         if (Data != null && Data.electroConduct)
         {
             isPowered = true;
             poweredElapsed = 0f;              // 워밍업 타이머 리셋
-
+            GameManager.I.Clear(Data, 3, "O");
         }
         else
         {
             isPowered = false;
+            GameManager.I.Clear(Data, 3, "X");
         }
+
+        PlayParticle();
     }
+
 
     private void OnSelectExited(SelectExitEventArgs args)
     {
         // 소켓에서 빠지면 전원 Off (감속)
         isPowered = false;
         Data = null;
+        sfx?.Despawn();
     }
 
     void Update()
@@ -115,5 +124,23 @@ public class LightEnable_LSH : MonoBehaviour
 
         if (!isPowered && currentSpeed <= 0.01f)
             currentSpeed = 0f;
+    }
+
+    private void PlayParticle()
+    {
+        if (particlePrefab == null) return;
+
+        var fx = Instantiate(particlePrefab, fxAnchor.position, fxAnchor.rotation);
+
+        fx.Play(true);
+
+        var main = fx.main;
+        float life =
+            main.duration +
+            (main.startLifetime.mode == ParticleSystemCurveMode.TwoConstants
+                ? main.startLifetime.constantMax
+                : main.startLifetime.constant) + 0.25f;
+        Destroy(fx.gameObject, life);
+        return;
     }
 }

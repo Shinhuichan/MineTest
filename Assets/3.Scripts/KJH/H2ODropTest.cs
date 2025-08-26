@@ -1,8 +1,8 @@
 using System.Collections;
-using Language.Lua;
 using UnityEngine;
 public class H2ODropTest : MonoBehaviour
 {
+    public float amount = 0f;
     int count = 0;
     KJHLiquidDrop kJHLiquidDrop;
     void Awake()
@@ -13,53 +13,87 @@ public class H2ODropTest : MonoBehaviour
     {
         count = 0;
         StartCoroutine(nameof(AutoRemove));
+        amount = 0f;
+        isReact = false;
     }
-    int react = 0;
+    bool isReact;
+    int reactType = 0;
     void OnTriggerStay(Collider other)
     {
         if (other.TryGetComponent(out ObjectInfo info))
         {
             count++;
+            if (count > 5 && !isReact && amount >= 0)
+            {
+                amount = transform.lossyScale.x;
+                //Debug.Log($"{info.chemistryCount} + {amount} --> {info.chemistryCount + amount}");
+                isReact = true;
+                info.chemistryCount += amount;
+            }
+            //
             if (info.oreData.isReactingToChem == ChemicalType.None)
             {
-                react = 0;
+                reactType = 0;
             }
             else if (info.oreData.isReactingToChem == ChemicalType.Acid)
             {
-                react = 1;
+                reactType = 1;
             }
             else if (info.oreData.isReactingToChem == ChemicalType.Water)
             {
                 if (count % 30 == 0)
                 {
-                    Vector3 pos = other.ClosestPoint(kJHLiquidDrop.worldCenter);
-                    ParticleManager.I.PlayParticle("Bubble", pos, Quaternion.identity, null);
-                    SoundManager.I.PlaySFX("Bubble", pos, null, 0.8f, 0.8f);
-                    react = 2;
+                    if (amount < 0.7f)
+                    {
+                        Vector3 pos = other.ClosestPoint(kJHLiquidDrop.worldCenter);
+                        var pb = ParticleManager.I.PlayParticle("Smoke", pos, Quaternion.identity, null);
+                        pb.transform.localScale = 0.3f * Vector3.one;
+                        SoundManager.I.PlaySFX("Smoke", pos, null, 0.8f, 0.7f);
+                        GlobalUI.I.StartCoroutine("SmallFire", pos);
+                    }
+                    else if (amount >= 0.7f)
+                    {
+                        Vector3 pos = other.ClosestPoint(kJHLiquidDrop.worldCenter);
+                        var pb = ParticleManager.I.PlayParticle("Smoke", pos, Quaternion.identity, null);
+                        pb.transform.localScale = 1.0f * Vector3.one;
+                        SoundManager.I.PlaySFX("Smoke", pos, null, 0.8f, 1.3f);
+                        GlobalUI.I.StartCoroutine("BigFire", pos);
+                        int find = GameManager.I.accidents.FindIndex(x => x.accidentName == "Explosion");
+                        if (find == -1)
+                        {
+                            LaboratoryAccident la = new LaboratoryAccident();
+                            la.accidentName = "Explosion";
+                            la.accidentWeight = 10;
+                            GameManager.I.accidents.Add(la);
+                            GlobalUI.I.StartCoroutine("Explosion", pos);
+                        }
+                    }
+                    reactType = 2;
                 }
             }
-            if (count > 250)
+            if (count > 250 - (amount * 100) && isReact)
             {
-                kJHLiquidDrop.UnInit();
-                kJHLiquidDrop.Despawn();
+                //Debug.Log($"{info.chemistryCount} - {amount} --> {info.chemistryCount - amount}");
+                isReact = false;
+                info.chemistryCount -= amount;
                 string str = GameManager.I.GetBoardText(info.oreData, 0);
                 if (!str.Contains("물 :"))
                 {
-                    if (react == 0)
+                    if (reactType == 0)
                     {
                         if (str == "")
                             GameManager.I.EditBoardText(info.oreData, 0, "물 : 반응 없음");
                         else if (str.Contains("염산 :"))
                             GameManager.I.Clear(info.oreData, 0, str + "\n" + "물 : 반응 없음");
                     }
-                    else if (react == 1)
+                    else if (reactType == 1)
                     {
                         if (str == "")
                             GameManager.I.EditBoardText(info.oreData, 0, "물 : 반응 없음");
                         else if (str.Contains("염산 :"))
                             GameManager.I.Clear(info.oreData, 0, str + "\n" + "물 : 반응 없음");
                     }
-                    else if (react == 2)
+                    else if (reactType == 2)
                     {
                         if (str == "")
                             GameManager.I.EditBoardText(info.oreData, 0, "물 : 격렬한 반응");
@@ -67,6 +101,8 @@ public class H2ODropTest : MonoBehaviour
                             GameManager.I.Clear(info.oreData, 0, str + "\n" + "물 : 격렬한 반응");
                     }
                 }
+                kJHLiquidDrop.UnInit();
+                kJHLiquidDrop.Despawn();
             }
         }
     }
