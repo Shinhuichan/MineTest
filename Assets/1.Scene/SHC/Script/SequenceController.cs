@@ -1,7 +1,8 @@
+using System.Collections.Generic;
 using CustomInspector;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class SequenceController : MonoBehaviour
 {
@@ -12,7 +13,13 @@ public class SequenceController : MonoBehaviour
     [SerializeField][ReadOnly] int testCount = 0;
     bool alreadyTalk = false;
 
-    bool IsReady => GameManager.I != null && GameManager.I.progreses != null && GameManager.I.progreses.Count > 0;
+    [ReadOnly][SerializeField] XRGrabInteractable[] grabs;
+    void Awake()
+    {
+        grabs = FindObjectsOfType<XRGrabInteractable>();
+        foreach (var grab in grabs) { grab.enabled = false; }
+        SoundManager.I.PlayBGM("실험실 속 작은 세계");
+    }
     void LateUpdate()
     {
         if (!alreadyTalk)
@@ -35,6 +42,16 @@ public class SequenceController : MonoBehaviour
         TestEndCore();
     }
 
+    #region Talk
+    public void TalkEnd(Transform _)
+    { TalkEndCore(); }
+    private void TalkEndCore()
+    {
+        foreach (var grab in grabs) { grab.enabled = true; }
+    }
+    #endregion Talk
+
+    #region Test
     public void TestEnd(Transform _)               // UnityEvent(Dynamic Transform)용
     { TestEndCore(); }
 
@@ -57,4 +74,5 @@ public class SequenceController : MonoBehaviour
         }
         else { alreadyTalk = true; /* 더 이상 대화 시작 금지*/ }
     }
+    #endregion Test
 }

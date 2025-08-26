@@ -3052,7 +3052,7 @@ MonoBehaviour:
         destinationDialogueID: 47
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["isTalk"] == true
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -3288,8 +3288,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 28.048706}
-    canvasZoom: 0.8200003
+    canvasScrollPosition: {x: 66.132965, y: 116.32393}
+    canvasZoom: 0.7900003
   - id: 2
     fields:
     - title: Title
