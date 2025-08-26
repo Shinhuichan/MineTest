@@ -246,6 +246,8 @@ MonoBehaviour:
   - {fileID: 98048133}
   - {fileID: 1751907659}
   testCount: 0
+  pendingEnd: 0
+  grabs: []
 --- !u!1001 &88203230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -458,9 +460,45 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationEvents.runOnConversationEndEventsAtEndOfFrame
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationEvents.onConversationCancelled.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
       propertyPath: conversationEvents.onConversationEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 51736790}
+    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationEvents.onConversationCancelled.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationEvents.onConversationCancelled.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 51736790}
+    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationEvents.onConversationCancelled.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationEvents.onConversationCancelled.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TestEnd
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationEvents.onConversationCancelled.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SequenceController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationEvents.onConversationCancelled.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1306748110}
+    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationEvents.onConversationCancelled.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Transform, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3351089792221306338, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -493,6 +531,10 @@ PrefabInstance:
       propertyPath: conversationActor
       value: 
       objectReference: {fileID: 1604926782}
+    - target: {fileID: 4070408707165716604, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationConversant
+      value: 
+      objectReference: {fileID: 1306748110}
     - target: {fileID: 4475387403018718801, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -529,6 +571,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5560666915686626895, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
+      propertyPath: conversationEvents.onConversationEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 51736790}
     - target: {fileID: 5644511673150844648, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

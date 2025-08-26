@@ -13,6 +13,9 @@ public class SequenceController : MonoBehaviour
     [SerializeField][ReadOnly] int testCount = 0;
     bool alreadyTalk = false;
 
+    private enum EndAction { None, Talk, Test }
+    [SerializeField] EndAction pendingEnd = EndAction.None;
+
     [ReadOnly][SerializeField] XRGrabInteractable[] grabs;
     void Awake()
     {
@@ -26,20 +29,33 @@ public class SequenceController : MonoBehaviour
             CallPlayer(testCount);
     }
 
+    public void EndTalk()
+    {
+        pendingEnd = EndAction.Talk;
+        trigger.OnUse();
+    }
+
     public void CallPlayer(int experimentNumber)
     {
         if (!GameManager.I.IsCurrentTestClear(experimentNumber)) return;
         if (trigger != null)
         {
             trigger.OnUse();
+            pendingEnd = EndAction.Test;
             alreadyTalk = true;
             return;
         }
     }
-    public void OnConversationEnd(Transform actor)  // 대화 종료 브로드캐스트 직접 수신
+    
+    public void OnConversationEnd(Transform actor)
     {
-        Debug.Log($"[Dialogue] OnConversationEnd by {actor?.name}");
-        TestEndCore();
+        Debug.Log($"[Dialogue] end: {actor?.name}, pending={pendingEnd}");
+        switch (pendingEnd)
+        {
+            case EndAction.Talk: TalkEndCore(); break;
+            case EndAction.Test: TestEndCore(); break;
+        }
+        pendingEnd = EndAction.None;
     }
 
     #region Talk
