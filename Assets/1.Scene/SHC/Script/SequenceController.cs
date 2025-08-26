@@ -1,7 +1,8 @@
+using System.Collections.Generic;
 using CustomInspector;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class SequenceController : MonoBehaviour
 {
@@ -12,11 +13,26 @@ public class SequenceController : MonoBehaviour
     [SerializeField][ReadOnly] int testCount = 0;
     bool alreadyTalk = false;
 
-    bool IsReady => GameManager.I != null && GameManager.I.progreses != null && GameManager.I.progreses.Count > 0;
+    private enum EndAction { None, Talk, Test }
+    [SerializeField] EndAction pendingEnd = EndAction.None;
+
+    [ReadOnly][SerializeField] XRGrabInteractable[] grabs;
+    void Awake()
+    {
+        grabs = FindObjectsOfType<XRGrabInteractable>();
+        foreach (var grab in grabs) { grab.enabled = false; }
+        SoundManager.I.PlayBGM("실험실 속 작은 세계");
+    }
     void LateUpdate()
     {
         if (!alreadyTalk)
             CallPlayer(testCount);
+    }
+
+    public void EndTalk()
+    {
+        pendingEnd = EndAction.Talk;
+        trigger.OnUse();
     }
 
     public void CallPlayer(int experimentNumber)
@@ -25,16 +41,33 @@ public class SequenceController : MonoBehaviour
         if (trigger != null)
         {
             trigger.OnUse();
+            pendingEnd = EndAction.Test;
             alreadyTalk = true;
             return;
         }
     }
-    public void OnConversationEnd(Transform actor)  // 대화 종료 브로드캐스트 직접 수신
+    
+    public void OnConversationEnd(Transform actor)
     {
-        Debug.Log($"[Dialogue] OnConversationEnd by {actor?.name}");
-        TestEndCore();
+        Debug.Log($"[Dialogue] end: {actor?.name}, pending={pendingEnd}");
+        switch (pendingEnd)
+        {
+            case EndAction.Talk: TalkEndCore(); break;
+            case EndAction.Test: TestEndCore(); break;
+        }
+        pendingEnd = EndAction.None;
     }
 
+    #region Talk
+    public void TalkEnd(Transform _)
+    { TalkEndCore(); }
+    private void TalkEndCore()
+    {
+        foreach (var grab in grabs) { grab.enabled = true; }
+    }
+    #endregion Talk
+
+    #region Test
     public void TestEnd(Transform _)               // UnityEvent(Dynamic Transform)용
     { TestEndCore(); }
 
@@ -57,4 +90,5 @@ public class SequenceController : MonoBehaviour
         }
         else { alreadyTalk = true; /* 더 이상 대화 시작 금지*/ }
     }
+    #endregion Test
 }

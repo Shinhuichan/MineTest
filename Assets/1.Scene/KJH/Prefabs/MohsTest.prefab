@@ -110,7 +110,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.008
+    widthMultiplier: 0.0092
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -356,6 +356,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   count: 1
+  controllers: []
 --- !u!1 &1110985983893488163
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,7 +845,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.008
+    widthMultiplier: 0.0092
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -1090,6 +1091,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   count: 1
+  controllers: []
 --- !u!1 &1978881081672067387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,7 +1202,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.008
+    widthMultiplier: 0.0092
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -1446,6 +1448,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   count: 1
+  controllers: []
 --- !u!1 &2692260748677344466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,6 +1573,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   count: 1
+  controllers: []
 --- !u!1 &2765720257388849351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,7 +1873,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.008
+    widthMultiplier: 0.0092
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -2115,6 +2119,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   count: 1
+  controllers: []
 --- !u!1 &3638596504204605903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2370,7 +2375,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.008
+    widthMultiplier: 0.0092
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -2616,6 +2621,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   count: 1
+  controllers: []
 --- !u!1 &5181560640290867393
 GameObject:
   m_ObjectHideFlags: 0
@@ -3369,7 +3375,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.008
+    widthMultiplier: 0.0092
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -3615,6 +3621,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   count: 1
+  controllers: []
 --- !u!1 &8478511394169864961
 GameObject:
   m_ObjectHideFlags: 0
@@ -3778,7 +3785,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.008
+    widthMultiplier: 0.0092
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -4024,6 +4031,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   count: 1
+  controllers: []
 --- !u!1 &8712142605729304392
 GameObject:
   m_ObjectHideFlags: 0
@@ -4306,7 +4314,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.39500007
+      value: 0.394
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4314,7 +4322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.03499998
+      value: -0.243
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4322,15 +4330,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 047c54d38785351409defbaa5dd2daa0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

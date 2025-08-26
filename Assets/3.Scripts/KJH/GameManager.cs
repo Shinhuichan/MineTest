@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
-
+using Unity.XR.CoreUtils;
+using UnityEngine.InputSystem.XR;
 [System.Serializable]
 public struct LaboratoryAccident
 {
@@ -13,12 +15,12 @@ public struct LaboratoryAccident
 public class GameManager : SingletonBehaviour<GameManager>
 {
     protected override bool IsDontDestroy() => true;
-    [SerializeField] List<LaboratoryAccident> accidents = new List<LaboratoryAccident>();
+    public List<LaboratoryAccident> accidents = new List<LaboratoryAccident>();
     public List<Progress> progreses;
-    ActionBasedController[] controllers;
+    //ActionBasedController[] controllers;
     [ReadOnlyInspector][SerializeField] ResultUI resultUI;
     [System.Serializable]
-    public class Progress       
+    public class Progress
     {
         public string Name;
         public Transform transform;
@@ -28,8 +30,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        controllers = FindObjectsByType<ActionBasedController>(FindObjectsSortMode.InstanceID);
+        //controllers = FindObjectsByType<ActionBasedController>(FindObjectsSortMode.InstanceID);
         resultUI = FindAnyObjectByType<ResultUI>();
+        xROrigin = FindAnyObjectByType<XROrigin>();
     }
     void Start()
     {
@@ -38,7 +41,10 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void Init()
     {
         accidents.Clear();
-        ObjectInfo[] temp = FindObjectsByType<ObjectInfo>(FindObjectsSortMode.InstanceID);
+        ObjectInfo[] temp = FindObjectsByType<ObjectInfo>(FindObjectsSortMode.None);
+        List<ObjectInfo> list = temp.ToList();
+        list.Sort((a, b) => int.Parse((a.transform.name).Split("Ore")[1]).CompareTo(int.Parse((b.transform.name).Split("Ore")[1])));
+        temp = list.ToArray();
         progreses.Clear();
         for (int i = 0; i < temp.Length; i++)
         {
@@ -48,6 +54,7 @@ public class GameManager : SingletonBehaviour<GameManager>
             pr.transform = temp[i].transform;
             pr.oreData = temp[i].oreData;
             progreses.Add(pr);
+            //Debug.Log(pr.transform.name);
         }
     }
     public void Clear(OreData oreData, int experimentNumber, string boardText)
@@ -70,15 +77,15 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
         // 실험 완료
         progreses[find].isClear[experimentNumber] = true;
-        // 햅틱 반응
-        if (controllers != null)
-        {
-            foreach (var ctrl in controllers)
-            {
-                ctrl.SendHapticImpulse(0.5f, 0.2f);
-            }
-        }
-            
+        // // 햅틱 반응
+        // if (controllers != null)
+        // {
+        //     foreach (var ctrl in controllers)
+        //     {
+        //         ctrl.SendHapticImpulse(0.5f, 0.2f);
+        //     }
+        // }
+
         Debug.Log($"광물 {oreData.type.ToString()}로 실험{experimentNumber}을 완료했습니다.");
         if (resultUI != null)
         {
@@ -104,22 +111,9 @@ public class GameManager : SingletonBehaviour<GameManager>
             if (pr.isClear[experimentNumber]) clear++;
 
         // 모든 광석이 실험이 됐는지 확인.
-        // Debug.Log($"실제로 한 실험 : {clear} == 해야되는 실험 : {total}");
+        //Debug.Log($"실제로 한 실험 : {clear} == 해야되는 실험 : {total}");
         return clear == total;
     }
-
-    // public void ShowText(Vector3 pos, string str)
-    // {
-
-    // }
-    // public void FadeIn(float time)
-    // {
-
-    // }
-    // public void FadeOut(float time)
-    // {
-
-    // }
     public void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
@@ -128,4 +122,37 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         SceneManager.LoadScene(sceneIndex);
     }
+
+    XROrigin xROrigin;
+    public void StopPlayer()
+    {
+        Transform loco = xROrigin.transform.Find("Locomotion System");
+        loco.Find("Turn").gameObject.SetActive(false);
+        loco.Find("Move").gameObject.SetActive(false);
+        xROrigin.transform.Find("Camera Offset/Left Controller").gameObject.SetActive(false);
+        xROrigin.transform.Find("Camera Offset/Left Controller Stabilized").gameObject.SetActive(false);
+        xROrigin.transform.Find("Camera Offset/Right Controller").gameObject.SetActive(false);
+        xROrigin.transform.Find("Camera Offset/Right Controller Stabilized").gameObject.SetActive(false);
+        TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
+        tpd.enabled = false;
+    }
+    public void ResumePlayer()
+    {
+        Transform loco = xROrigin.transform.Find("Locomotion System");
+        loco.Find("Turn").gameObject.SetActive(true);
+        loco.Find("Move").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Left Controller").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Left Controller Stabilized").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Right Controller").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Right Controller Stabilized").gameObject.SetActive(true);
+        TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
+        tpd.enabled = true;
+    }
+    public void LookTarget()
+    {
+        
+    }
+
+
+
 }

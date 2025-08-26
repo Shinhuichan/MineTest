@@ -431,7 +431,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(SitToStand); Audio(NPCVoice1)'
+          AnimatorPlay(SitToStand)'
         type: 0
         typeString: 
       conversationID: 1
@@ -501,7 +501,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice3)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -559,7 +559,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk1); Audio(NPCVoice2)'
+          AnimatorPlay(Talk1)'
         type: 0
         typeString: 
       conversationID: 1
@@ -617,7 +617,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk3); Audio(NPCVoice4)'
+          AnimatorPlay(Talk3)'
         type: 0
         typeString: 
       conversationID: 1
@@ -675,7 +675,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk2); Audio(NPCVoice2)'
+          AnimatorPlay(Talk2)'
         type: 0
         typeString: 
       conversationID: 1
@@ -732,7 +732,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk1); Audio(NPCVoice3)'
+          AnimatorPlay(Talk1)'
         type: 0
         typeString: 
       conversationID: 1
@@ -790,7 +790,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk4); Audio(NPCVoice1)'
+          AnimatorPlay(Talk4)'
         type: 0
         typeString: 
       conversationID: 1
@@ -962,7 +962,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice4)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1021,7 +1021,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice4)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1079,7 +1079,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk4); Audio(NPCVoice1)'
+          AnimatorPlay(Talk4)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1104,7 +1104,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 769.2657
-        y: 377.67273
+        y: 379.10132
         width: 160
         height: 30
     - id: 13
@@ -1138,7 +1138,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk2); Audio(NPCVoice2)'
+          AnimatorPlay(Talk2)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1197,7 +1197,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk3); Audio(NPCVoice1)'
+          AnimatorPlay(Talk3)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1257,7 +1257,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice3)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1317,7 +1317,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk1); Audio(NPCVoice2)'
+          AnimatorPlay(Talk1)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1377,7 +1377,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice4)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1491,7 +1491,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice2)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1549,7 +1549,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(StandToSit); Audio(NPCVoice1)'
+          AnimatorPlay(StandToSit)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1561,10 +1561,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: CurrentQuestState("Electro Contuct") == "unassigned"
-      userScript: 'Variable["isTalk"] = true;
-
-        SetQuestState("Electro Contuct",
-        "active")'
+      userScript: Variable["isTalk"] = true;
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1658,7 +1655,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Idle); Audio(NPCVoice1)'
+          AnimatorPlay(Idle)'
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 1
@@ -1702,6 +1699,12 @@ MonoBehaviour:
       - originConversationID: 1
         originDialogueID: 23
         destinationConversationID: 1
+        destinationDialogueID: 51
+        isConnector: 0
+        priority: 2
+      - originConversationID: 1
+        originDialogueID: 23
+        destinationConversationID: 1
         destinationDialogueID: 29
         isConnector: 0
         priority: 2
@@ -1709,12 +1712,6 @@ MonoBehaviour:
         originDialogueID: 23
         destinationConversationID: 1
         destinationDialogueID: 46
-        isConnector: 0
-        priority: 2
-      - originConversationID: 1
-        originDialogueID: 23
-        destinationConversationID: 1
-        destinationDialogueID: 51
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -2089,7 +2086,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice4)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2413,8 +2410,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 504.72552
-        y: 664.2897
+        x: 505.99127
+        y: 668.08716
         width: 160
         height: 30
     - id: 36
@@ -2448,7 +2445,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice1)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2508,7 +2505,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk3); Audio(NPCVoice2)'
+          AnimatorPlay(Talk3)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2567,7 +2564,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Angry); Audio(NPCVoice4)'
+          AnimatorPlay(Angry)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2626,7 +2623,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk2); Audio(NPCVoice2)'
+          AnimatorPlay(Talk2)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2685,7 +2682,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Laugh); Audio(NPCVoice3)'
+          AnimatorPlay(Laugh)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2744,7 +2741,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice2)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2803,7 +2800,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice4)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2862,7 +2859,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice3)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2921,7 +2918,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice2)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2980,7 +2977,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice3)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -3052,7 +3049,7 @@ MonoBehaviour:
         destinationDialogueID: 47
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["isTalk"] == true
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -3093,7 +3090,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(StandToSit); Audio(NPCVoice1)'
+          AnimatorPlay(StandToSit)'
         type: 0
         typeString: 
       conversationID: 1
@@ -3145,9 +3142,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: '{{default}};
-
-          AnimatorPlay(Talk2); Audio(NPCVoice3)'
+        value: 
         type: 0
         typeString: 
       conversationID: 1
@@ -3261,9 +3256,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: '{{default}};
-
-          AnimatorPlay(Talk4); Audio(NPCVoice3)'
+        value: 
         type: 0
         typeString: 
       conversationID: 1
@@ -3287,13 +3280,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 131.6968
+        x: 130.26823
         y: 624.1218
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 0.7000004
+    canvasScrollPosition: {x: 0, y: 55.116714}
+    canvasZoom: 0.8200003
   - id: 2
     fields:
     - title: Title
