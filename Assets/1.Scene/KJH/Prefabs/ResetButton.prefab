@@ -758,8 +758,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uBAA8\uB4E0 \uBB3C\uAC74 \uC704\uCE58 \uCD08\uAE30\uD654  \u2192"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7b842a69ff1f2664dab32477e5c3040f, type: 2}
-  m_sharedMaterial: {fileID: 2077733235751138414, guid: 7b842a69ff1f2664dab32477e5c3040f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: af31dec748b798b4a89a525a9e7ca363, type: 2}
+  m_sharedMaterial: {fileID: 5191416508969624097, guid: af31dec748b798b4a89a525a9e7ca363, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
