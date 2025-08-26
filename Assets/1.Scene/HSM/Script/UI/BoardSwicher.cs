@@ -19,6 +19,8 @@ public class BoardSwicher : MonoBehaviour
     [Header("Buttons")]
     public Button mineral_View_Button;
     public Button mineral_Table_Button;
+    public Button prev;
+    public Button next;
 
     [Header("UIs")]
     public GameObject mineral_View;
@@ -26,6 +28,7 @@ public class BoardSwicher : MonoBehaviour
 
     private bool isBInFront = false;
     private bool isViewTrue = true;
+
     private void Start()
     {
         // 시작할때의 위치를 기반으로 앞 ,뒤 위치를 정의
@@ -41,13 +44,20 @@ public class BoardSwicher : MonoBehaviour
 
         mineral_View.SetActive(isViewTrue);
         mineral_Table.SetActive(!isViewTrue);
+
+        mineral_View_Button.interactable = !isViewTrue;
+        mineral_Table_Button.interactable = isViewTrue;
     }
 
     public void ViewChange()
     {
+        isViewTrue = !isViewTrue;
+
         mineral_View.SetActive(isViewTrue);
         mineral_Table.SetActive(!isViewTrue);
 
+        mineral_View_Button.interactable = !isViewTrue;
+        mineral_Table_Button.interactable = isViewTrue;
         OnSwapButtonClick();
     }
 
