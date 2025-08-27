@@ -19,7 +19,7 @@ public class SoundManager : SingletonBehaviour<SoundManager>
         transform.GetChild(0).TryGetComponent(out ausBGM0);
         transform.GetChild(1).TryGetComponent(out ausBGM1);
     }
-    public void PlayBGM(string Name, float crossFadeTime = 0f)
+    public void PlayBGM(string Name, float volume = 1f, float crossFadeTime = 0f)
     {
         AudioClip clip;
         if(Name != "")
@@ -38,6 +38,8 @@ public class SoundManager : SingletonBehaviour<SoundManager>
             clip = bgmList[find];
         }
         else clip = null;
+        
+        ausBGM0.volume = volumeBGM * volume;
         if (crossFadeTime == 0f)
         {
             ausBGM0.clip = clip;

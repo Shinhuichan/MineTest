@@ -123,6 +123,11 @@ public class MohsOre : MonoBehaviour
                                             if (Mathf.Abs(temp - temp2) == 2)
                                             {
                                                 GameManager.I.Clear(info.oreData, 1, info.oreData.hardness.ToString());
+                                                GlobalUI.I.Narration($"경도가 {temp}보다 크고 {str}보다 작으니까.\n이 광물의 경도는 {info.oreData.hardness}쯤 될것같다.", 3.7f);
+                                            }
+                                            else
+                                            {
+                                                GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면,\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 3.7f);
                                             }
                                         }
                                         else
@@ -130,6 +135,11 @@ public class MohsOre : MonoBehaviour
                                             if (Mathf.Abs(temp - temp2) == 1)
                                             {
                                                 GameManager.I.Clear(info.oreData, 1, info.oreData.hardness.ToString());
+                                                GlobalUI.I.Narration($"경도가 {temp}보다 크고 {str}보다 작으니까.\n이 광물의 경도는 {info.oreData.hardness}쯤 될것같다.", 3.7f);
+                                            }
+                                            else
+                                            {
+                                                GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면,\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 3.7f);
                                             }
                                         }
                                     }
@@ -189,14 +199,25 @@ public class MohsOre : MonoBehaviour
                                         {
                                             if (Mathf.Abs(temp - temp2) == 2)
                                             {
+                                                GlobalUI.I.Narration($"경도가 {str}보다 크고 {temp}보다 작으니까.\n이 광물의 경도는 {info.oreData.hardness}쯤 될것같다.", 3.7f);
                                                 GameManager.I.Clear(info.oreData, 1, info.oreData.hardness.ToString());
+                                            }
+                                            else
+                                            {
+                                                GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면,\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 3.7f);
                                             }
                                         }
                                         else
                                         {
                                             if (Mathf.Abs(temp - temp2) == 1)
                                             {
+                                                GlobalUI.I.Narration($"경도가 {str}보다 크고 {temp}보다 작으니까.\n이 광물의 경도는 {info.oreData.hardness}쯤 될것같다.", 3.7f);
+
                                                 GameManager.I.Clear(info.oreData, 1, info.oreData.hardness.ToString());
+                                            }
+                                            else
+                                            {
+                                                GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면,\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 3.7f);
                                             }
                                         }
                                     }
@@ -218,7 +239,7 @@ public class MohsOre : MonoBehaviour
                                         {
                                             GlobalUI.I.Narration("경도가 거의 같아서 서로 잘 안긁히는 것 같다.\n다른 광물로 해보자.", 6f);
                                             GlobalUI.I.isShowMohsSameHardness = true;
-                                        }   
+                                        }
                                     }
 
                                 }

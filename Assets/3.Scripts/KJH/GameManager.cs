@@ -1,11 +1,12 @@
 using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 using Unity.XR.CoreUtils;
-using UnityEngine.InputSystem.XR;
 [System.Serializable]
 public struct LaboratoryAccident
 {
@@ -16,7 +17,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 {
     protected override bool IsDontDestroy() => true;
     public List<LaboratoryAccident> accidents = new List<LaboratoryAccident>();
-    public List<Progress> progreses;
+    public List<Progress> progreses = new List<Progress>();
     //ActionBasedController[] controllers;
     [ReadOnlyInspector][SerializeField] ResultUI resultUI;
     [System.Serializable]
@@ -27,19 +28,15 @@ public class GameManager : SingletonBehaviour<GameManager>
         public OreData oreData;
         public bool[] isClear = new bool[4];
     }
-    protected override void Awake()
-    {
-        base.Awake();
-        //controllers = FindObjectsByType<ActionBasedController>(FindObjectsSortMode.InstanceID);
-        resultUI = FindAnyObjectByType<ResultUI>();
-        xROrigin = FindAnyObjectByType<XROrigin>();
-    }
     void Start()
     {
         Init();
     }
     public void Init()
     {
+        resultUI = FindAnyObjectByType<ResultUI>();
+        xROrigin = FindAnyObjectByType<XROrigin>();
+        camera = Camera.main;
         accidents.Clear();
         ObjectInfo[] temp = FindObjectsByType<ObjectInfo>(FindObjectsSortMode.None);
         List<ObjectInfo> list = temp.ToList();
@@ -59,6 +56,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public void Clear(OreData oreData, int experimentNumber, string boardText)
     {
+        if (progreses.Count == 0) return;
         if (experimentNumber < 0 || experimentNumber > 3)
         {
             Debug.Log($"experimentNumber는 0(화학반응) , 1(경도) , 2(현미경) , 3(전기전도) 들만 가능합니다. ( {experimentNumber} ) ");
@@ -91,6 +89,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             resultUI.ShowText(oreData, experimentNumber, boardText);
         }
+
     }
     public void EditBoardText(OreData oreData, int experimentNumber, string boardText)
     {
@@ -111,18 +110,39 @@ public class GameManager : SingletonBehaviour<GameManager>
             if (pr.isClear[experimentNumber]) clear++;
 
         // 모든 광석이 실험이 됐는지 확인.
-        //Debug.Log($"실제로 한 실험 : {clear} == 해야되는 실험 : {total}");
+        Debug.Log($"실제로 한 실험 : {clear} == 해야되는 실험 : {total}");
         return clear == total;
     }
     public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        StartCoroutine(nameof(ChangeScene_co1), sceneName);
+    }
+    IEnumerator ChangeScene_co1(string sceneName)
+    {
+        AsyncOperation ao = SceneManager.LoadSceneAsync(sceneName);
+        while (true)
+        {
+            yield return null;
+            if (ao.isDone) break;
+        }
+        yield return new WaitForSeconds(0.5f);
+        Init();
     }
     public void ChangeScene(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneIndex);
+        StartCoroutine(nameof(ChangeScene_co2), sceneIndex);
     }
-
+    IEnumerator ChangeScene_co2(int sceneIndex)
+    {
+        AsyncOperation ao = SceneManager.LoadSceneAsync(sceneIndex);
+        while (true)
+        {
+            yield return null;
+            if (ao.isDone) break;
+        }
+        yield return new WaitForSeconds(0.5f);
+        Init();
+    }
     XROrigin xROrigin;
     public void StopPlayer()
     {
@@ -136,6 +156,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
         tpd.enabled = false;
     }
+    public void ResumeHand()
+    {
+        xROrigin.transform.Find("Camera Offset/Left Controller").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Left Controller Stabilized").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Right Controller").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Right Controller Stabilized").gameObject.SetActive(true);
+    }
     public void ResumePlayer()
     {
         Transform loco = xROrigin.transform.Find("Locomotion System");
@@ -148,9 +175,22 @@ public class GameManager : SingletonBehaviour<GameManager>
         TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
         tpd.enabled = true;
     }
-    public void LookTarget()
+    Camera camera;
+    public void LookTarget(Vector3 pos)
     {
-        
+        StopCoroutine(nameof(LookTarget_co));
+        StartCoroutine(nameof(LookTarget_co), pos);
+    }
+    IEnumerator LookTarget_co(Vector3 pos)
+    {
+        Vector3 look = pos - camera.transform.position;
+        float time = Time.time;
+        Vector3 forward = camera.transform.forward;
+        while (Time.time - time < 1.2f)
+        {
+            yield return null;
+            camera.transform.forward = Vector3.Lerp(forward, look, (Time.time - time)/1.2f);
+        }
     }
 
 

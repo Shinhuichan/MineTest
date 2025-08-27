@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections;
 using CustomInspector;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
@@ -25,12 +26,13 @@ public class SequenceController : MonoBehaviour
     {
         grabs = FindObjectsOfType<XRGrabInteractable>();
         foreach (var grab in grabs) { grab.enabled = false; }
-        SoundManager.I.PlayBGM("실험실 속 작은 세계_Fix");
+        SoundManager.I.PlayBGM("실험실 속 작은 세계_Fix", 0.6f);
     }
     void Start()
     {
         StartCoroutine(CheckTestCount());
     }
+
 
     IEnumerator CheckTestCount()
     {
@@ -58,7 +60,6 @@ public class SequenceController : MonoBehaviour
         }
     }
     #endregion 호출 조건
-    
     public void OnConversationEnd(Transform actor)
     {
         // Debug.Log($"[Dialogue] end: {actor?.name}, pending={pendingEnd}");

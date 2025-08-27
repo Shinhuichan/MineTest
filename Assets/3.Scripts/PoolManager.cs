@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 public class PoolManager : SingletonBehaviour<PoolManager>
 {
-    protected override bool IsDontDestroy() => true;
+    protected override bool IsDontDestroy() => false;
     Dictionary<PoolBehaviour, ObjectPool<PoolBehaviour>> prefabs;
     Dictionary<PoolBehaviour, ObjectPool<PoolBehaviour>> instances;
     protected override void Awake()
