@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections;
 using CustomInspector;
@@ -12,6 +13,9 @@ public class SequenceController : MonoBehaviour
     [SerializeField] Transform conversant;           // 플레이어(카메라 등)
     [SerializeField] GameObject[] testObjects;
     [SerializeField][ReadOnly] int testCount = 0;
+
+    [Header("Update Test")]
+    [SerializeField] float testUpdateCount = 2f;
     bool alreadyTalk = false;
 
     private enum EndAction { None, Talk, Test }
@@ -22,24 +26,23 @@ public class SequenceController : MonoBehaviour
     {
         grabs = FindObjectsOfType<XRGrabInteractable>();
         foreach (var grab in grabs) { grab.enabled = false; }
-        SoundManager.I.PlayBGM("실험실 속 작은 세계");
+        // SoundManager.I.PlayBGM("실험실 속 작은 세계");
     }
     void Start()
     {
-        StartCoroutine("CheckTestCount");
+        StartCoroutine(CheckTestCount());
     }
-
 
 
     IEnumerator CheckTestCount()
     {
         while (true)
         {
-            yield return new WaitForSeconds(2f);
-            if (!alreadyTalk)
-                CallPlayer(testCount);
+            yield return new WaitForSeconds(testUpdateCount);
+            if (!alreadyTalk) { CallPlayer(testCount); }
         }
     }
+    #region 호출 조건
     public void EndTalk()
     {
         pendingEnd = EndAction.Talk;
@@ -57,10 +60,10 @@ public class SequenceController : MonoBehaviour
             return;
         }
     }
-
+    #endregion 호출 조건
     public void OnConversationEnd(Transform actor)
     {
-        Debug.Log($"[Dialogue] end: {actor?.name}, pending={pendingEnd}");
+        // Debug.Log($"[Dialogue] end: {actor?.name}, pending={pendingEnd}");
         switch (pendingEnd)
         {
             case EndAction.Talk: TalkEndCore(); break;
@@ -70,8 +73,6 @@ public class SequenceController : MonoBehaviour
     }
 
     #region Talk
-    public void TalkEnd(Transform _)
-    { TalkEndCore(); }
     private void TalkEndCore()
     {
         foreach (var grab in grabs) { grab.enabled = true; }
@@ -79,11 +80,6 @@ public class SequenceController : MonoBehaviour
     #endregion Talk
 
     #region Test
-    public void TestEnd(Transform _)               // UnityEvent(Dynamic Transform)용
-    { TestEndCore(); }
-
-    public void TestEnd()                           // 매뉴얼 호출용(인자 없는 버튼 등)
-    { TestEndCore(); }
 
     private void TestEndCore()
     {
