@@ -44,7 +44,6 @@ public class SequenceController : MonoBehaviour
     public void EndTalk()
     {
         pendingEnd = EndAction.Talk;
-        trigger.OnUse();
     }
 
     public void CallPlayer(int experimentNumber)
@@ -65,8 +64,8 @@ public class SequenceController : MonoBehaviour
         // Debug.Log($"[Dialogue] end: {actor?.name}, pending={pendingEnd}");
         switch (pendingEnd)
         {
-            case EndAction.Talk: TalkEndCore(); break;
-            case EndAction.Test: TestEndCore(); break;
+            case EndAction.Talk: TalkEndCore(); Debug.Log("이야기 끝");  break;
+            case EndAction.Test: TestEndCore(); Debug.Log("실험 끝"); break;
         }
         pendingEnd = EndAction.None;
     }
