@@ -9,8 +9,8 @@ public class VolumeSettingController : MonoBehaviour
     void OnEnable()
     {
         // 초기값(우선순위: SoundManager → PlayerPrefs)
-        float bgm = PlayerPrefs.GetFloat("volumeBGM", 1f);
-        float sfx = PlayerPrefs.GetFloat("volumeSFX", 1f);
+        float bgm = PlayerPrefs.GetFloat("volumeBGM");
+        float sfx = PlayerPrefs.GetFloat("volumeSFX");
 
         // 슬라이더 이벤트 연결 전에 값 세팅(연쇄 호출 방지)
         bgmSlider.SetValueWithoutNotify(Mathf.Clamp01(bgm));

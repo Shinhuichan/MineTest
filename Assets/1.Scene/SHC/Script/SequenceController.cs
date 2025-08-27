@@ -1,6 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections;
+using System.Linq;
 using CustomInspector;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
@@ -39,7 +38,8 @@ public class SequenceController : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(testUpdateCount);
-            if (!alreadyTalk) { CallPlayer(testCount); }
+            if (GameManager.I.progreses.Count() > 0 && !alreadyTalk)
+                { CallPlayer(testCount); }
         }
     }
     #region 호출 조건
@@ -62,7 +62,6 @@ public class SequenceController : MonoBehaviour
     #endregion 호출 조건
     public void OnConversationEnd(Transform actor)
     {
-        // Debug.Log($"[Dialogue] end: {actor?.name}, pending={pendingEnd}");
         switch (pendingEnd)
         {
             case EndAction.Talk: TalkEndCore(); Debug.Log("이야기 끝");  break;
