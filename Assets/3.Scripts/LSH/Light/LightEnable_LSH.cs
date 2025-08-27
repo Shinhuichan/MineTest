@@ -68,8 +68,8 @@ public class LightEnable_LSH : MonoBehaviour
         var go = (args.interactableObject as Component)?.gameObject;
         if (go == null) return;
 
-        var obj = go.GetComponent<OreData>();
-        Data = obj != null ? obj : null;
+        var obj = go.GetComponent<ObjectInfo>();
+        Data = obj != null ? obj.oreData : null;
 
         // 전도성 아이템이면 전원 On
         if (Data != null && Data.electroConduct)
