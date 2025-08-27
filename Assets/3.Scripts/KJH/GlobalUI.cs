@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEditor;
 public class GlobalUI : SingletonBehaviour<GlobalUI>
 {
     protected override bool IsDontDestroy() => false;
@@ -13,8 +14,12 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
         fade = pivot.Find("Fade").gameObject;
         fadeRdr = fade.GetComponent<MeshRenderer>();
         fadeMr = fadeRdr.sharedMaterial;
+        redScreen = pivot.Find("RedScreen").gameObject;
+        redScreenRdr = redScreen.GetComponent<MeshRenderer>();
+        redScreenMr = redScreenRdr.sharedMaterial;
         narration = pivot.Find("Narration");
         narrationText = pivot.Find("Narration/Text").GetComponent<Text>();
+        gameOverPop = transform.Find("GameOver").gameObject;
     }
     void OnEnable()
     {
@@ -35,6 +40,10 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     }
     [HideInInspector] public bool isShowMohsSameHardness;
     [HideInInspector] public bool isShowExplosionText;
+    [HideInInspector] public bool isShowReactWaterNoReact;
+    [HideInInspector] public bool isShowReactHClNoReact;
+    [HideInInspector] public bool isShowMohsLower;
+    [HideInInspector] public bool isShowMohsUpper;
     #region Fade
     GameObject fade;
     MeshRenderer fadeRdr;
@@ -81,6 +90,7 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     Transform narration;
     Text narrationText;
     Tween narrationTween;
+    [HideInInspector] public SFX narrationSFX;
     public void Narration(string str, float duration)
     {
         narrationText.text = str;
@@ -99,6 +109,10 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     }
     #endregion
     #region Game Over
+    GameObject redScreen;
+    GameObject gameOverPop;
+    MeshRenderer redScreenRdr;
+    Material redScreenMr;
     public IEnumerator SmallFire(Vector3 pos)
     {
         yield return new WaitForSeconds(3f);
@@ -121,13 +135,46 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
             Narration("어..? 어? 너무 많이 부었나..", 4f);
             isShowExplosionText = true;
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         GameManager.I.StopPlayer();
-        yield return new WaitForSeconds(3f);
+        GameManager.I.LookTarget(pos);
+        yield return new WaitForSeconds(4f);
         ParticleManager.I.PlayParticle("Explosion", pos, Quaternion.identity, null);
+        var pb = ParticleManager.I.PlayParticle("Explosion", pos, Quaternion.identity, null);
+        pb.transform.localScale = 0.2f * Vector3.one;
         SoundManager.I.PlaySFX("Explosion", pos, null, 0.4f, 1.2f);
-        yield return new WaitForSeconds(1.5f);
-
+        yield return new WaitForSeconds(0.5f);
+        ShowRedScreen();
+        yield return new WaitForSeconds(1f);
+        gameOverPop.SetActive(true);
+        gameOverPop.transform.position = pos;
+        Transform child = gameOverPop.transform.GetChild(0);
+        Vector3 scale = child.localScale;
+        child.localScale = 0.5f * scale.x * Vector3.one;
+        child.DOScale(1f * scale.x, 1.2f).SetEase(Ease.OutBounce);
+        GameManager.I.ResumeHand();
+    }
+    public void ShowRedScreen()
+    {
+        redScreen.gameObject.SetActive(true);
+        redScreenMr.SetColor("_Color", new Color(1f, 0f, 0f, 0f));
+        redScreenMr.DOColor(new Color(1f, 0f, 0f, 0.2f), "_Color", 2f).SetEase(Ease.OutQuad).OnComplete(() =>
+        {
+            redScreenMr.SetColor("_Color", new Color(1f, 0f, 0f, 0f));
+            redScreen.gameObject.SetActive(false);
+        });
+    }
+    public void Restart()
+    {
+        GameManager.I.ChangeScene(0);
+    }
+    public void GameQuit()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
     }
     #endregion
 

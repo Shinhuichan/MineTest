@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using CustomInspector;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
@@ -23,12 +24,22 @@ public class SequenceController : MonoBehaviour
         foreach (var grab in grabs) { grab.enabled = false; }
         SoundManager.I.PlayBGM("실험실 속 작은 세계");
     }
-    void LateUpdate()
+    void Start()
     {
-        if (!alreadyTalk)
-            CallPlayer(testCount);
+        StartCoroutine("CheckTestCount");
     }
 
+
+
+    IEnumerator CheckTestCount()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2f);
+            if (!alreadyTalk)
+                CallPlayer(testCount);
+        }
+    }
     public void EndTalk()
     {
         pendingEnd = EndAction.Talk;
@@ -46,7 +57,7 @@ public class SequenceController : MonoBehaviour
             return;
         }
     }
-    
+
     public void OnConversationEnd(Transform actor)
     {
         Debug.Log($"[Dialogue] end: {actor?.name}, pending={pendingEnd}");

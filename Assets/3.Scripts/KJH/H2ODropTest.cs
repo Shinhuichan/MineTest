@@ -85,6 +85,14 @@ public class H2ODropTest : MonoBehaviour
                             GameManager.I.EditBoardText(info.oreData, 0, "물 : 반응 없음");
                         else if (str.Contains("염산 :"))
                             GameManager.I.Clear(info.oreData, 0, str + "\n" + "물 : 반응 없음");
+
+                        if (!GlobalUI.I.isShowReactWaterNoReact)
+                        {
+                            GlobalUI.I.isShowReactWaterNoReact = true;
+                            GlobalUI.I.Narration("이 광물은 물과 반응하지 않는 것 같다.", 3.7f);
+                        }
+
+
                     }
                     else if (reactType == 1)
                     {
@@ -92,6 +100,13 @@ public class H2ODropTest : MonoBehaviour
                             GameManager.I.EditBoardText(info.oreData, 0, "물 : 반응 없음");
                         else if (str.Contains("염산 :"))
                             GameManager.I.Clear(info.oreData, 0, str + "\n" + "물 : 반응 없음");
+
+                        if (!GlobalUI.I.isShowReactWaterNoReact)
+                        {
+                            GlobalUI.I.isShowReactWaterNoReact = true;
+                            GlobalUI.I.Narration("이 광물은 물과 반응하지 않는 것 같다.", 3.7f);
+                        }
+
                     }
                     else if (reactType == 2)
                     {
@@ -99,6 +114,7 @@ public class H2ODropTest : MonoBehaviour
                             GameManager.I.EditBoardText(info.oreData, 0, "물 : 격렬한 반응");
                         else if (str.Contains("염산 :"))
                             GameManager.I.Clear(info.oreData, 0, str + "\n" + "물 : 격렬한 반응");
+
                     }
                 }
                 kJHLiquidDrop.UnInit();
@@ -128,7 +144,7 @@ public class H2ODropTest : MonoBehaviour
         while (true)
         {
             yield return yi;
-            if (Time.time - time < 20f) continue;
+            if (Time.time - time < 12f) continue;
             if (isTrigger) continue;
             kJHLiquidDrop.UnInit();
             kJHLiquidDrop.Despawn();

@@ -1,11 +1,12 @@
 using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 using Unity.XR.CoreUtils;
-using UnityEngine.InputSystem.XR;
 [System.Serializable]
 public struct LaboratoryAccident
 {
@@ -14,7 +15,7 @@ public struct LaboratoryAccident
 }
 public class GameManager : SingletonBehaviour<GameManager>
 {
-    protected override bool IsDontDestroy() => true;
+    protected override bool IsDontDestroy() => false;
     public List<LaboratoryAccident> accidents = new List<LaboratoryAccident>();
     public List<Progress> progreses;
     //ActionBasedController[] controllers;
@@ -36,6 +37,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     void Start()
     {
+        camera = Camera.main;
         Init();
     }
     public void Init()
@@ -91,6 +93,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             resultUI.ShowText(oreData, experimentNumber, boardText);
         }
+
     }
     public void EditBoardText(OreData oreData, int experimentNumber, string boardText)
     {
@@ -111,7 +114,7 @@ public class GameManager : SingletonBehaviour<GameManager>
             if (pr.isClear[experimentNumber]) clear++;
 
         // 모든 광석이 실험이 됐는지 확인.
-        //Debug.Log($"실제로 한 실험 : {clear} == 해야되는 실험 : {total}");
+        Debug.Log($"실제로 한 실험 : {clear} == 해야되는 실험 : {total}");
         return clear == total;
     }
     public void ChangeScene(string sceneName)
@@ -136,6 +139,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
         tpd.enabled = false;
     }
+    public void ResumeHand()
+    {
+        xROrigin.transform.Find("Camera Offset/Left Controller").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Left Controller Stabilized").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Right Controller").gameObject.SetActive(true);
+        xROrigin.transform.Find("Camera Offset/Right Controller Stabilized").gameObject.SetActive(true);
+    }
     public void ResumePlayer()
     {
         Transform loco = xROrigin.transform.Find("Locomotion System");
@@ -148,9 +158,22 @@ public class GameManager : SingletonBehaviour<GameManager>
         TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
         tpd.enabled = true;
     }
-    public void LookTarget()
+    Camera camera;
+    public void LookTarget(Vector3 pos)
     {
-        
+        StopCoroutine(nameof(LookTarget_co));
+        StartCoroutine(nameof(LookTarget_co), pos);
+    }
+    IEnumerator LookTarget_co(Vector3 pos)
+    {
+        Vector3 look = pos - camera.transform.position;
+        float time = Time.time;
+        Vector3 forward = camera.transform.forward;
+        while (Time.time - time < 1.2f)
+        {
+            yield return null;
+            camera.transform.forward = Vector3.Lerp(forward, look, (Time.time - time)/1.2f);
+        }
     }
 
 

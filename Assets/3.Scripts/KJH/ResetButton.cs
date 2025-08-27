@@ -45,7 +45,7 @@ public class ResetButton : MonoBehaviour
     bool isFade;
     IEnumerator ButtonHolding()
     {
-        yield return new WaitForSeconds(1.9f);
+        yield return new WaitForSeconds(1.5f);
         GlobalUI.I.FadeOut(0.6f);
         isFade = true;
         for (int i = 0; i < initTrs.Length; i++)

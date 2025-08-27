@@ -246,6 +246,7 @@ MonoBehaviour:
   - {fileID: 98048133}
   - {fileID: 1751907659}
   testCount: 0
+  pendingEnd: 0
   grabs: []
 --- !u!1001 &88203230
 PrefabInstance:
@@ -354,10 +355,6 @@ PrefabInstance:
       propertyPath: conversationActor
       value: 
       objectReference: {fileID: 1604926782}
-    - target: {fileID: 642717053071029261, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
-      propertyPath: conversationConversant
-      value: 
-      objectReference: {fileID: 122916533}
     - target: {fileID: 1069365699441665642, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -467,17 +464,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
-      propertyPath: conversationEvents.runOnConversationEndEventsAtEndOfFrame
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
       propertyPath: conversationEvents.onConversationEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 51736790}
-    - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
-      propertyPath: conversationEvents.onConversationEnd.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnConversationEnd
-      objectReference: {fileID: 0}
     - target: {fileID: 2937078220046699524, guid: 889f67a39c1096a48975e398e3367e5c, type: 3}
       propertyPath: conversationEvents.onConversationEnd.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
@@ -4931,18 +4920,6 @@ PrefabInstance:
       propertyPath: objectGroup
       value: 
       objectReference: {fileID: 1367830549}
-    - target: {fileID: 6745175550466378804, guid: d661f645c81f29b4aa596207971ae441, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: af31dec748b798b4a89a525a9e7ca363, type: 2}
-    - target: {fileID: 6745175550466378804, guid: d661f645c81f29b4aa596207971ae441, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 5191416508969624097, guid: af31dec748b798b4a89a525a9e7ca363, type: 2}
-    - target: {fileID: 6745175550466378804, guid: d661f645c81f29b4aa596207971ae441, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
