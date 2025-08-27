@@ -29,7 +29,14 @@ public class HClDropTest : MonoBehaviour
                 info.chemistryCount += amount;
             }
             //
-            if (info.oreData.isReactingToChem == ChemicalType.Acid)
+            if (info.oreData.isReactingToChem == ChemicalType.None)
+            {
+                if (count % 30 == 0)
+                {
+                    reactType = 0;
+                }
+            }
+            else if (info.oreData.isReactingToChem == ChemicalType.Acid)
             {
                 if (count % 30 == 0)
                 {
@@ -85,13 +92,11 @@ public class HClDropTest : MonoBehaviour
                             GameManager.I.EditBoardText(info.oreData, 0, "염산 : 반응 없음");
                         else if (str.Contains("물 :"))
                             GameManager.I.Clear(info.oreData, 0, "염산 : 반응 없음" + "\n" + str);
-                            
                         if (!GlobalUI.I.isShowReactHClNoReact)
                         {
                             GlobalUI.I.isShowReactHClNoReact = true;
                             GlobalUI.I.Narration("이 광물은 염산과 반응하지 않는 것 같다.", 3.7f);
                         }
-
                     }
                     else if (reactType == 1)
                     {

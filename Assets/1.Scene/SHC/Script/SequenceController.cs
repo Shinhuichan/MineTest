@@ -26,7 +26,7 @@ public class SequenceController : MonoBehaviour
     {
         grabs = FindObjectsOfType<XRGrabInteractable>();
         foreach (var grab in grabs) { grab.enabled = false; }
-        // SoundManager.I.PlayBGM("실험실 속 작은 세계");
+        SoundManager.I.PlayBGM("실험실 속 작은 세계", 0.6f);
     }
     void Start()
     {

@@ -6670,14 +6670,14 @@ MonoBehaviour:
           m_MethodName: OnConversationEnd
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgument: {fileID: 7689824830555447444}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    runOnConversationEndEventsAtEndOfFrame: 0
+    runOnConversationEndEventsAtEndOfFrame: 1
     onConversationCancelled:
       m_PersistentCalls:
         m_Calls:

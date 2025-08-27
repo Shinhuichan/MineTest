@@ -93,8 +93,8 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     [HideInInspector] public SFX narrationSFX;
     public void Narration(string str, float duration)
     {
-        narrationText.text = str;
         narrationTween?.Kill();
+        narrationText.text = str;
         narrationText.color = new Color(narrationText.color.r, narrationText.color.g, narrationText.color.b, 0f);
         narrationTween = narrationText.DOFade(1f, 1f).SetEase(Ease.OutSine).OnComplete(() =>
         {

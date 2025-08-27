@@ -15,9 +15,9 @@ public struct LaboratoryAccident
 }
 public class GameManager : SingletonBehaviour<GameManager>
 {
-    protected override bool IsDontDestroy() => false;
+    protected override bool IsDontDestroy() => true;
     public List<LaboratoryAccident> accidents = new List<LaboratoryAccident>();
-    public List<Progress> progreses;
+    public List<Progress> progreses = new List<Progress>();
     //ActionBasedController[] controllers;
     [ReadOnlyInspector][SerializeField] ResultUI resultUI;
     [System.Serializable]
@@ -28,20 +28,15 @@ public class GameManager : SingletonBehaviour<GameManager>
         public OreData oreData;
         public bool[] isClear = new bool[4];
     }
-    protected override void Awake()
-    {
-        base.Awake();
-        //controllers = FindObjectsByType<ActionBasedController>(FindObjectsSortMode.InstanceID);
-        resultUI = FindAnyObjectByType<ResultUI>();
-        xROrigin = FindAnyObjectByType<XROrigin>();
-    }
     void Start()
     {
-        camera = Camera.main;
         Init();
     }
     public void Init()
     {
+        resultUI = FindAnyObjectByType<ResultUI>();
+        xROrigin = FindAnyObjectByType<XROrigin>();
+        camera = Camera.main;
         accidents.Clear();
         ObjectInfo[] temp = FindObjectsByType<ObjectInfo>(FindObjectsSortMode.None);
         List<ObjectInfo> list = temp.ToList();
@@ -61,6 +56,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public void Clear(OreData oreData, int experimentNumber, string boardText)
     {
+        if (progreses.Count == 0) return;
         if (experimentNumber < 0 || experimentNumber > 3)
         {
             Debug.Log($"experimentNumber는 0(화학반응) , 1(경도) , 2(현미경) , 3(전기전도) 들만 가능합니다. ( {experimentNumber} ) ");
@@ -119,13 +115,34 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        StartCoroutine(nameof(ChangeScene_co1), sceneName);
+    }
+    IEnumerator ChangeScene_co1(string sceneName)
+    {
+        AsyncOperation ao = SceneManager.LoadSceneAsync(sceneName);
+        while (true)
+        {
+            yield return null;
+            if (ao.isDone) break;
+        }
+        yield return new WaitForSeconds(0.5f);
+        Init();
     }
     public void ChangeScene(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneIndex);
+        StartCoroutine(nameof(ChangeScene_co2), sceneIndex);
     }
-
+    IEnumerator ChangeScene_co2(int sceneIndex)
+    {
+        AsyncOperation ao = SceneManager.LoadSceneAsync(sceneIndex);
+        while (true)
+        {
+            yield return null;
+            if (ao.isDone) break;
+        }
+        yield return new WaitForSeconds(0.5f);
+        Init();
+    }
     XROrigin xROrigin;
     public void StopPlayer()
     {

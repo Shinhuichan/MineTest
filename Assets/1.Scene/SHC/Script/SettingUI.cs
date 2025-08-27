@@ -38,10 +38,10 @@ public class SettingUI : MonoBehaviour
     }
     public void GameQuit()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.ExitPlaymode();
+#else
             Application.Quit();
-        #endif
+#endif
     }
 }
