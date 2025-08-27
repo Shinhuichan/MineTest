@@ -45,15 +45,9 @@ public class CheckMicroScopeData : MonoBehaviour
             checkImage.sprite = obj.oreData.microShape;
             checkImage.preserveAspect = true;
 
-            //실험 상태 업데이트 및 방송
-            //if(progress != null)
-            //{
-            //    // 현미경 실험 완료 상태를 트루로 변경
-            //    progress.isMicroScopeCheckd = true;
-            //}
-            GameManager.I.Clear(Data, 2, "이미지 생성");
-            //UIManager.Instance.NotifyExperimentUpdated(obj);
+            GameManager.I.Clear(Data, 2, obj.description);
         }
+        SoundManager.I.PlaySFX("ObjectInSocket", fxAnchor);
 
         PlayParticle();
     }

@@ -84,6 +84,7 @@ public class LightEnable_LSH : MonoBehaviour
             GameManager.I.Clear(Data, 3, "X");
         }
 
+        SoundManager.I.PlaySFX("ObjectInSocket", fxAnchor);
         PlayParticle();
     }
 
