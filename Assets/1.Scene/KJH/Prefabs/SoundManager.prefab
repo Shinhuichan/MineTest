@@ -57,6 +57,22 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e570680f969a8fa439c4a24ddfd8a8d4, type: 3}
   - {fileID: 8300000, guid: 08b2e4a466231df4da57fc56e25a4e54, type: 3}
   - {fileID: 8300000, guid: 683dfa71ab78e784182aae2291841ea7, type: 3}
+  - {fileID: 8300000, guid: 4016c352873be8e4fabf608d68817727, type: 3}
+  - {fileID: 8300000, guid: 71cb8fa417cf2e84dbcee30208820bac, type: 3}
+  - {fileID: 8300000, guid: 892459c0a2e35b9408b128388d8e6c4d, type: 3}
+  - {fileID: 8300000, guid: 5652b259038824d4ba943dda8ae8e3a0, type: 3}
+  - {fileID: 8300000, guid: 09879e25bc9278146af98bfb72ef7ab7, type: 3}
+  - {fileID: 8300000, guid: c5f9f3f254387914ebbbea972e2bac55, type: 3}
+  - {fileID: 8300000, guid: 0498daf0600554b4783d18c45a207cd6, type: 3}
+  - {fileID: 8300000, guid: 2a617a0c7f912404580938d2a46fc4b0, type: 3}
+  - {fileID: 8300000, guid: 17296f45570bc644886676efc68fbae4, type: 3}
+  - {fileID: 8300000, guid: 164980b14785caa4695c58363dd15c30, type: 3}
+  - {fileID: 8300000, guid: 7b8df07494140a94ba3f527a22786019, type: 3}
+  - {fileID: 8300000, guid: 2da2f944ea9c2b549aeb889140a7437f, type: 3}
+  - {fileID: 8300000, guid: 7759343b1dc31bd4aaa5d36c61c6c790, type: 3}
+  - {fileID: 8300000, guid: 50b08eef54e78ae4cac0fc775ab230c0, type: 3}
+  - {fileID: 8300000, guid: c0f1da4782f26214c90cfe776fe419dd, type: 3}
+  - {fileID: 8300000, guid: b3a286cebb407ef4ebe49048e818c7e7, type: 3}
   ambienceList: []
   sfxPrefab: {fileID: 6825123997177719663, guid: 3573164359e59e749971469f005bd620, type: 3}
   volumeBGM: 1

@@ -6459,10 +6459,10 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: SequenceController, Assembly-CSharp
-          m_MethodName: TestEnd
+          m_MethodName: OnConversationEnd
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 7689824830555447444}
+            m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
@@ -6609,7 +6609,7 @@ MonoBehaviour:
   useConversationTitlePicker: 1
   useBarkTitlePicker: 1
   useQuestNamePicker: 1
-  selectedDatabase: {fileID: 11400000, guid: d54b4c7ca7ec3784aa2504a8213dcba1, type: 2}
+  selectedDatabase: {fileID: 11400000, guid: ad7c843cea30bb544918c6ea00f093a9, type: 2}
 --- !u!1 &2974476928089676115
 GameObject:
   m_ObjectHideFlags: 0
@@ -10678,7 +10678,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9040990119464053917}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: PixelCrushers.DialogueSystem.StandardUIContinueButtonFastForward,
+          Assembly-CSharp-firstpass
         m_MethodName: OnFastForward
         m_Mode: 1
         m_Arguments:
@@ -12900,7 +12901,7 @@ MonoBehaviour:
   skipBarkIfNoValidEntries: 0
   cacheBarkLines: 0
   conversation: Sample Dialog(UI)
-  conversationConversant: {fileID: 0}
+  conversationConversant: {fileID: 277832928772335857}
   conversationActor: {fileID: 0}
   startConversationEntryID: -1
   startConversationEntryTitle: 
@@ -12926,7 +12927,7 @@ MonoBehaviour:
   useConversationTitlePicker: 1
   useBarkTitlePicker: 1
   useQuestNamePicker: 1
-  selectedDatabase: {fileID: 11400000, guid: d54b4c7ca7ec3784aa2504a8213dcba1, type: 2}
+  selectedDatabase: {fileID: 11400000, guid: ad7c843cea30bb544918c6ea00f093a9, type: 2}
 --- !u!114 &8488285416808470514
 MonoBehaviour:
   m_ObjectHideFlags: 0

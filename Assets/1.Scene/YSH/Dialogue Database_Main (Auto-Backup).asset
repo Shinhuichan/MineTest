@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 935899b62f48ae5498594680ed17d133, type: 3}
-  m_Name: Dialogue Database_Main
+  m_Name: Dialogue Database_Main (Auto-Backup)
   m_EditorClassIdentifier: 
   version: 
   author: 
@@ -501,7 +501,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(NPCVoice5)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -525,7 +525,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 570.669
+        x: 569.17645
         y: 181
         width: 160
         height: 30
@@ -617,7 +617,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk3); Audio(NPCVoice6)'
+          AnimatorPlay(Talk3)'
         type: 0
         typeString: 
       conversationID: 1
@@ -641,7 +641,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 569.4925
+        x: 568
         y: 281
         width: 160
         height: 30
@@ -966,7 +966,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(Chuckle2)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1050,7 +1050,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 769.2657
-        y: 436.9229
+        y: 435.43036
         width: 160
         height: 30
     - id: 12
@@ -1083,7 +1083,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk4); Audio(NPCVoice5)'
+          AnimatorPlay(Talk4)'
         type: 0
         typeString: 
       conversationID: 1
@@ -1497,7 +1497,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(Chuckle1)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2457,7 +2457,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk); Audio(Chuckle2)'
+          AnimatorPlay(Talk)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2517,7 +2517,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk3); Audio(NPCVoice7)'
+          AnimatorPlay(Talk3)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2576,7 +2576,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Angry); Audio(Sigh)'
+          AnimatorPlay(Angry)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2635,7 +2635,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Talk2); Audio(Chuckle1)'
+          AnimatorPlay(Talk2)'
         type: 0
         typeString: 
       conversationID: 1
@@ -2660,7 +2660,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 323.97873
-        y: 717.0733
+        y: 715.8075
         width: 160
         height: 30
     - id: 40
@@ -2694,7 +2694,7 @@ MonoBehaviour:
       - title: Sequence
         value: '{{default}};
 
-          AnimatorPlay(Laugh); Audio(Chuckle2)'
+          AnimatorPlay(Laugh)'
         type: 0
         typeString: 
       conversationID: 1
@@ -3297,8 +3297,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 47.826397, y: 108.73241}
-    canvasZoom: 0.7900003
+    canvasScrollPosition: {x: 166.57846, y: 0}
+    canvasZoom: 0.67000043
   - id: 2
     fields:
     - title: Title
