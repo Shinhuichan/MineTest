@@ -38,6 +38,7 @@ public class TutorialUI : MonoBehaviour
     private void Start()
     {
         ShowIntroduce(currentIndex);
+        SoundManager.I.PlayBGM("조용하지 않은 실험실");
     }
 
     private void IndexCheck()

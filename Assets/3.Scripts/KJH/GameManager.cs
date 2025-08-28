@@ -20,6 +20,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     public List<Progress> progreses = new List<Progress>();
     //ActionBasedController[] controllers;
     [ReadOnlyInspector][SerializeField] ResultUI resultUI;
+   
+    [SerializeField] blackBoardUI blackboardUI;                    // ***UI용 추가**
+
     [System.Serializable]
     public class Progress
     {
@@ -36,6 +39,8 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         resultUI = FindAnyObjectByType<ResultUI>();
         xROrigin = FindAnyObjectByType<XROrigin>();
+        blackboardUI = FindAnyObjectByType<blackBoardUI>();       // ***UI용 추가**
+
         camera = Camera.main;
         accidents.Clear();
         ObjectInfo[] temp = FindObjectsByType<ObjectInfo>(FindObjectsSortMode.None);
@@ -75,6 +80,14 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
         // 실험 완료
         progreses[find].isClear[experimentNumber] = true;
+
+        // ----- 칠판 UI 업데이트 ---------
+        if (blackboardUI != null)
+        {
+            // find = 광물 인덱스, experimentNumber = 실험 인덱스
+            blackboardUI.MarkAsCompleted(experimentNumber, find);
+        }
+
         // // 햅틱 반응
         // if (controllers != null)
         // {

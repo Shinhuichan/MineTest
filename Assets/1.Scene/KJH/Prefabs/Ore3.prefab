@@ -404,7 +404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectName: Copper
-  description: 
+  description: "\uC815\uC721\uBA74\uCCB4"
   objImage: {fileID: 21300000, guid: e45f8f823c093d941855bb23b53b9414, type: 3}
   oreData: {fileID: 11400000, guid: 1758ed353f2a073418f7fa9966472572, type: 2}
   chemistryCount: 0
