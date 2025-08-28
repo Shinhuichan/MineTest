@@ -56,7 +56,7 @@ public class TutorialUI : MonoBehaviour
             nextSceneButton.SetActive(false);
         }
     }
-        
+
     public void ShowIntroduce(int index)
     {
         if (index < 0 || index >= introduces.Length) return;
@@ -90,6 +90,7 @@ public class TutorialUI : MonoBehaviour
         if (currentIndex >= introduces.Length) currentIndex = 0;
         ShowIntroduce(currentIndex);
         IndexCheck();
+        SoundManager.I.PlaySFX("UIClickNext");
     }
 
     public void Prev()
@@ -98,7 +99,13 @@ public class TutorialUI : MonoBehaviour
         if (currentIndex < 0) currentIndex = introduces.Length - 1;
         ShowIntroduce(currentIndex);
         IndexCheck();
+        SoundManager.I.PlaySFX("UIClickNext");
     }
-    
     #endregion
+
+    public void GameStart()
+    {
+        GameManager.I.ChangeScene(1);
+        SoundManager.I.PlaySFX("UIClickNext");
+    }
 }

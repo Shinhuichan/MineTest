@@ -11,6 +11,7 @@ public class SequenceController : MonoBehaviour
     [SerializeField] Transform actor;                // 교수님 등 화자
     [SerializeField] Transform conversant;           // 플레이어(카메라 등)
     [SerializeField] GameObject[] testObjects;
+    [SerializeField] GameObject ores;
     [SerializeField][ReadOnly] int testCount = 0;
 
     [Header("Update Test")]
@@ -24,6 +25,10 @@ public class SequenceController : MonoBehaviour
     void Awake()
     {
         grabs = FindObjectsOfType<XRGrabInteractable>();
+        if (ores == null)
+        {
+            ores = FindObjectOfType<ObjectInfo>().transform.parent.gameObject;
+        }
         foreach (var grab in grabs) { grab.enabled = false; }
         SoundManager.I.PlayBGM("실험실 속 작은 세계_Fix", 0.6f);
     }
@@ -40,6 +45,7 @@ public class SequenceController : MonoBehaviour
             yield return new WaitForSeconds(testUpdateCount);
             if (GameManager.I.progreses.Count() > 0 && !alreadyTalk)
                 { CallPlayer(testCount); }
+                
         }
     }
     #region 호출 조건
@@ -91,6 +97,7 @@ public class SequenceController : MonoBehaviour
         {
             testCount++;
             if (testObjects[testCount] != null) testObjects[testCount].SetActive(true);
+            if (testCount == testObjects.Length - 1) ores.SetActive(false);
             alreadyTalk = false; // 다음 대화 트리거 허용
         }
         else { alreadyTalk = true; /* 더 이상 대화 시작 금지*/ }
