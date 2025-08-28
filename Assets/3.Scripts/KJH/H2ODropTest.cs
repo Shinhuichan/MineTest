@@ -35,11 +35,11 @@ public class H2ODropTest : MonoBehaviour
             {
                 reactType = 0;
             }
-            else if (info.oreData.isReactingToChem == ChemicalType.Acid)
+            else if (info.oreData.isReactingToChem.HasFlag(ChemicalType.Acid) && !info.oreData.isReactingToChem.HasFlag(ChemicalType.Water))
             {
                 reactType = 1;
             }
-            else if (info.oreData.isReactingToChem == ChemicalType.Water)
+            else if (info.oreData.isReactingToChem.HasFlag(ChemicalType.Acid) && info.oreData.isReactingToChem.HasFlag(ChemicalType.Water))
             {
                 if (count % 30 == 0)
                 {

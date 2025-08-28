@@ -127,7 +127,11 @@ public class MohsOre : MonoBehaviour
                                             }
                                             else
                                             {
-                                                GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면,\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 3.7f);
+                                                if (!GlobalUI.I.isShowMohsUpper)
+                                                {
+                                                    GlobalUI.I.isShowMohsUpper = true;
+                                                    GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면,\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 3.7f);
+                                                }
                                             }
                                         }
                                         else
@@ -139,8 +143,20 @@ public class MohsOre : MonoBehaviour
                                             }
                                             else
                                             {
-                                                GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면,\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 3.7f);
+                                                if (!GlobalUI.I.isShowMohsUpper)
+                                                {
+                                                    GlobalUI.I.isShowMohsUpper = true;
+                                                    GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면,\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 3.7f);
+                                                }
                                             }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!GlobalUI.I.isShowMohsUpper)
+                                        {
+                                            GlobalUI.I.isShowMohsUpper = true;
+                                            GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면,\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 3.7f);
                                         }
                                     }
                                 }
@@ -204,7 +220,11 @@ public class MohsOre : MonoBehaviour
                                             }
                                             else
                                             {
-                                                GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면,\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 3.7f);
+                                                if (!GlobalUI.I.isShowMohsLower)
+                                                {
+                                                    GlobalUI.I.isShowMohsLower = true;
+                                                    GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면,\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 3.7f);
+                                                }
                                             }
                                         }
                                         else
@@ -217,8 +237,20 @@ public class MohsOre : MonoBehaviour
                                             }
                                             else
                                             {
-                                                GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면,\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 3.7f);
+                                                if (!GlobalUI.I.isShowMohsLower)
+                                                {
+                                                    GlobalUI.I.isShowMohsLower = true;
+                                                    GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면,\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 3.7f);
+                                                }
                                             }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!GlobalUI.I.isShowMohsLower)
+                                        {
+                                            GlobalUI.I.isShowMohsLower = true;
+                                            GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면,\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 3.7f);
                                         }
                                     }
                                 }
