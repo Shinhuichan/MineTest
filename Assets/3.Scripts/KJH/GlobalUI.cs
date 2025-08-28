@@ -166,6 +166,7 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     }
     public void Restart()
     {
+        GameManager.I.ResumePlayer();
         GameManager.I.ChangeScene(0);
     }
     public void GameQuit()

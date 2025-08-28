@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmList:
-  - {fileID: 8300000, guid: 6f3a4a7abd8bca0498616ed6a37fb858, type: 3}
+  - {fileID: 8300000, guid: 17a18e8709d05d1469e70b8f7f26f5a4, type: 3}
   sfxList:
   - {fileID: 8300000, guid: b5e8551cea4e50344aa584407a74aa52, type: 3}
   - {fileID: 8300000, guid: 10ca8d166cdb8c640bddcebbe710c74b, type: 3}

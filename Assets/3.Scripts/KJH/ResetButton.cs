@@ -11,11 +11,14 @@ public class ResetButton : MonoBehaviour
     bool isPlaying = false;
     void OnEnable()
     {
-        initTrs = objectGroup.GetComponentsInChildren<Transform>();
         StartCoroutine(nameof(RecoredInitTransforms));
     }
     IEnumerator RecoredInitTransforms()
     {
+        yield return null;
+        yield return null;
+        yield return null;
+        initTrs = objectGroup.GetComponentsInChildren<Transform>(true);
         initPoses = new Vector3[initTrs.Length];
         initRotations = new Quaternion[initTrs.Length];
         initScales = new Vector3[initTrs.Length];
@@ -26,6 +29,7 @@ public class ResetButton : MonoBehaviour
             initRotations[i] = initTrs[i].rotation;
             initScales[i] = initTrs[i].localScale;
             //initIsActive[i] = initTrs[i].gameObject.activeSelf;
+            //Debug.Log(initTrs[i].name);
             yield return null;
         }
     }
