@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.SceneManagement;
 using Unity.XR.CoreUtils;
 [System.Serializable]
 public struct LaboratoryAccident
@@ -26,6 +27,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     // 현재 플레이어가 진행해야 할 실험의 단계를 저장하는 변수
     private int currentActiveExperimentIndex = 0;                  // ***UI용 추가**
 
+    private bool useBlackboardUI = true;
+    private bool useFinalTestManager = true;
+
     [System.Serializable]
     public class Progress
     {
@@ -34,18 +38,49 @@ public class GameManager : SingletonBehaviour<GameManager>
         public OreData oreData;
         public bool[] isClear = new bool[4];
     }
+
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
     void Start()
     {
         Init();
-
-       
     }
+
+    private void OnSceneLoaded(Scene s, LoadSceneMode mode)
+    {
+        Init();
+    }
+
     public void Init()
     {
         resultUI = FindAnyObjectByType<ResultUI>();
         xROrigin = FindAnyObjectByType<XROrigin>();
-        blackboardUI = FindAnyObjectByType<blackBoardUI>();       // ***UI용 추가**
-        finalTestManager = FindAnyObjectByType<FinalTestManager>();       // ***UI용 추가**
+        if (useBlackboardUI)
+        {
+            blackboardUI = FindFirstObjectByType<blackBoardUI>(FindObjectsInactive.Include);
+            if (blackboardUI == null && blackboardUI != null)
+            {
+                blackboardUI = Instantiate(blackboardUI);
+            }
+        }
+        else blackboardUI = null;
+
+        if (useFinalTestManager)
+        {
+            finalTestManager = FindFirstObjectByType<FinalTestManager>(FindObjectsInactive.Include);
+            if (finalTestManager == null && finalTestManager != null)
+            {
+                finalTestManager = Instantiate(finalTestManager);
+            }
+        }
+        else finalTestManager = null;
 
         camera = Camera.main;
         accidents.Clear();
