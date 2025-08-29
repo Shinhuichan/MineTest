@@ -22,6 +22,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     [ReadOnlyInspector][SerializeField] ResultUI resultUI;
    
     [SerializeField] blackBoardUI blackboardUI;                    // ***UI용 추가**
+    [SerializeField] FinalTestManager finalTestManager;
+    // 현재 플레이어가 진행해야 할 실험의 단계를 저장하는 변수
+    private int currentActiveExperimentIndex = 0;                  // ***UI용 추가**
 
     [System.Serializable]
     public class Progress
@@ -34,12 +37,15 @@ public class GameManager : SingletonBehaviour<GameManager>
     void Start()
     {
         Init();
+
+       
     }
     public void Init()
     {
         resultUI = FindAnyObjectByType<ResultUI>();
         xROrigin = FindAnyObjectByType<XROrigin>();
         blackboardUI = FindAnyObjectByType<blackBoardUI>();       // ***UI용 추가**
+        finalTestManager = FindAnyObjectByType<FinalTestManager>();       // ***UI용 추가**
 
         camera = Camera.main;
         accidents.Clear();
@@ -57,6 +63,11 @@ public class GameManager : SingletonBehaviour<GameManager>
             pr.oreData = temp[i].oreData;
             progreses.Add(pr);
             //Debug.Log(pr.transform.name);
+        }
+        if (blackboardUI != null)
+        {
+            Debug.Log(currentActiveExperimentIndex);
+            blackboardUI.ShowExperimentStatus(currentActiveExperimentIndex);
         }
     }
     public void Clear(OreData oreData, int experimentNumber, string boardText)
@@ -84,9 +95,12 @@ public class GameManager : SingletonBehaviour<GameManager>
         // ----- 칠판 UI 업데이트 ---------
         if (blackboardUI != null)
         {
-            // find = 광물 인덱스, experimentNumber = 실험 인덱스
-            blackboardUI.MarkAsCompleted(experimentNumber, find);
+            // f현재 보고 있는 화면의 O/X상태를 갱신
+            blackboardUI.UpdateStatusDisplay();
         }
+        // 방금 완료한 실험의 모든 오브젝트가 체크되었는지 확인
+        CheckForFullExperimentCompletion(experimentNumber);
+
 
         // // 햅틱 반응
         // if (controllers != null)
@@ -104,6 +118,92 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
 
     }
+    /// <summary>
+    /// 특정 실험의 모든 오브젝트가 완료되었는지 확인하고, 완료되었다면 다음 실험으로 넘어가는 함수
+    /// </summary>
+    private void CheckForFullExperimentCompletion(int experimentNumber)
+    {
+        //현재 진행중인 실험이 아니면 체크할 필요 없음
+        if (experimentNumber != currentActiveExperimentIndex) return;
+        
+        bool allObjectsCleared = true;
+        
+        foreach(var progress in progreses)
+        {
+            if(!progress.isClear[experimentNumber])
+            {
+                allObjectsCleared = false;
+                break; //하나라도 미완이 있음 루프 중단
+            }
+        }
+        // 모든 오브젝트에 대한 실험을 완료했다면
+        if(allObjectsCleared)
+        {
+            Debug.Log($"실험 {experimentNumber + 1}의 과제를 완료했습니다.다음 실험으로 넘어가겠습니다.");
+
+            // 다음 실험 인덱스로 변경
+            currentActiveExperimentIndex++;
+            int totalExperiments = progreses[0].isClear.Length;
+
+             
+            
+            if(currentActiveExperimentIndex < totalExperiments)
+            {
+                // 다음 실험 UI 보여주기
+                FindObjectOfType<blackBoardUI>().ShowExperimentStatus(currentActiveExperimentIndex);
+            }
+            else
+            {
+                // 모든 실험 완료! 테스트 모드로 전환
+                Debug.Log("모든 실험을 완료했습니다!");
+                if(blackboardUI != null)
+                {
+                    blackboardUI.ShowTestView();
+                }
+            }
+        }
+    }
+    // 최종 정답을 확인하는 함수
+    public void CheckFinalAnswer(OreData[] submittedOreData)
+    {
+        int correctCount = 0;
+        int totalQuestions = progreses.Count;
+
+        for(int i = 0;i < totalQuestions; i++)
+        {
+            if (submittedOreData[i] == null) continue;
+
+            OreData correctAnswerData = progreses[i].oreData;
+
+            if(submittedOreData[i].type == correctAnswerData.type)
+            {
+                correctCount++;
+            }
+        }
+
+        Debug.Log($"맞은 개수 : {correctCount} / {totalQuestions}");
+
+        if (finalTestManager != null)
+        {
+            finalTestManager.ShowFeedback(correctCount, totalQuestions);
+        }
+        // 만약 모두 맞았다면, 게임 종료 로직을 호출합니다.
+        if (correctCount == totalQuestions)
+        {
+            EndGame();
+        }
+        else
+        {
+            
+        }
+    }
+    public void EndGame()
+    {
+        Debug.Log("게임 클리어");
+
+        // 게임 클리어시 필요한 로직
+    }
+
     public void EditBoardText(OreData oreData, int experimentNumber, string boardText)
     {
         resultUI.ShowText(oreData, experimentNumber, boardText);
