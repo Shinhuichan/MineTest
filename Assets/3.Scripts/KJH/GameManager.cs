@@ -190,12 +190,9 @@ public class GameManager : SingletonBehaviour<GameManager>
         // 만약 모두 맞았다면, 게임 종료 로직을 호출합니다.
         if (correctCount == totalQuestions)
         {
-            EndGame();
+            Invoke("EndGame", 2f);
         }
-        else
-        {
-            
-        }
+       
     }
     public void EndGame()
     {
