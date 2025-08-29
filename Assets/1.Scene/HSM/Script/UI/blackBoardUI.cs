@@ -5,72 +5,74 @@ using TMPro;
 
 public class blackBoardUI : MonoBehaviour
 {
-    //텍스트 컴포넌트를 연결할 변수
-    public TMP_Text statusText;
-
-    [System.Serializable]
-    public class TextRow
-    {
-        public TMP_Text[] colums;
-    }
-    public TextRow[] rows; //텍스트 컴포넌트를 담을 배열
-
-    public int totalExperiments = 4;
-    public int objectPerExperiment = 3;
-    //데이터 저장은 bool 2차원 배열로 관리
-    private bool[,] experimentsStatus;
-
-    private void Start()
-    {
-        experimentsStatus = new bool[totalExperiments, objectPerExperiment];
-
-        InitializeDisplay();
-    }
-
-    /// <summary>
-    /// 게임 시작 시 모든 텍스트를 초기상태로 설정
-    /// </summary>
+    [SerializeField] private TMP_Text mainExperimentTiltle;
+    [SerializeField] private List<TMP_Text> objectStatusTexts;
     
-    private void InitializeDisplay()
-    {
-        for(int i =0; i<totalExperiments; i++)
-        {
-            for (int j =0; j<objectPerExperiment; j++)
-            {
-                UpdateCell(i, j, false);
-            }
-        }
-    }
-    /// <summary>
-    /// * 특정 실험의 특정 오브젝트가 완료되었을 때 외부에서 호출하는 함수
-    /// </summary>
-    /// <param name="experimentIndex">완료된 실험의 인덱스(0~3) </param>
-    /// <param name="objectIndex">완료된 오브젝트의 인덱스(0~2) </param>
+    [SerializeField] private List<string> experimentNames;
 
-    public void MarkAsCompleted(int experimentIndex, int objectIndex)
+    public GameObject experimentStatusPanel;
+    public GameObject testPanel;
+
+    private int currentlyDisplayedIndex = -1;
+
+    public void Start()
     {
-        if(experimentIndex >= totalExperiments || objectIndex >= objectPerExperiment)
+        ShowExperimentView();
+    }
+    public void ShowExperimentView()
+    {
+        experimentStatusPanel.SetActive(true);
+        testPanel.SetActive(false);
+    }
+    public void ShowTestView()
+    {
+        experimentStatusPanel.SetActive(false);
+        testPanel.SetActive(true);
+    }
+    public void ShowExperimentStatus(int experimentIndex)
+    {
+        //보여중 실험이 유효한 범위 내에 있는지 확인
+        if(experimentIndex < 0 || experimentIndex >= experimentNames.Count)
         {
-            Debug.LogError("잘못된 실험또는 오브젝트 인덱스 입니다.");
+            Debug.Log(experimentNames.Count);
+            Debug.LogError("잘못된 실험 인덱스 입니다");
             return;
         }
-        // 데이터 상태 변경
-        experimentsStatus[experimentIndex, objectIndex] = true;
-        // 데이터 변경되었으니, 해당 셀의 UI만 업데이트
-        UpdateCell(experimentIndex, objectIndex, true);
+        currentlyDisplayedIndex = experimentIndex;
+
+
+        // 1. 제목 업데이트 
+        mainExperimentTiltle.text = experimentNames[currentlyDisplayedIndex];
+
+        // 2. O/X 상태 업데이트
+        UpdateStatusDisplay();
     }
 
-    public void UpdateCell(int row, int col, bool isCompleted)
+    public void UpdateStatusDisplay()
     {
-        if(isCompleted)
+        if (GameManager.I == null || GameManager.I.progreses == null) return;
+
+        int totalProgressCount = GameManager.I.progreses.Count;
+
+        int loopCount = Mathf.Min(objectStatusTexts.Count, totalProgressCount);
+
+        for(int i = 0; i < loopCount; i++)
         {
-            rows[row].colums[col].text = " O ";
-            rows[row].colums[col].color = Color.green;
+            // i번째 광물의 현재 표시 중인 실험의 완료 여부 확인
+            bool isDone = GameManager.I.progreses[i].isClear[currentlyDisplayedIndex];
+
+            if(isDone)
+            {
+                objectStatusTexts[i].text = "O";
+                objectStatusTexts[i].color = Color.green;
+            }
+            else
+            {
+                objectStatusTexts[i].text = "X";
+                objectStatusTexts[i].color = Color.red;
+            }
         }
-        else
-        {
-            rows[row].colums[col].text = " X ";
-            rows[row].colums[col].color = Color.red;
-        }
+
     }
+
 }
