@@ -23,6 +23,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     [ReadOnlyInspector][SerializeField] ResultUI resultUI;
    
     [SerializeField] blackBoardUI blackboardUI;                    // ***UI용 추가**
+    [ReadOnlyInspector][SerializeField] BoardSwitcher boardSwitcher;
     [SerializeField] FinalTestManager finalTestManager;
     // 현재 플레이어가 진행해야 할 실험의 단계를 저장하는 변수
     private int currentActiveExperimentIndex = 0;                  // ***UI용 추가**
@@ -60,8 +61,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void Init()
     {
-        resultUI = FindAnyObjectByType<ResultUI>();
-        xROrigin = FindAnyObjectByType<XROrigin>();
+        resultUI = FindAnyObjectByType<ResultUI>(FindObjectsInactive.Include);
+        boardSwitcher = FindAnyObjectByType<BoardSwitcher>(FindObjectsInactive.Include);
+        xROrigin = FindAnyObjectByType<XROrigin>(FindObjectsInactive.Include);
         if (useBlackboardUI)
         {
             blackboardUI = FindFirstObjectByType<blackBoardUI>(FindObjectsInactive.Include);
@@ -101,7 +103,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
         if (blackboardUI != null)
         {
-            Debug.Log(currentActiveExperimentIndex);
+            //Debug.Log(currentActiveExperimentIndex);
             blackboardUI.ShowExperimentStatus(currentActiveExperimentIndex);
         }
     }
@@ -151,7 +153,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             resultUI.ShowText(oreData, experimentNumber, boardText);
         }
-
+        boardSwitcher.RefreshPageUI();
     }
     /// <summary>
     /// 특정 실험의 모든 오브젝트가 완료되었는지 확인하고, 완료되었다면 다음 실험으로 넘어가는 함수
@@ -239,6 +241,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void EditBoardText(OreData oreData, int experimentNumber, string boardText)
     {
         resultUI.ShowText(oreData, experimentNumber, boardText);
+        boardSwitcher.RefreshPageUI();
     }
     public string GetBoardText(OreData oreData, int experimentNumber)
     {

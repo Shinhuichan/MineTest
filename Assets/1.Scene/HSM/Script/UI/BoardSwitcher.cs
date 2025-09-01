@@ -41,13 +41,13 @@ public class BoardSwitcher : MonoBehaviour
 
     [Header("Table UI (표형식)")]
     public GameObject mineral_Table;
-    
+
     // 내부 상태
     private bool isBInFront = false;
     private bool isViewTrue = true;
     // 페이지(광물) 인덱싱
-    private int currentIndex = 0;
-    private List<GameManager.Progress> pages = new List<GameManager.Progress>();
+    [ReadOnlyInspector] public int currentIndex = 0;
+    [ReadOnlyInspector] public List<GameManager.Progress> pages = new List<GameManager.Progress>();
 
     private void Start()
     {
@@ -73,6 +73,8 @@ public class BoardSwitcher : MonoBehaviour
     private IEnumerator DelayInit()
     {
         yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => GameManager.I.progreses != null);
+        yield return new WaitUntil(() => GameManager.I.progreses.Count > 0);
         // 페이지 데이터 읽기
         LoadPagesFromGameManager();
         // 첫 페이지 표시
@@ -115,6 +117,7 @@ public class BoardSwitcher : MonoBehaviour
         OnSwapSlide();
         // 같은 페이지의 다른 레이아웃이므로 내용 갱신
         RefreshPageUI();
+        SoundManager.I.PlaySFX("UIClickNext", transform.position, null);
     }
     private void OnPrev()
     {
@@ -122,16 +125,18 @@ public class BoardSwitcher : MonoBehaviour
         currentIndex = Mathf.Max(0, currentIndex - 1);
         RefreshNavInteractable();
         // 페이지 넘길 때 보드 슬라이드
-        OnSwapSlide();
+        //OnSwapSlide();
         RefreshPageUI();
+        SoundManager.I.PlaySFX("UIClickNext", transform.position, null);
     }
     private void OnNext()
     {
         if (pages.Count == 0) return;
         currentIndex = Mathf.Min(pages.Count - 1, currentIndex + 1);
         RefreshNavInteractable();
-        OnSwapSlide();
+        //OnSwapSlide();
         RefreshPageUI();
+        SoundManager.I.PlaySFX("UIClickNext", transform.position, null);
     }
     /// <summary>
     /// 기존 보드 전환 애니메이션 재사용
@@ -154,7 +159,7 @@ public class BoardSwitcher : MonoBehaviour
     /// 현재 currentIndex에 해당하는 광물 정보를 UI에 채운다.
     /// ResultUI의 저장 텍스트가 있으면 우선 사용하고, 없으면 OreData 기반 기본 설명을 구성.
     /// </summary>
-    private void RefreshPageUI()
+    public void RefreshPageUI()
     {
         if (pages.Count == 0)
         {
@@ -168,9 +173,9 @@ public class BoardSwitcher : MonoBehaviour
         if (image)
         {
             Sprite s = null;
-            if(pageImages != null & pageImages.Count > 0)
+            if (pageImages != null & pageImages.Count > 0)
             {
-                if(currentIndex >=0 && currentIndex < pageImages.Count)
+                if (currentIndex >= 0 && currentIndex < pageImages.Count)
                 {
                     s = pageImages[currentIndex];
                 }
@@ -180,18 +185,25 @@ public class BoardSwitcher : MonoBehaviour
             image.enabled = (s != null);
         }
         // 4개 실험 텍스트(0~3): 화학반응/경도/현미경/전도 — 실험 잠금 처리
-        string t0 = pr.isClear[0]
-            ? GetBoardOrFallback(ore, 0, () => BuildChemicalText(ore))
-            : "-";
-        string t1 = pr.isClear[1]
-            ? GetBoardOrFallback(ore, 1, () => BuildHardnessText(ore))
-            : "-";
-        string t2 = pr.isClear[2]
-            ? GetBoardOrFallback(ore, 2, () => BuildMicroText(ore))
-            : "-";
-        string t3 = pr.isClear[3]
-            ? GetBoardOrFallback(ore, 3, () => BuildConductText(ore))
-            : "-";
+
+        string t0 = GetBoardOrFallback(ore, 0, () => BuildChemicalText(ore));
+        string t1 = GetBoardOrFallback(ore, 1, () => BuildChemicalText(ore));
+        string t2 = GetBoardOrFallback(ore, 2, () => BuildChemicalText(ore));
+        string t3 = GetBoardOrFallback(ore, 3, () => BuildChemicalText(ore));
+
+        // string t0 = pr.isClear[0]
+        //     ? GetBoardOrFallback(ore, 0, () => BuildChemicalText(ore))
+        //     : "-";
+        // string t1 = pr.isClear[1]
+        //     ? GetBoardOrFallback(ore, 1, () => BuildHardnessText(ore))
+        //     : "-";
+        // string t2 = pr.isClear[2]
+        //     ? GetBoardOrFallback(ore, 2, () => BuildMicroText(ore))
+        //     : "-";
+        // string t3 = pr.isClear[3]
+        //     ? GetBoardOrFallback(ore, 3, () => BuildConductText(ore))
+        //     : "-";
+
         // View 레이아웃
         if (viewReactionText) viewReactionText.text = t0;
         if (viewHardnessText) viewHardnessText.text = t1;
@@ -201,6 +213,9 @@ public class BoardSwitcher : MonoBehaviour
         bool anyCleared = pr.isClear[0] || pr.isClear[1] || pr.isClear[2] || pr.isClear[3];
         if (image) image.color = anyCleared ? Color.white : new Color(1f, 1f, 1f, 0.4f);
 
+        // Debug.Log("1...." + viewReactionText.text);
+        // Debug.Log("2...." + t0);
+
     }
     private void SetAllViewTexts(string s)
     {
@@ -209,7 +224,7 @@ public class BoardSwitcher : MonoBehaviour
         if (viewMicroText) viewMicroText.text = s;
         if (viewConductText) viewConductText.text = s;
     }
-    
+
     private string GetBoardOrFallback(OreData ore, int experimentNumber, Func<string> fallbackBuilder)
     {
         string fromBoard = "";
@@ -223,18 +238,20 @@ public class BoardSwitcher : MonoBehaviour
     // ------- Fallback 문구 생성기 (ResultUI 텍스트가 없을 때) -------
     private string BuildChemicalText(OreData ore)
     {
-        // isReactingToChem 플래그 해석
-        var reacts = ore.isReactingToChem;
-        bool w = (reacts & ChemicalType.Water) != 0;
-        bool a = (reacts & ChemicalType.Acid) != 0;
-        if (!w && !a) return "반응 없음";
-        if (w && a) return "물/산 모두 반응";
-        if (w) return "물에 반응";
-        return "산에 반응";
+        return "-";
+        // // isReactingToChem 플래그 해석
+        // var reacts = ore.isReactingToChem;
+        // bool w = (reacts & ChemicalType.Water) != 0;
+        // bool a = (reacts & ChemicalType.Acid) != 0;
+        // if (!w && !a) return "반응 없음";
+        // if (w && a) return "물/산 모두 반응";
+        // if (w) return "물에 반응";
+        // return "산에 반응";
     }
     private string BuildHardnessText(OreData ore)
     {
-        return $"{ore.hardness:0.0}";
+        return "-";
+        //return $"{ore.hardness:0.0}";
     }
     private string BuildMicroText(OreData ore)
     {
@@ -245,10 +262,5 @@ public class BoardSwitcher : MonoBehaviour
         string c = ore.electroConduct ? "O" : "X";
         string tx = ore.isToxicElements ? " / O" : "X";
         return $"전기전도: {c}{tx}";
-    }
-
-    private void Update()
-    {
-        RefreshPageUI();
     }
 }

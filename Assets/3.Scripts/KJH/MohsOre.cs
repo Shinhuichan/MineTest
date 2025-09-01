@@ -27,11 +27,40 @@ public class MohsOre : MonoBehaviour
         myLr.material = Instantiate(mat);
         myLr.material.color = myLr.startColor;
         myLr.material.SetColor("_Color", myLr.startColor);
+        startTime = Time.time;
     }
     Vector3 prevDisplacement;
     Vector3 currDisplacement;
     Vector3 velocity;
     Vector3 firstLocalPos;
+    bool isGrab;
+    public void GrabStart()
+    {
+        isGrab = true;
+        SoundManager.I.PlaySFX("DropGlass1", transform.position, null, 0.8f, 0.3f);
+    }
+    public void GrabEnd()
+    {
+        isGrab = false;
+    }
+    bool isCoolTime;
+    float startTime;
+    IEnumerator CoolTime()
+    {
+        yield return new WaitForSeconds(1.4f);
+        isCoolTime = false;
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if(Time.time - startTime > 1.4f)
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
+            if (!isCoolTime && !isGrab)
+            {
+                isCoolTime = true;
+                SoundManager.I.PlaySFX("DropGlass2", transform.position, null, 0.8f, 0.6f);
+                StartCoroutine(nameof(CoolTime));
+            }
+    }
     void OnCollisionStay(Collision collision)
     {
         if (collision.collider.TryGetComponent(out ObjectInfo info))

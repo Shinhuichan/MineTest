@@ -30,8 +30,8 @@ public class PlayButtonSFX : MonoBehaviour
     {
         if (SoundManager.I != null)
         {
-            SoundManager.I.PlaySFX(sfxName, Vector3.zero);
-            Debug.Log($"{sfxName} 실행 완료");
+            SoundManager.I.PlaySFX(sfxName, Vector3.zero, null, 0.5f);
+            //Debug.Log($"{sfxName} 실행 완료");
         }
         else
         {

@@ -34,6 +34,7 @@ public class Pipette : MonoBehaviour
         inputAsset.FindActionMap("XRI RightHand Interaction").FindAction("Activate").performed += RightButton;
         inputAsset.FindActionMap("XRI RightHand Interaction").FindAction("Activate").canceled += RightButtonUp;
         capacity = 1f;
+        startTime = Time.time;
     }
     void OnDisable()
     {
@@ -65,6 +66,27 @@ public class Pipette : MonoBehaviour
         xRControllerParentName = xRController.parent.name;
         StopCoroutine(nameof(GrabHolding));
         StartCoroutine(nameof(GrabHolding));
+        pipetteHit?.Despawn();
+        pipetteHit = SoundManager.I.PlaySFX("DropGlass1", transform.position, null, 0.8f, 0.3f);
+    }
+    bool isCoolTime;
+    float startTime;
+    IEnumerator CoolTime()
+    {
+        yield return new WaitForSeconds(1.4f);
+        isCoolTime = false;
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if(Time.time - startTime > 1.4f)
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
+            if (!isCoolTime && !isGrab)
+            {
+                isCoolTime = true;
+                pipetteHit?.Despawn();
+                pipetteHit = SoundManager.I.PlaySFX("DropGlass2", transform.position, null, 0.8f, 0.6f);
+                StartCoroutine(nameof(CoolTime));
+            }
     }
     public void GrabEnd()
     {
@@ -107,6 +129,8 @@ public class Pipette : MonoBehaviour
             yield return yi;
         }
     }
+    SFX pipetteSuck;
+    SFX pipetteHit;
     void Update()
     {
         if (capacity >= 1f) return;
@@ -116,11 +140,19 @@ public class Pipette : MonoBehaviour
         handle.localScale = Vector3.Lerp(handle.localScale, 1.12f * Vector3.one, Time.deltaTime);
         if (capacity < 1f && isInErlenmeyer)
         {
+            if (pipetteSuck == null)
+            {
+                pipetteSuck = SoundManager.I.PlaySFX("WaterSuck", transform.position, null, 0.8f, 0.6f);
+            }
             fill += 0.5f * Time.deltaTime;
             fill = Mathf.Clamp(fill, 0.75f, 1f);
             erl.fill -= 0.096f * Time.deltaTime;
             erl.Refresh();
             RefreshFill();
+        }
+        else
+        {
+
         }
     }
     ///////////////////////
