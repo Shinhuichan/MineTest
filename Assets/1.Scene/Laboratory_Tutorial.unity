@@ -4030,18 +4030,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 267554993}
     m_Modifications:
-    - target: {fileID: 5788626559494717808, guid: 6997361b8dd3a484b8c00f6f82c1ae6f, type: 3}
-      propertyPath: progress.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5788626559494717808, guid: 6997361b8dd3a484b8c00f6f82c1ae6f, type: 3}
-      propertyPath: accidents.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5788626559494717808, guid: 6997361b8dd3a484b8c00f6f82c1ae6f, type: 3}
-      propertyPath: progress.Array.data[0].isClear.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6174099768387666402, guid: 6997361b8dd3a484b8c00f6f82c1ae6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5767,22 +5755,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: bgmList.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: sfxList.Array.size
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: bgmList.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: f97477fea40ccc041962c94ce0b8f29f, type: 3}
-    - target: {fileID: 3473108535421446262, guid: 3cfa1b16c45177e4d9fd47365ac95f97, type: 3}
-      propertyPath: sfxList.Array.data[24]
-      value: 
-      objectReference: {fileID: 8300000, guid: 359cf3d9227e04e4fab579e47a1b1800, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
