@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -31,20 +30,20 @@ public class blackBoardUI : MonoBehaviour
     }
     public void ShowExperimentStatus(int experimentIndex)
     {
-        //º¸¿©Áß ½ÇÇèÀÌ À¯È¿ÇÑ ¹üÀ§ ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½
         if(experimentIndex < 0 || experimentIndex >= experimentNames.Count)
         {
             Debug.Log(experimentNames.Count);
-            Debug.LogError("Àß¸øµÈ ½ÇÇè ÀÎµ¦½º ÀÔ´Ï´Ù");
+            Debug.LogError("ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½");
             return;
         }
         currentlyDisplayedIndex = experimentIndex;
 
 
-        // 1. Á¦¸ñ ¾÷µ¥ÀÌÆ® 
+        // 1. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® 
         mainExperimentTiltle.text = experimentNames[currentlyDisplayedIndex];
 
-        // 2. O/X »óÅÂ ¾÷µ¥ÀÌÆ®
+        // 2. O/X ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         UpdateStatusDisplay();
     }
 
@@ -58,7 +57,7 @@ public class blackBoardUI : MonoBehaviour
 
         for(int i = 0; i < loopCount; i++)
         {
-            // i¹øÂ° ±¤¹°ÀÇ ÇöÀç Ç¥½Ã ÁßÀÎ ½ÇÇèÀÇ ¿Ï·á ¿©ºÎ È®ÀÎ
+            // iï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
             bool isDone = GameManager.I.progreses[i].isClear[currentlyDisplayedIndex];
 
             if(isDone)
