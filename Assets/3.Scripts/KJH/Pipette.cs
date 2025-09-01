@@ -35,8 +35,6 @@ public class Pipette : MonoBehaviour
         inputAsset.FindActionMap("XRI RightHand Interaction").FindAction("Activate").canceled += RightButtonUp;
         capacity = 1f;
         startTime = Time.time;
-        pipetteSuck = null;
-        currPipetteSuckSFX = -1;
     }
     void OnDisable()
     {
@@ -80,15 +78,15 @@ public class Pipette : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (Time.time - startTime > 1.4f)
-            if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
-                if (!isCoolTime && !isGrab)
-                {
-                    isCoolTime = true;
-                    pipetteHit?.Despawn();
-                    pipetteHit = SoundManager.I.PlaySFX("DropGlass2", transform.position, null, 0.8f, 0.6f);
-                    StartCoroutine(nameof(CoolTime));
-                }
+        if(Time.time - startTime > 1.4f)
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
+            if (!isCoolTime && !isGrab)
+            {
+                isCoolTime = true;
+                pipetteHit?.Despawn();
+                pipetteHit = SoundManager.I.PlaySFX("DropGlass2", transform.position, null, 0.8f, 0.6f);
+                StartCoroutine(nameof(CoolTime));
+            }
     }
     public void GrabEnd()
     {
@@ -121,15 +119,6 @@ public class Pipette : MonoBehaviour
                 capacity -= speed * timeStep;
                 capacity = Mathf.Clamp01(capacity);
                 handle.localScale = Vector3.Lerp(handle.localScale, new Vector3(0.64f, 0.76f, 0.61f), 2.6f * timeStep);
-                if (capacity > 0f && fill < 0.1f)
-                {
-                    if (currPipetteSuckSFX != 1)
-                    {
-                        pipetteSuck?.Despawn();
-                        pipetteSuck = SoundManager.I.PlaySFX("AirOut", transform.position, null, 0.8f, 0.6f);
-                        currPipetteSuckSFX = 1;
-                    }
-                }
             }
             else
             {
@@ -141,7 +130,6 @@ public class Pipette : MonoBehaviour
         }
     }
     SFX pipetteSuck;
-    int currPipetteSuckSFX;
     SFX pipetteHit;
     void Update()
     {
@@ -152,11 +140,9 @@ public class Pipette : MonoBehaviour
         handle.localScale = Vector3.Lerp(handle.localScale, 1.12f * Vector3.one, Time.deltaTime);
         if (capacity < 1f && isInErlenmeyer)
         {
-            if (currPipetteSuckSFX != 3)
+            if (pipetteSuck == null)
             {
-                pipetteSuck?.Despawn();
                 pipetteSuck = SoundManager.I.PlaySFX("WaterSuck", transform.position, null, 0.8f, 0.6f);
-                currPipetteSuckSFX = 3;
             }
             fill += 0.5f * Time.deltaTime;
             fill = Mathf.Clamp(fill, 0.75f, 1f);
@@ -164,14 +150,9 @@ public class Pipette : MonoBehaviour
             erl.Refresh();
             RefreshFill();
         }
-        else if(fill < 0.1f)
+        else
         {
-            if (currPipetteSuckSFX != 2)
-            {
-                pipetteSuck?.Despawn();
-                pipetteSuck = SoundManager.I.PlaySFX("AirIn", transform.position, null, 0.8f, 0.6f);
-                currPipetteSuckSFX = 2;
-            }
+
         }
     }
     ///////////////////////
@@ -226,6 +207,49 @@ public class Pipette : MonoBehaviour
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // bool isPress;
+    // IEnumerator Pressing()
+    // {
+    //     yield return null;
+    //     float timeStep = 0.02f;
+    //     YieldInstruction yi = new WaitForSeconds(timeStep);
+    //     while (true)
+    //     {
+    //         press -= 0.3f * timeStep;
+    //         press = Mathf.Clamp01(press);
+    //         if (press <= 0f) break;
+    //         yield return yi;
+    //     }
+    //     isPress = false;
+    // }
+
+
+
+
+
 
 
 

@@ -68,20 +68,10 @@ public class KJHLiquidDrop : PoolBehaviour
     {
         Init();
     }
-    [HideInInspector] public bool isHitSfx;
-    public void PlaySFX()
-    {
-        Vector3 pos = transform.TransformPoint(vertices[0]);
-        SoundManager.I.PlaySFX("LiquidDrop", pos, null, 0.6f, 0.6f);
-        var pa = ParticleManager.I.PlayParticle("WaterHit", pos, Quaternion.identity, null);
-        float a = Mathf.Clamp01(transform.localScale.x * 0.5f);
-        pa.transform.localScale =  0.06f * a * Vector3.one;
-    }
     void OnDisable() => UnInit();
     void OnDestroy() => Dispose();
     public void Init()
     {
-        isHitSfx = false;
         if (original == null)
         {
             original = mf.mesh;
@@ -120,7 +110,6 @@ public class KJHLiquidDrop : PoolBehaviour
         seed = (uint)Random.Range(0, 10000);
         initScale = 0f;
         InitEntity();
-        SoundManager.I.PlaySFX("Pipette", transform.TransformPoint(vertices[0]), null, 0.8f, 1f);
     }
     public void UnInit()
     {
@@ -253,14 +242,6 @@ public partial class KJHLiquidDropSystem : SystemBase
                 if (mono.infos[i].isAttach > 0) attachCount++;
             }
             float ratio = (float)attachCount / mono.infos.Length;
-            if (ratio > 0.3f)
-            {
-                if (!mono.isHitSfx)
-                {
-                    mono.isHitSfx = true;
-                    mono.PlaySFX();
-                }
-            }
             deltaTime = SystemAPI.Time.DeltaTime;
             var job = new KJHLiquidDropMoveJob
             {
@@ -329,7 +310,7 @@ public partial struct KJHLiquidDropMoveJob : IJobParallelFor
                     info.attachVertex = info.vertex;
                 info.velocity_gravity = float3.zero;
                 info.velocity = float3.zero;
-                info.vertex = math.lerp(info.vertex, (0.6f * (info.hitPoint - pivot) / scale) +  0.4f * info.attachVertex, 3.5f * deltaTime);
+                info.vertex = math.lerp(info.vertex, 0.5f * ((info.hitPoint - pivot) / scale + info.attachVertex), 3.5f * deltaTime);
                 // 덮어쓰기
                 infos[index] = info;
                 return;

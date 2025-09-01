@@ -52,14 +52,14 @@ public class MohsOre : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (Time.time - startTime > 1.4f)
-            if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
-                if (!isCoolTime && !isGrab)
-                {
-                    isCoolTime = true;
-                    SoundManager.I.PlaySFX("DropGlass2", transform.position, null, 0.8f, 0.6f);
-                    StartCoroutine(nameof(CoolTime));
-                }
+        if(Time.time - startTime > 1.4f)
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
+            if (!isCoolTime && !isGrab)
+            {
+                isCoolTime = true;
+                SoundManager.I.PlaySFX("DropGlass2", transform.position, null, 0.8f, 0.6f);
+                StartCoroutine(nameof(CoolTime));
+            }
     }
     void OnCollisionStay(Collision collision)
     {
@@ -159,7 +159,7 @@ public class MohsOre : MonoBehaviour
                                                 if (!GlobalUI.I.isShowMohsUpper)
                                                 {
                                                     GlobalUI.I.isShowMohsUpper = true;
-                                                    GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면, 이 광물은\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 4.2f);
+                                                    GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면,\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 3.7f);
                                                 }
                                             }
                                         }
@@ -175,7 +175,7 @@ public class MohsOre : MonoBehaviour
                                                 if (!GlobalUI.I.isShowMohsUpper)
                                                 {
                                                     GlobalUI.I.isShowMohsUpper = true;
-                                                    GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면, 이 광물은\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 4.2f);
+                                                    GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면,\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 3.7f);
                                                 }
                                             }
                                         }
@@ -185,7 +185,7 @@ public class MohsOre : MonoBehaviour
                                         if (!GlobalUI.I.isShowMohsUpper)
                                         {
                                             GlobalUI.I.isShowMohsUpper = true;
-                                            GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면, 이 광물은\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 4.2f);
+                                            GlobalUI.I.Narration($"경도가 {number}인 광물이 긁히는 걸 보면,\n경도가 {number}보다 클 것이다. 범위를 더 좁혀보자..", 3.7f);
                                         }
                                     }
                                 }
@@ -252,7 +252,7 @@ public class MohsOre : MonoBehaviour
                                                 if (!GlobalUI.I.isShowMohsLower)
                                                 {
                                                     GlobalUI.I.isShowMohsLower = true;
-                                                    GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면, 이 광물은\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 4.2f);
+                                                    GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면,\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 3.7f);
                                                 }
                                             }
                                         }
@@ -269,7 +269,7 @@ public class MohsOre : MonoBehaviour
                                                 if (!GlobalUI.I.isShowMohsLower)
                                                 {
                                                     GlobalUI.I.isShowMohsLower = true;
-                                                    GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면, 이 광물은\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 4.2f);
+                                                    GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면,\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 3.7f);
                                                 }
                                             }
                                         }
@@ -279,7 +279,7 @@ public class MohsOre : MonoBehaviour
                                         if (!GlobalUI.I.isShowMohsLower)
                                         {
                                             GlobalUI.I.isShowMohsLower = true;
-                                            GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면, 이 광물은\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 4.2f);
+                                            GlobalUI.I.Narration($"경도가 {number}인 광물에 긁히는 걸 보면,\n경도가 {number}보다 작을 것이다. 범위를 더 좁혀보자..", 3.7f);
                                         }
                                     }
                                 }

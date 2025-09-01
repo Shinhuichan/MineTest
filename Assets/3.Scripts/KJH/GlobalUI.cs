@@ -28,8 +28,6 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
         pivot.localPosition = Vector3.zero;
         pivot.localRotation = Quaternion.identity;
         pivot.localScale = Vector3.one;
-        isRestart = false;
-        isGameQuit = false;
     }
     void OnDestroy()
     {
@@ -98,8 +96,6 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
         narrationTween?.Kill();
         narrationText.text = str;
         narrationText.color = new Color(narrationText.color.r, narrationText.color.g, narrationText.color.b, 0f);
-        narrationText.DOKill();
-        DOTween.Kill(narrationText);
         narrationTween = narrationText.DOFade(1f, 1f).SetEase(Ease.OutSine).OnComplete(() =>
         {
             DOVirtual.DelayedCall(duration, () =>
@@ -160,7 +156,6 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     }
     public void ShowRedScreen()
     {
-        SoundManager.I.PlaySFX("GameOver", redScreen.transform.position, null, 0.6f);
         redScreen.gameObject.SetActive(true);
         redScreenMr.SetColor("_Color", new Color(1f, 0f, 0f, 0f));
         redScreenMr.DOColor(new Color(1f, 0f, 0f, 0.2f), "_Color", 2f).SetEase(Ease.OutQuad).OnComplete(() =>
@@ -171,33 +166,11 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     }
     public void Restart()
     {
-        if (!isRestart)
-        {
-            isRestart = true;
-            StartCoroutine(nameof(Restart_co));
-            SoundManager.I.PlaySFX("UIClickNext", transform.position, null, 0.5f, 1f);
-        }
-    }
-    bool isRestart;
-    bool isGameQuit;
-    IEnumerator Restart_co()
-    {
-        yield return new WaitForSeconds(0.3f);
         GameManager.I.ResumePlayer();
         GameManager.I.ChangeScene(0);
     }
     public void GameQuit()
     {
-        if (!isGameQuit)
-        {
-            isGameQuit = true;
-            StartCoroutine(nameof(GameQuit_co));
-            SoundManager.I.PlaySFX("UIClickNext", transform.position, null, 0.5f, 1f);
-        }
-    }
-    IEnumerator GameQuit_co()
-    {
-        yield return new WaitForSeconds(0.3f);
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else

@@ -50,7 +50,7 @@ public class HClDropTest : MonoBehaviour
             {
                 if (count % 30 == 0)
                 {
-                    if (amount < 0.7f && count < 190)
+                    if (amount < 0.7f)
                     {
                         Vector3 pos = other.ClosestPoint(kJHLiquidDrop.worldCenter);
                         var pb = ParticleManager.I.PlayParticle("Smoke", pos, Quaternion.identity, null);
@@ -58,7 +58,7 @@ public class HClDropTest : MonoBehaviour
                         SoundManager.I.PlaySFX("Smoke", pos, null, 0.8f, 0.7f);
                         GlobalUI.I.StartCoroutine("SmallFire", pos);
                     }
-                    else if (amount >= 0.7f && count < 190)
+                    else if (amount >= 0.7f)
                     {
                         Vector3 pos = other.ClosestPoint(kJHLiquidDrop.worldCenter);
                         var pb = ParticleManager.I.PlayParticle("Smoke", pos, Quaternion.identity, null);
