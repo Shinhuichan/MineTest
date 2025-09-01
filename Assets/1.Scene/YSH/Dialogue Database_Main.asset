@@ -3297,7 +3297,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 47.826397, y: 108.73241}
+    canvasScrollPosition: {x: 0, y: 0}
     canvasZoom: 0.7900003
   - id: 2
     fields:
@@ -3687,7 +3687,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC120\uC0DD\uB2D8, \uB2E4\uC74C \uC2E4\uD5D8\uC73C\uB85C \uB118\uC5B4\uAC00\uB3C4
+        value: "\uC120\uC0DD\uB2D8, \uB2E4\uC74C\uC73C\uB85C \uC9C4\uD589\uD574\uB3C4
           \uC88B\uC744 \uAC83\uAC19\uC2B5\uB2C8\uB2E4."
         type: 0
         typeString: 
@@ -3743,7 +3743,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC88B\uB2E4. \uB118\uC5B4\uAC00\uC790"
+        value: "\uD655\uC778\uD588\uC2B5\uB2C8\uB2E4. \uB118\uC5B4\uAC00\uC8E0."
         type: 0
         typeString: 
       - title: Sequence
@@ -3770,7 +3770,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 47.142822, y: 21.107111}
+    canvasScrollPosition: {x: 0, y: 0}
     canvasZoom: 1.1199999
   syncInfo:
     syncActors: 0

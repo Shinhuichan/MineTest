@@ -16,15 +16,18 @@ public class SettingUI : MonoBehaviour
     #region UI Active
     public void SetToggleUI()
     {
+        SoundManager.I.PlaySFX("KeyboardNoise");
         menuUI.SetActive(!toggleBool);
         toggleBool = !toggleBool;
     }
     public void EnterSettingUI()
     {
+        SoundManager.I.PlaySFX("KeyboardNoise");
         settingUI.SetActive(true);
     }
     public void ExitSettingUI()
     {
+        SoundManager.I.PlaySFX("KeyboardNoise");
         SoundManager.I.SetVolumeBGM(bgmSlider.value);
         SoundManager.I.SetVolumeSFX(sfxSlider.value);
         SoundManager.I.SetVolumeEnd();
@@ -34,10 +37,12 @@ public class SettingUI : MonoBehaviour
 
     public void SceneRestart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SoundManager.I.PlaySFX("KeyboardNoise");
+        GameManager.I.ChangeScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void GameQuit()
     {
+        SoundManager.I.PlaySFX("KeyboardNoise");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.ExitPlaymode();
 #else
