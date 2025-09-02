@@ -301,8 +301,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         xROrigin.transform.Find("Camera Offset/Left Controller Stabilized").gameObject.SetActive(false);
         xROrigin.transform.Find("Camera Offset/Right Controller").gameObject.SetActive(false);
         xROrigin.transform.Find("Camera Offset/Right Controller Stabilized").gameObject.SetActive(false);
-        TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
-        tpd.enabled = false;
+        // TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
+        // tpd.enabled = false;
     }
     public void ResumeHand()
     {
@@ -320,26 +320,26 @@ public class GameManager : SingletonBehaviour<GameManager>
         xROrigin.transform.Find("Camera Offset/Left Controller Stabilized").gameObject.SetActive(true);
         xROrigin.transform.Find("Camera Offset/Right Controller").gameObject.SetActive(true);
         xROrigin.transform.Find("Camera Offset/Right Controller Stabilized").gameObject.SetActive(true);
-        TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
-        tpd.enabled = true;
+        // TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
+        // tpd.enabled = true;
     }
     Camera camera;
     public void LookTarget(Vector3 pos)
     {
-        StopCoroutine(nameof(LookTarget_co));
-        StartCoroutine(nameof(LookTarget_co), pos);
+        //StopCoroutine(nameof(LookTarget_co));
+        //StartCoroutine(nameof(LookTarget_co), pos);
     }
-    IEnumerator LookTarget_co(Vector3 pos)
-    {
-        Vector3 look = pos - camera.transform.position;
-        float time = Time.time;
-        Vector3 forward = camera.transform.forward;
-        while (Time.time - time < 1.2f)
-        {
-            yield return null;
-            camera.transform.forward = Vector3.Lerp(forward, look, (Time.time - time)/1.2f);
-        }
-    }
+    // IEnumerator LookTarget_co(Vector3 pos)
+    // {
+    //     Vector3 look = pos - camera.transform.position;
+    //     float time = Time.time;
+    //     Vector3 forward = camera.transform.forward;
+    //     while (Time.time - time < 1.2f)
+    //     {
+    //         yield return null;
+    //         camera.transform.forward = Vector3.Lerp(forward, look, (Time.time - time)/1.2f);
+    //     }
+    // }
 
 
 
