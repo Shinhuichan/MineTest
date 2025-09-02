@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 838856291398871931}
   - component: {fileID: 946847565702019715}
   - component: {fileID: 47365301753139360}
-  - component: {fileID: 2529830492578819375}
+  - component: {fileID: 123465200195158077}
   m_Layer: 0
   m_Name: Computer
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2529830492578819375
-BoxCollider:
+--- !u!64 &123465200195158077
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,9 +103,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.019085329, y: 0.017088296, z: 0.010861177}
-  m_Center: {x: -0.000002300368, y: 0.00003780389, z: 0.0054305866}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5668984478841134232, guid: 4c9a36e9bc3f0c945a611d032b717f9e, type: 3}
 --- !u!1 &3334217883834874311
 GameObject:
   m_ObjectHideFlags: 0
