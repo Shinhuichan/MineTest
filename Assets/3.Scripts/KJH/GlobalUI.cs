@@ -151,7 +151,7 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
         ShowRedScreen();
         yield return new WaitForSeconds(1f);
         gameOverPop.SetActive(true);
-        gameOverPop.transform.position = pos;
+        gameOverPop.transform.position = new Vector3(pos.x, 1.7f, pos.z);
         Transform child = gameOverPop.transform.GetChild(0);
         Vector3 scale = child.localScale;
         child.localScale = 0.5f * scale.x * Vector3.one;

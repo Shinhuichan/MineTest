@@ -324,22 +324,39 @@ public class GameManager : SingletonBehaviour<GameManager>
         // tpd.enabled = true;
     }
     Camera camera;
-    public void LookTarget(Vector3 pos)
+    public void LookTarget(Transform target)
     {
-        //StopCoroutine(nameof(LookTarget_co));
-        //StartCoroutine(nameof(LookTarget_co), pos);
+        StopCoroutine(nameof(LookTarget_co));
+        StartCoroutine(nameof(LookTarget_co), target.position);
     }
-    // IEnumerator LookTarget_co(Vector3 pos)
-    // {
-    //     Vector3 look = pos - camera.transform.position;
-    //     float time = Time.time;
-    //     Vector3 forward = camera.transform.forward;
-    //     while (Time.time - time < 1.2f)
-    //     {
-    //         yield return null;
-    //         camera.transform.forward = Vector3.Lerp(forward, look, (Time.time - time)/1.2f);
-    //     }
-    // }
+    public void LookTarget(Vector3 targetPosition)
+    {
+        StopCoroutine(nameof(LookTarget_co));
+        StartCoroutine(nameof(LookTarget_co), targetPosition);
+    }
+    IEnumerator LookTarget_co(Vector3 targetPos)
+    {
+        Transform camTr = Camera.main.transform;
+        float startTime = Time.time;
+        while (Time.time - startTime < 1.5f)
+        {
+            //camTr.rotation = Quaternion.Slerp(camTr.rotation, Quaternion.LookRotation(transform.position - camTr.position), Time.deltaTime);
+            Vector3 vector = transform.position - camTr.position;
+            vector.y = 0f;
+            Vector3 forwardXZ = camTr.forward;
+            forwardXZ.y = 0f;
+            float angle = Quaternion.FromToRotation(forwardXZ, vector).eulerAngles.y;
+            if (angle >= 5 && angle <= 180)
+            {
+                xROrigin.RotateAroundCameraPosition(Vector3.up, 150f * Time.deltaTime);
+            }
+            else if (angle > 180 && angle < 355)
+            {
+                xROrigin.RotateAroundCameraPosition(Vector3.up, -150f * Time.deltaTime);
+            }
+            yield return null;
+        }
+    }
 
 
 
