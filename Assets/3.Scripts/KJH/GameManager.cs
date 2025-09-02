@@ -25,6 +25,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     [SerializeField] blackBoardUI blackboardUI;                    // ***UI용 추가**
     [ReadOnlyInspector][SerializeField] BoardSwitcher boardSwitcher;
     [SerializeField] FinalTestManager finalTestManager;
+    [SerializeField] private SequenceController sequenceController;
     // 현재 플레이어가 진행해야 할 실험의 단계를 저장하는 변수
     private int currentActiveExperimentIndex = 0;                  // ***UI용 추가**
 
@@ -158,6 +159,16 @@ public class GameManager : SingletonBehaviour<GameManager>
     /// <summary>
     /// 특정 실험의 모든 오브젝트가 완료되었는지 확인하고, 완료되었다면 다음 실험으로 넘어가는 함수
     /// </summary>
+    public void PrepareNextExperimentUI()
+    {
+        if (blackboardUI != null)
+        {
+            Debug.Log($"대화종료. 다음실험 ({currentActiveExperimentIndex})UI를 표시합니다.");
+            blackboardUI.ShowExperimentStatus(currentActiveExperimentIndex);
+        }
+        Debug.Log($"[GM.NextUI] show index={currentActiveExperimentIndex}");
+    }
+
     private void CheckForFullExperimentCompletion(int experimentNumber)
     {
         //현재 진행중인 실험이 아니면 체크할 필요 없음
@@ -186,8 +197,10 @@ public class GameManager : SingletonBehaviour<GameManager>
 
             if (currentActiveExperimentIndex < totalExperiments)
             {
-                // 다음 실험 UI 보여주기
-                FindObjectOfType<blackBoardUI>().ShowExperimentStatus(currentActiveExperimentIndex);
+                if (sequenceController != null)
+                {
+                    sequenceController.TriggerTestEndDialogue(experimentNumber);
+                }
             }
             else
             {
