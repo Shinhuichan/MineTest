@@ -68,6 +68,7 @@ public class BoardSwitcher : MonoBehaviour
         mineral_View_Button.interactable = !isViewTrue;
         mineral_Table_Button.interactable = isViewTrue;
         StartCoroutine(DelayInit());
+        StartCoroutine(UpdateUI());
     }
 
     private IEnumerator DelayInit()
@@ -262,5 +263,14 @@ public class BoardSwitcher : MonoBehaviour
         string c = ore.electroConduct ? "O" : "X";
         string tx = ore.isToxicElements ? " / O" : "X";
         return $"전기전도: {c}{tx}";
+    }
+    IEnumerator UpdateUI()
+    {
+        YieldInstruction yi = new WaitForSeconds(3f);
+        while (true)
+        {
+            yield return yi;
+            RefreshPageUI();
+        }
     }
 }
