@@ -21,7 +21,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public List<Progress> progreses = new List<Progress>();
     //ActionBasedController[] controllers;
     [ReadOnlyInspector][SerializeField] ResultUI resultUI;
-   
+
     [SerializeField] blackBoardUI blackboardUI;                    // ***UI용 추가**
     [ReadOnlyInspector][SerializeField] BoardSwitcher boardSwitcher;
     [SerializeField] FinalTestManager finalTestManager;
@@ -162,19 +162,19 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         //현재 진행중인 실험이 아니면 체크할 필요 없음
         if (experimentNumber != currentActiveExperimentIndex) return;
-        
+
         bool allObjectsCleared = true;
-        
-        foreach(var progress in progreses)
+
+        foreach (var progress in progreses)
         {
-            if(!progress.isClear[experimentNumber])
+            if (!progress.isClear[experimentNumber])
             {
                 allObjectsCleared = false;
                 break; //하나라도 미완이 있음 루프 중단
             }
         }
         // 모든 오브젝트에 대한 실험을 완료했다면
-        if(allObjectsCleared)
+        if (allObjectsCleared)
         {
             Debug.Log($"실험 {experimentNumber + 1}의 과제를 완료했습니다.다음 실험으로 넘어가겠습니다.");
 
@@ -182,9 +182,9 @@ public class GameManager : SingletonBehaviour<GameManager>
             currentActiveExperimentIndex++;
             int totalExperiments = progreses[0].isClear.Length;
 
-             
-            
-            if(currentActiveExperimentIndex < totalExperiments)
+
+
+            if (currentActiveExperimentIndex < totalExperiments)
             {
                 // 다음 실험 UI 보여주기
                 FindObjectOfType<blackBoardUI>().ShowExperimentStatus(currentActiveExperimentIndex);
@@ -193,7 +193,7 @@ public class GameManager : SingletonBehaviour<GameManager>
             {
                 // 모든 실험 완료! 테스트 모드로 전환
                 Debug.Log("모든 실험을 완료했습니다!");
-                if(blackboardUI != null)
+                if (blackboardUI != null)
                 {
                     blackboardUI.ShowTestView();
                 }
@@ -206,13 +206,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         int correctCount = 0;
         int totalQuestions = progreses.Count;
 
-        for(int i = 0;i < totalQuestions; i++)
+        for (int i = 0; i < totalQuestions; i++)
         {
             if (submittedOreData[i] == null) continue;
 
             OreData correctAnswerData = progreses[i].oreData;
 
-            if(submittedOreData[i].type == correctAnswerData.type)
+            if (submittedOreData[i].type == correctAnswerData.type)
             {
                 correctCount++;
             }
@@ -229,7 +229,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             Invoke("EndGame", 2f);
         }
-       
+
     }
     public void EndGame()
     {
@@ -301,8 +301,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         xROrigin.transform.Find("Camera Offset/Left Controller Stabilized").gameObject.SetActive(false);
         xROrigin.transform.Find("Camera Offset/Right Controller").gameObject.SetActive(false);
         xROrigin.transform.Find("Camera Offset/Right Controller Stabilized").gameObject.SetActive(false);
-        TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
-        tpd.enabled = false;
+        // TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
+        // tpd.enabled = false;
     }
     public void ResumeHand()
     {
@@ -320,26 +320,63 @@ public class GameManager : SingletonBehaviour<GameManager>
         xROrigin.transform.Find("Camera Offset/Left Controller Stabilized").gameObject.SetActive(true);
         xROrigin.transform.Find("Camera Offset/Right Controller").gameObject.SetActive(true);
         xROrigin.transform.Find("Camera Offset/Right Controller Stabilized").gameObject.SetActive(true);
-        TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
-        tpd.enabled = true;
+        // TrackedPoseDriver tpd = xROrigin.transform.Find("Camera Offset/Main Camera").GetComponent<TrackedPoseDriver>();
+        // tpd.enabled = true;
     }
     Camera camera;
-    public void LookTarget(Vector3 pos)
+    public void LookTarget(Transform target)
     {
         StopCoroutine(nameof(LookTarget_co));
-        StartCoroutine(nameof(LookTarget_co), pos);
+        StartCoroutine(nameof(LookTarget_co), target.position);
     }
-    IEnumerator LookTarget_co(Vector3 pos)
+    public void LookTarget(Vector3 targetPosition)
     {
-        Vector3 look = pos - camera.transform.position;
-        float time = Time.time;
-        Vector3 forward = camera.transform.forward;
-        while (Time.time - time < 1.2f)
+        StopCoroutine(nameof(LookTarget_co));
+        StartCoroutine(nameof(LookTarget_co), targetPosition);
+    }
+    IEnumerator LookTarget_co(Vector3 targetPos)
+    {
+        Transform camTr = Camera.main.transform;
+        float startTime = Time.time;
+        DebugExtension.DebugWireSphere(targetPos, Color.blue, 0.2f, 20f, true);
+        DebugExtension.DebugWireSphere(camTr.position, Color.yellow, 0.2f, 20f, true);
+        Debug.DrawLine(targetPos, camTr.position, Color.blue, 20f, true);
+        Debug.DrawRay(camTr.position, 10f * camTr.forward, Color.yellow, 20f);
+        Vector3 forwardXZ = camTr.forward;
+        forwardXZ.y = 0f;
+        forwardXZ.Normalize();
+        Vector3 targetDirXZ = targetPos - camTr.position;
+        targetDirXZ.y = 0f;
+        targetDirXZ.Normalize();
+        float angle = Vector3.SignedAngle(forwardXZ, targetDirXZ, Vector3.up);
+        Debug.Log($"각도 : {angle}");
+        while (Time.time - startTime < 3f)
         {
+            forwardXZ = camTr.forward;
+            forwardXZ.y = 0f;
+            forwardXZ.Normalize();
+            targetDirXZ = targetPos - camTr.position;
+            targetDirXZ.y = 0f;
+            targetDirXZ.Normalize();
+            angle = Vector3.SignedAngle(forwardXZ, targetDirXZ, Vector3.up);
+            if (angle > 5 && angle <= 180)
+            {
+                xROrigin.RotateAroundCameraPosition(Vector3.up, 150f * Time.deltaTime);
+            }
+            else if (angle >= -180 && angle <= -5)
+            {
+                xROrigin.RotateAroundCameraPosition(Vector3.up, -150f * Time.deltaTime);
+            }
+            else
+            {
+                break;
+            }
             yield return null;
-            camera.transform.forward = Vector3.Lerp(forward, look, (Time.time - time)/1.2f);
         }
     }
+
+
+
 
 
 
