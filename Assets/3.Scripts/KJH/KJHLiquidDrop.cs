@@ -72,7 +72,7 @@ public class KJHLiquidDrop : PoolBehaviour
     public void PlaySFX()
     {
         Vector3 pos = transform.TransformPoint(vertices[0]);
-        SoundManager.I.PlaySFX("LiquidDrop", pos, null, 0.6f, 0.6f);
+        SoundManager.I.PlaySFX("LiquidDrop", pos, null, 0.6f, 0.9f);
         var pa = ParticleManager.I.PlayParticle("WaterHit", pos, Quaternion.identity, null);
         float a = Mathf.Clamp01(transform.localScale.x * 0.5f);
         pa.transform.localScale =  0.06f * a * Vector3.one;
@@ -120,7 +120,7 @@ public class KJHLiquidDrop : PoolBehaviour
         seed = (uint)Random.Range(0, 10000);
         initScale = 0f;
         InitEntity();
-        SoundManager.I.PlaySFX("Pipette", transform.TransformPoint(vertices[0]), null, 0.8f, 1f);
+        SoundManager.I.PlaySFX("Pipette", transform.TransformPoint(vertices[0]), null, 0.8f, 1.5f);
     }
     public void UnInit()
     {

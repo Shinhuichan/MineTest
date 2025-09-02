@@ -21,7 +21,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public List<Progress> progreses = new List<Progress>();
     //ActionBasedController[] controllers;
     [ReadOnlyInspector][SerializeField] ResultUI resultUI;
-   
+
     [SerializeField] blackBoardUI blackboardUI;                    // ***UI용 추가**
     [ReadOnlyInspector][SerializeField] BoardSwitcher boardSwitcher;
     [SerializeField] FinalTestManager finalTestManager;
@@ -162,19 +162,19 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         //현재 진행중인 실험이 아니면 체크할 필요 없음
         if (experimentNumber != currentActiveExperimentIndex) return;
-        
+
         bool allObjectsCleared = true;
-        
-        foreach(var progress in progreses)
+
+        foreach (var progress in progreses)
         {
-            if(!progress.isClear[experimentNumber])
+            if (!progress.isClear[experimentNumber])
             {
                 allObjectsCleared = false;
                 break; //하나라도 미완이 있음 루프 중단
             }
         }
         // 모든 오브젝트에 대한 실험을 완료했다면
-        if(allObjectsCleared)
+        if (allObjectsCleared)
         {
             Debug.Log($"실험 {experimentNumber + 1}의 과제를 완료했습니다.다음 실험으로 넘어가겠습니다.");
 
@@ -182,9 +182,9 @@ public class GameManager : SingletonBehaviour<GameManager>
             currentActiveExperimentIndex++;
             int totalExperiments = progreses[0].isClear.Length;
 
-             
-            
-            if(currentActiveExperimentIndex < totalExperiments)
+
+
+            if (currentActiveExperimentIndex < totalExperiments)
             {
                 // 다음 실험 UI 보여주기
                 FindObjectOfType<blackBoardUI>().ShowExperimentStatus(currentActiveExperimentIndex);
@@ -193,7 +193,7 @@ public class GameManager : SingletonBehaviour<GameManager>
             {
                 // 모든 실험 완료! 테스트 모드로 전환
                 Debug.Log("모든 실험을 완료했습니다!");
-                if(blackboardUI != null)
+                if (blackboardUI != null)
                 {
                     blackboardUI.ShowTestView();
                 }
@@ -206,13 +206,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         int correctCount = 0;
         int totalQuestions = progreses.Count;
 
-        for(int i = 0;i < totalQuestions; i++)
+        for (int i = 0; i < totalQuestions; i++)
         {
             if (submittedOreData[i] == null) continue;
 
             OreData correctAnswerData = progreses[i].oreData;
 
-            if(submittedOreData[i].type == correctAnswerData.type)
+            if (submittedOreData[i].type == correctAnswerData.type)
             {
                 correctCount++;
             }
@@ -229,7 +229,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             Invoke("EndGame", 2f);
         }
-       
+
     }
     public void EndGame()
     {
@@ -338,25 +338,45 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         Transform camTr = Camera.main.transform;
         float startTime = Time.time;
-        while (Time.time - startTime < 1.5f)
+        DebugExtension.DebugWireSphere(targetPos, Color.blue, 0.2f, 20f, true);
+        DebugExtension.DebugWireSphere(camTr.position, Color.yellow, 0.2f, 20f, true);
+        Debug.DrawLine(targetPos, camTr.position, Color.blue, 20f, true);
+        Debug.DrawRay(camTr.position, 10f * camTr.forward, Color.yellow, 20f);
+        Vector3 forwardXZ = camTr.forward;
+        forwardXZ.y = 0f;
+        forwardXZ.Normalize();
+        Vector3 targetDirXZ = targetPos - camTr.position;
+        targetDirXZ.y = 0f;
+        targetDirXZ.Normalize();
+        float angle = Vector3.SignedAngle(forwardXZ, targetDirXZ, Vector3.up);
+        Debug.Log($"각도 : {angle}");
+        while (Time.time - startTime < 3f)
         {
-            //camTr.rotation = Quaternion.Slerp(camTr.rotation, Quaternion.LookRotation(transform.position - camTr.position), Time.deltaTime);
-            Vector3 vector = transform.position - camTr.position;
-            vector.y = 0f;
-            Vector3 forwardXZ = camTr.forward;
+            forwardXZ = camTr.forward;
             forwardXZ.y = 0f;
-            float angle = Quaternion.FromToRotation(forwardXZ, vector).eulerAngles.y;
-            if (angle >= 5 && angle <= 180)
+            forwardXZ.Normalize();
+            targetDirXZ = targetPos - camTr.position;
+            targetDirXZ.y = 0f;
+            targetDirXZ.Normalize();
+            angle = Vector3.SignedAngle(forwardXZ, targetDirXZ, Vector3.up);
+            if (angle > 5 && angle <= 180)
             {
                 xROrigin.RotateAroundCameraPosition(Vector3.up, 150f * Time.deltaTime);
             }
-            else if (angle > 180 && angle < 355)
+            else if (angle >= -180 && angle <= -5)
             {
                 xROrigin.RotateAroundCameraPosition(Vector3.up, -150f * Time.deltaTime);
+            }
+            else
+            {
+                break;
             }
             yield return null;
         }
     }
+
+
+
 
 
 

@@ -20,6 +20,7 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
         narration = pivot.Find("Narration");
         narrationText = pivot.Find("Narration/Text").GetComponent<Text>();
         gameOverPop = transform.Find("GameOver").gameObject;
+        gameClearPop = transform.Find("GameClear").gameObject;
     }
     void OnEnable()
     {
@@ -149,9 +150,12 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
         SoundManager.I.PlaySFX("Explosion", pos, null, 0.4f, 1.2f);
         yield return new WaitForSeconds(0.5f);
         ShowRedScreen();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
+        SoundManager.I.PlaySFX("GameOver", redScreen.transform.position, null, 0.6f);
+        yield return new WaitForSeconds(0.5f);
+        GameManager.I.LookTarget(gameOverPop.transform.position);
+        SoundManager.I.PlaySFX("GameOverTTS", gameOverPop.transform.position, null);
         gameOverPop.SetActive(true);
-        gameOverPop.transform.position = new Vector3(pos.x, 1.7f, pos.z);
         Transform child = gameOverPop.transform.GetChild(0);
         Vector3 scale = child.localScale;
         child.localScale = 0.5f * scale.x * Vector3.one;
@@ -160,10 +164,9 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     }
     public void ShowRedScreen()
     {
-        SoundManager.I.PlaySFX("GameOver", redScreen.transform.position, null, 0.6f);
         redScreen.gameObject.SetActive(true);
         redScreenMr.SetColor("_Color", new Color(1f, 0f, 0f, 0f));
-        redScreenMr.DOColor(new Color(1f, 0f, 0f, 0.2f), "_Color", 2f).SetEase(Ease.OutQuad).OnComplete(() =>
+        redScreenMr.DOColor(new Color(1f, 0f, 0f, 0.2f), "_Color", 1.5f).SetEase(Ease.OutQuad).OnComplete(() =>
         {
             redScreenMr.SetColor("_Color", new Color(1f, 0f, 0f, 0f));
             redScreen.gameObject.SetActive(false);
@@ -205,7 +208,50 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
 #endif
     }
     #endregion
-
+    #region Game Clear
+    GameObject gameClearPop;
+    public void GameClear()
+    {
+        StartCoroutine(nameof(GameCler_co));
+    }
+    IEnumerator GameCler_co()
+    {
+        GameManager.I.StopPlayer();
+        GameManager.I.LookTarget(gameClearPop.transform.position);
+        yield return new WaitForSeconds(1.8f);
+        SoundManager.I.PlaySFX("GameClear", gameClearPop.transform.position, null, 0.6f);
+        StartCoroutine(nameof(ConfetiEffect));
+        yield return new WaitForSeconds(0.5f);
+        SoundManager.I.PlaySFX("GameClearTTS", gameClearPop.transform.position, null);
+        gameClearPop.SetActive(true);
+        Transform child = gameClearPop.transform.GetChild(0);
+        Vector3 scale = child.localScale;
+        child.localScale = 0.5f * scale.x * Vector3.one;
+        child.DOScale(1f * scale.x, 1.2f).SetEase(Ease.OutBounce);
+        GameManager.I.ResumeHand();
+    }
+    IEnumerator ConfetiEffect()
+    {
+        Vector3 randomPos;
+        for (int i = 0; i < 12; i++)
+        {
+            int count = Random.Range(1, 5);
+            for (int j = 0; j < count; j++)
+            {
+                randomPos = transform.position + new Vector3(Random.Range(-2.5f, 2.5f), Random.Range(0f, 1f), Random.Range(-1.5f, 1.5f));
+                SoundManager.I.PlaySFX("Confetti", randomPos);
+                string str = "";
+                if (Random.value > 0.5f)
+                    str = "Confetti1";
+                else
+                    str = "Confetti2";
+                var pa = ParticleManager.I.PlayParticle(str, randomPos, Quaternion.Euler(0f, Random.Range(0f, 360f), 0f), null);
+                yield return new WaitForSeconds(Random.Range(0.01f, 0.1f));
+            }
+            yield return new WaitForSeconds(Random.Range(0.5f, 1.2f));
+        }
+    }
+    #endregion
 
 
 }

@@ -81,6 +81,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4e874dddaa16d5a4c82f26acbc54238d, type: 3}
   - {fileID: 8300000, guid: e81940bec5667674e94ccfde435757ee, type: 3}
   - {fileID: 8300000, guid: d78b40868e65c1440ad78ee91169ff2e, type: 3}
+  - {fileID: 8300000, guid: 1a931aa0c14aed049860bdb8bb392c0e, type: 3}
+  - {fileID: 8300000, guid: 287fff97424634649b25b2db4d52a20b, type: 3}
   ambienceList: []
   sfxPrefab: {fileID: 6825123997177719663, guid: 3573164359e59e749971469f005bd620, type: 3}
   volumeBGM: 1

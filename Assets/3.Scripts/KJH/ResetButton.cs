@@ -1,4 +1,5 @@
 using System.Collections;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 public class ResetButton : MonoBehaviour
 {
@@ -44,6 +45,20 @@ public class ResetButton : MonoBehaviour
         if (isFade)
         {
             GlobalUI.I.FadeIn(0.3f);
+        }
+    }
+    public void QuickReset()
+    {
+        for (int i = 0; i < initTrs.Length; i++)
+        {
+            initTrs[i].position = initPoses[i];
+            initTrs[i].rotation = initRotations[i];
+            initTrs[i].localScale = initScales[i];
+            if (initTrs[i].TryGetComponent(out ErlenmeyerTrigger erlenmeyer))
+            {
+                erlenmeyer.fill = 1f;
+                erlenmeyer.Refresh();
+            }
         }
     }
     bool isFade;

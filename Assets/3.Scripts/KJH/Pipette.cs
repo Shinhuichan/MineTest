@@ -86,7 +86,7 @@ public class Pipette : MonoBehaviour
                 {
                     isCoolTime = true;
                     pipetteHit?.Despawn();
-                    pipetteHit = SoundManager.I.PlaySFX("DropGlass2", transform.position, null, 0.8f, 0.6f);
+                    pipetteHit = SoundManager.I.PlaySFX("DropGlass2", transform.position, null, 0.8f, 0.9f);
                     StartCoroutine(nameof(CoolTime));
                 }
     }
@@ -126,7 +126,7 @@ public class Pipette : MonoBehaviour
                     if (currPipetteSuckSFX != 1)
                     {
                         pipetteSuck?.Despawn();
-                        pipetteSuck = SoundManager.I.PlaySFX("AirOut", transform.position, null, 0.8f, 0.6f);
+                        pipetteSuck = SoundManager.I.PlaySFX("AirOut", transform.position, null, 0.8f, 0.9f);
                         currPipetteSuckSFX = 1;
                     }
                 }
