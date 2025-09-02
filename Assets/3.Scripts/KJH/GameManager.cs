@@ -338,10 +338,10 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         Transform camTr = Camera.main.transform;
         float startTime = Time.time;
-        DebugExtension.DebugWireSphere(targetPos, Color.blue, 0.2f, 20f, true);
-        DebugExtension.DebugWireSphere(camTr.position, Color.yellow, 0.2f, 20f, true);
-        Debug.DrawLine(targetPos, camTr.position, Color.blue, 20f, true);
-        Debug.DrawRay(camTr.position, 10f * camTr.forward, Color.yellow, 20f);
+        //DebugExtension.DebugWireSphere(targetPos, Color.blue, 0.2f, 20f, true);
+        //DebugExtension.DebugWireSphere(camTr.position, Color.yellow, 0.2f, 20f, true);
+        //Debug.DrawLine(targetPos, camTr.position, Color.blue, 20f, true);
+        //Debug.DrawRay(camTr.position, 10f * camTr.forward, Color.yellow, 20f);
         Vector3 forwardXZ = camTr.forward;
         forwardXZ.y = 0f;
         forwardXZ.Normalize();
@@ -349,7 +349,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         targetDirXZ.y = 0f;
         targetDirXZ.Normalize();
         float angle = Vector3.SignedAngle(forwardXZ, targetDirXZ, Vector3.up);
-        Debug.Log($"각도 : {angle}");
+        //Debug.Log($"각도 : {angle}");
         while (Time.time - startTime < 3f)
         {
             forwardXZ = camTr.forward;

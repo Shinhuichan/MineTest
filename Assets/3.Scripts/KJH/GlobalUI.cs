@@ -37,7 +37,7 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
     IEnumerator Start()
     {
         yield return new WaitForSeconds(1f);
-        Narration("먼저 선생님과 대화부터 해보자..", 3.2f);
+        Narration("먼저 선생님과 대화부터 해보자..", 2.4f);
     }
     [HideInInspector] public bool isShowMohsSameHardness;
     [HideInInspector] public bool isShowExplosionText;
