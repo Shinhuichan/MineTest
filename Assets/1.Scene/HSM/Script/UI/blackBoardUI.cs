@@ -12,7 +12,7 @@ public class blackBoardUI : MonoBehaviour
     public GameObject experimentStatusPanel;
     public GameObject testPanel;
 
-    private int currentlyDisplayedIndex = -1;
+    private int currentlyDisplayedIndex = 0;
 
     public void Start()
     {
@@ -31,7 +31,7 @@ public class blackBoardUI : MonoBehaviour
     public void ShowExperimentStatus(int experimentIndex)
     {
         //������ ������ ��ȿ�� ���� ���� �ִ��� Ȯ��
-        if(experimentIndex < 0 || experimentIndex >= experimentNames.Count)
+        if(experimentIndex < 0)
         {
             Debug.Log(experimentNames.Count);
             Debug.LogError("�߸��� ���� �ε��� �Դϴ�");
@@ -45,11 +45,30 @@ public class blackBoardUI : MonoBehaviour
 
         // 2. O/X ���� ������Ʈ
         UpdateStatusDisplay();
+Debug.Log($"[Board] ShowExperimentStatus({experimentIndex})");
     }
 
     public void UpdateStatusDisplay()
     {
         if (GameManager.I == null || GameManager.I.progreses == null) return;
+
+        /* if(currentlyDisplayedIndex < 0 ||
+             GameManager.I.progreses.Count == 0 ||
+             GameManager.I.progreses[0].isClear == null ||
+             currentlyDisplayedIndex >= GameManager.I.progreses[0].isClear.Length)
+         {
+             Debug.LogError($"[Blackboard] invalid currentDisplayedIndex = {currentlyDisplayedIndex}");
+             return;
+         }*/
+        // 인덱스 유효성 가드
+        if (GameManager.I.progreses.Count == 0) return;
+        var cols = GameManager.I.progreses[0].isClear;
+        if (currentlyDisplayedIndex < 0 || cols == null || currentlyDisplayedIndex >= cols.Length)
+        {
+            Debug.LogWarning($"[Blackboard] invalid index={currentlyDisplayedIndex}");
+            return;
+        }
+
 
         int totalProgressCount = GameManager.I.progreses.Count;
 
@@ -57,21 +76,13 @@ public class blackBoardUI : MonoBehaviour
 
         for(int i = 0; i < loopCount; i++)
         {
-            // i��° ������ ���� ǥ�� ���� ������ �Ϸ� ���� Ȯ��
+            
             bool isDone = GameManager.I.progreses[i].isClear[currentlyDisplayedIndex];
-
-            if(isDone)
-            {
-                objectStatusTexts[i].text = "O";
-                objectStatusTexts[i].color = Color.green;
-            }
-            else
-            {
-                objectStatusTexts[i].text = "X";
-                objectStatusTexts[i].color = Color.red;
-            }
+            objectStatusTexts[i].text = isDone ? "O" : "X";
+            objectStatusTexts[i].color = isDone ? Color.green : Color.red;
         }
 
+Debug.Log($"[Board] UpdateStatusDisplay idx={currentlyDisplayedIndex}");
     }
 
 }
