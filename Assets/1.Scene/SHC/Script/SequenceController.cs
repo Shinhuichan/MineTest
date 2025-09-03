@@ -17,20 +17,21 @@ public class SequenceController : MonoBehaviour
     [Header("Update Test")]
     [SerializeField] float testUpdateCount = 2f;
     bool alreadyTalk = false;
-
     private enum EndAction { None, Talk, Test }
     [SerializeField] EndAction pendingEnd = EndAction.None;
-
     [ReadOnly][SerializeField] XRGrabInteractable[] grabs;
+    ResetButton rb;
     void Awake()
     {
         grabs = FindObjectsOfType<XRGrabInteractable>();
+
         if (ores == null)
         {
             ores = FindObjectOfType<ObjectInfo>().transform.parent.gameObject;
         }
         foreach (var grab in grabs) { grab.enabled = false; }
         SoundManager.I.PlayBGM("실험실 속 작은 세계_Fix", 0.6f);
+        rb = FindObjectOfType<ResetButton>(true);
     }
     void Start()
     {
@@ -64,18 +65,19 @@ public class SequenceController : MonoBehaviour
             alreadyTalk = true;
             return;
         }
-Debug.Log($"[Seq] CallPlayer({experimentNumber}), alreadyTalk={alreadyTalk}");
+        Debug.Log($"[Seq] CallPlayer({experimentNumber}), alreadyTalk={alreadyTalk}");
     }
     #endregion 호출 조건
     public void OnConversationEnd(Transform actor)
     {
         switch (pendingEnd)
         {
-            case EndAction.Talk: TalkEndCore(); Debug.Log("이야기 끝");  break;
+            case EndAction.Talk: TalkEndCore(); Debug.Log("이야기 끝"); break;
             case EndAction.Test: TestEndCore(); Debug.Log("실험 끝"); break;
         }
         pendingEnd = EndAction.None;
-  Debug.Log($"[Seq] OnConversationEnd pending={pendingEnd} → TestEndCore/TalkEndCore");
+        Debug.Log($"[Seq] OnConversationEnd pending={pendingEnd} → TestEndCore/TalkEndCore");
+        rb.QuickReset();
     }
 
     #region Talk
