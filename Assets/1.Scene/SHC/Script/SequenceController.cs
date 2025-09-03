@@ -30,12 +30,13 @@ public class SequenceController : MonoBehaviour
             ores = FindObjectOfType<ObjectInfo>().transform.parent.gameObject;
         }
         foreach (var grab in grabs) { grab.enabled = false; }
-        SoundManager.I.PlayBGM("실험실 속 작은 세계_Fix", 0.6f);
         rb = FindObjectOfType<ResetButton>(true);
     }
-    void Start()
+    IEnumerator Start()
     {
+        yield return null;
         StartCoroutine(CheckTestCount());
+        SoundManager.I.PlayBGM("실험실 속 작은 세계_Fix", 0.6f);
     }
 
 
