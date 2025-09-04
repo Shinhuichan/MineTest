@@ -21,6 +21,7 @@ public class BoardSwitcher : MonoBehaviour
     [Header("Top Tabs")]
     public Button mineral_View_Button;
     public Button mineral_Table_Button;
+    [SerializeField] private Button Mineral_Test_Button;
 
     [Header("Prev/Next")]
     public Button prev;
@@ -42,12 +43,20 @@ public class BoardSwitcher : MonoBehaviour
     [Header("Table UI (표형식)")]
     public GameObject mineral_Table;
 
+    [Header("정답 맞추기 UI")]
+    public GameObject mineral_Test;
+
+    [SerializeField] private FinalTestManager finalTestManager;
+
     // 내부 상태
     private bool isBInFront = false;
     private bool isViewTrue = true;
     // 페이지(광물) 인덱싱
     [ReadOnlyInspector] public int currentIndex = 0;
     [ReadOnlyInspector] public List<GameManager.Progress> pages = new List<GameManager.Progress>();
+
+    private enum TabType { View, Table, Test};
+    private TabType type = TabType.View;
 
     private void Start()
     {
@@ -57,8 +66,9 @@ public class BoardSwitcher : MonoBehaviour
         PosA_Back = PosB_Back;
         PosB_Front = PosA_Front;
         // 탭 버튼
-        mineral_View_Button.onClick.AddListener(ViewChange);
-        mineral_Table_Button.onClick.AddListener(ViewChange);
+        mineral_View_Button.onClick.AddListener(() => ViewChange(TabType.View));
+        mineral_Table_Button.onClick.AddListener(() => ViewChange(TabType.Table));
+        Mineral_Test_Button.onClick.AddListener(() => ViewChange(TabType.Test));
         // Prev/Next 버튼
         if (prev) prev.onClick.AddListener(OnPrev);
         if (next) next.onClick.AddListener(OnNext);
@@ -67,6 +77,7 @@ public class BoardSwitcher : MonoBehaviour
         mineral_Table.SetActive(!isViewTrue);
         mineral_View_Button.interactable = !isViewTrue;
         mineral_Table_Button.interactable = isViewTrue;
+        Mineral_Test_Button.interactable = isViewTrue;
         StartCoroutine(DelayInit());
     }
 
@@ -106,19 +117,37 @@ public class BoardSwitcher : MonoBehaviour
         if (prev) prev.interactable = (pages.Count > 0 && currentIndex > 0);
         if (next) next.interactable = (pages.Count > 0 && currentIndex < pages.Count - 1);
     }
-    public void ViewChange()
+
+    private void ViewChange(TabType t)
     {
-        isViewTrue = !isViewTrue;
-        mineral_View.SetActive(isViewTrue);
-        mineral_Table.SetActive(!isViewTrue);
-        mineral_View_Button.interactable = !isViewTrue;
-        mineral_Table_Button.interactable = isViewTrue;
-        // 탭 전환 시 보드 슬라이드 애니메이션
+        if (type == t) return;
+
+        // Test → 다른 탭 : 떨어지기 전에 소켓 밑으로 주차 + 물리 잠금
+        if (type == TabType.Test && t != TabType.Test && finalTestManager)
+            finalTestManager.ParkSelectionsToSocket();
+
+        type = t;
+
+        // 패널 SetActive 사용해도 됨 (주차했으니 떨어지지 않음)
+        if (mineral_View) mineral_View.SetActive(type == TabType.View);
+        if (mineral_Table) mineral_Table.SetActive(type == TabType.Table);
+        if (mineral_Test) mineral_Test.SetActive(type == TabType.Test);
+
+        // 다른 탭 → Test : 패널을 켠 다음 복구(필요 시 원래 부모로 되돌리려면 true)
+        if (type == TabType.Test && finalTestManager)
+            finalTestManager.UnparkSelections(restoreOriginalParent: false);
+
+        // 버튼 상태, 애니메이션, UI 갱신
+        if (mineral_View_Button) mineral_View_Button.interactable = (type != TabType.View);
+        if (mineral_Table_Button) mineral_Table_Button.interactable = (type != TabType.Table);
+        if (Mineral_Test_Button) Mineral_Test_Button.interactable = (type != TabType.Test);
+
         OnSwapSlide();
-        // 같은 페이지의 다른 레이아웃이므로 내용 갱신
         RefreshPageUI();
         SoundManager.I.PlaySFX("UIClickNext", transform.position, null);
     }
+
+
     private void OnPrev()
     {
         if (pages.Count == 0) return;

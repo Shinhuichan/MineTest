@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,150 +7,180 @@ using TMPro;
 
 public class FinalTestManager : MonoBehaviour
 {
-    [Header("¿¬°á")]
+    [Header("ì—°ê²°")]
     [SerializeField] private XRSocketInteractor[] answerSockets;
     [SerializeField] private GameObject feedbackPanel;
     [SerializeField] private TMP_Text feedbackText;
 
     private XRInteractionManager interactionManager;
-
     private bool isCheckingAnswer = false;
 
-    private void Start()
+    // ---- ì£¼ì°¨ ì •ë³´ ----
+    private struct ParkInfo
+    {
+        public XRSocketInteractor socket;
+        public IXRSelectInteractable interactable;
+        public Transform root;              // â† Rigidbody/Grabì´ ë¶™ì€ ë£¨íŠ¸
+        public Transform originalParent;
+        public bool hadRigidbody;
+        public Rigidbody rb;
+        public bool rbWasKinematic;
+        public XRGrabInteractable grab;
+        public bool grabWasEnabled;
+    }
+    private readonly List<ParkInfo> _parked = new List<ParkInfo>();
+
+    void Start()
     {
         interactionManager = FindObjectOfType<XRInteractionManager>();
-        
-        // ¸ğµç ¼ÒÄÏ¿¡ ¾ÆÀÌÅÛÀÌ Ã¤¿öÁö´Â ÀÌº¥Æ®¸¦ °¨ÁöÇÏµµ·Ï µî·ÏÇÕ´Ï´Ù.
-        foreach (var socket in answerSockets)
-        {
-            socket.selectEntered.AddListener(OnSocketFilled);
-        }
-        if(feedbackPanel != null)
-        {
-            feedbackPanel.SetActive(false);
-        }
-    }
-    // ½ºÅ©¸³Æ®°¡ ºñÈ°¼ºÈ­µÉ ¶§ ÀÌº¥Æ® ¿¬°áÀ» ÇØÁ¦ÇÏ¿© ¸Ş¸ğ¸® ´©¼ö¸¦ ¹æÁöÇÕ´Ï´Ù.
-    private void OnDestroy()
-    {
-        foreach(var socket in answerSockets)
-        {
-            socket.selectEntered.RemoveListener(OnSocketFilled);
-        }
+        foreach (var s in answerSockets) s.selectEntered.AddListener(OnSocketFilled);
+        if (feedbackPanel) feedbackPanel.SetActive(false);
     }
 
-    private void OnSocketFilled(SelectEnterEventArgs args)
+    void OnDestroy()
+    {
+        foreach (var s in answerSockets) s.selectEntered.RemoveListener(OnSocketFilled);
+    }
+
+    void OnSocketFilled(SelectEnterEventArgs args)
     {
         if (isCheckingAnswer) return;
 
-        bool allSocketsFull = true;
-        foreach (var socket in answerSockets)
+        bool full = true;
+        foreach (var s in answerSockets) { if (!s.hasSelection) { full = false; break; } }
+        if (full)
         {
-            if(!socket.hasSelection)
-            {
-                allSocketsFull = false;
-                break;  // ÇÏ³ª¶óµµ ºñ¾îÀÖÀ¸¸é °Ë»ç Áß´Ü
-            }
-        }
-        if(allSocketsFull)
-        {
-            Debug.Log("¸ğµç ¼ÒÄÏÀÌ Ã¤¿öÁ³½À´Ï´Ù. ÀÚµ¿Ã¤Á¡À» ½ÃÀÛÇÕ´Ï´Ù.");
             isCheckingAnswer = true;
             checkAnswer();
         }
-
     }
 
     public void checkAnswer()
     {
-        OreData[] submittedData = new OreData[answerSockets.Length];
-        for(int i =0; i < answerSockets.Length; i++)
+        OreData[] submitted = new OreData[answerSockets.Length];
+        for (int i = 0; i < answerSockets.Length; i++)
         {
-            IXRSelectInteractable socketedObject = answerSockets[i].GetOldestInteractableSelected();
-            if(socketedObject != null)
+            var it = answerSockets[i].GetOldestInteractableSelected();
+            if (it is Component comp)
             {
-                answerSheet sheet = socketedObject.transform.GetComponent<answerSheet>();
-                if(sheet != null)
-                {
-                    submittedData[i] = sheet.associatedOreData;
-                }
+                var sheet = comp.GetComponent<answerSheet>();
+                if (sheet) submitted[i] = sheet.associatedOreData;
             }
         }
-        GameManager.I.CheckFinalAnswer(submittedData);
+        GameManager.I.CheckFinalAnswer(submitted);
     }
-    public void ShowFeedback(int correctCount, int totalQuestions)
+
+    public void ShowFeedback(int correct, int total)
     {
-        if (feedbackPanel == null || feedbackText == null) return;
-
-        // Á¤´äÀÏ °æ¿ì
-        if(correctCount == totalQuestions)
-        {
-            feedbackText.text = "Á¤´äÀÔ´Ï´Ù!";
-        }
-        // ¿À´äÀÏ °æ¿ì
-        else
-        {
-            feedbackText.text = $"´Ù½Ã ÇÑ¹ø »ı°¢ÇØº¸¼¼¿ä.\nÁ¤´ä ({correctCount} / {totalQuestions})";
-        }
+        if (!feedbackPanel || !feedbackText) return;
+        feedbackText.text = (correct == total) ? "ì •ë‹µì…ë‹ˆë‹¤!" : $"ë‹¤ì‹œ í•œë²ˆ ìƒê°í•´ë³´ì„¸ìš”.\nì •ë‹µ ({correct} / {total})";
         StartCoroutine(FeedbackDisplayRoutine());
-       
-        // ¿À´äÀÏ °æ¿ì¿¡¸¸ ¸®¼Â ÄÚ·çÆ¾À» ½ÇÇà
-        if(correctCount < totalQuestions)
-        {
-            StartCoroutine(ResetTestRoutine());
-        }
+        if (correct < total) StartCoroutine(ResetTestRoutine());
     }
 
-    private IEnumerator FeedbackDisplayRoutine()
+    IEnumerator FeedbackDisplayRoutine()
     {
         feedbackPanel.SetActive(true);
         yield return new WaitForSeconds(2f);
         feedbackPanel.SetActive(false);
     }
-    // Å×½ºÆ®¸¦ ¸®¼ÂÇÏ´Â ÄÚ·çÆ¾
-    private IEnumerator ResetTestRoutine()
-    {
 
-        // 1. ÇÇµå¹é UI°¡ »ç¶óÁú ¶§±îÁö 2ÃÊ ´ë±â
+    IEnumerator ResetTestRoutine()
+    {
         yield return new WaitForSeconds(2f);
 
-        Debug.Log("¸®¼Â ½ÃÀÛ: »óÈ£ÀÛ¿ë Ãë¼Ò ¹× À§Ä¡ º¹±¸¸¦ ½ÃÀÛÇÕ´Ï´Ù.");
-
-        List<answerSheet> sheetsToReset = new List<answerSheet>();
-
-        // 2. ¼ÒÄÏ¿¡ ÀÖ´Â ¸ğµç ¿ÀºêÁ§Æ®ÀÇ »óÈ£ÀÛ¿ëÀ» ¸ÕÀú Ãë¼Ò½ÃÅ´
-        foreach (var socket in answerSockets)
+        var list = new List<answerSheet>();
+        foreach (var s in answerSockets)
         {
-            if (socket.hasSelection)
+            if (!s.hasSelection) continue;
+            var it = s.GetOldestInteractableSelected();
+            if (it is Component comp)
             {
-                IXRSelectInteractable socketedObject = socket.GetOldestInteractableSelected();
-                answerSheet sheet = socketedObject.transform.GetComponent<answerSheet>();
-                if (sheet != null)
-                {
-                    sheetsToReset.Add(sheet);
-                    
-                }
+                var sheet = comp.GetComponent<answerSheet>();
+                if (sheet) list.Add(sheet);
             }
         }
-
-     
-       
-
-        // 4. »óÈ£ÀÛ¿ëÀÌ Ãë¼ÒµÈ ¸ğµç ¿ÀºêÁ§Æ®¸¦ ¿ø·¡ À§Ä¡·Î µÇµ¹¸²
-        foreach (var sheet in sheetsToReset)
-        {
-            sheet.ForceCancelInteraction();
-        }
+        foreach (var sh in list) sh.ForceCancelInteraction();
         yield return null;
-        foreach (var sheet in sheetsToReset)
-        {
-            sheet.StartReturnToPositionRoutine();
-        }
+        foreach (var sh in list) sh.StartReturnToPositionRoutine();
 
-
-        Debug.Log("Å×½ºÆ®°¡ ¸®¼ÂµÇ¾ú½À´Ï´Ù.");
         isCheckingAnswer = false;
     }
+
+    // ====== ì—¬ê¸°ë¶€í„°: íƒ­ ì „í™˜ìš© ì£¼ì°¨/ë³µê·€ ======
+
+    /// <summary>
+    /// Test íƒ­ì„ ë– ë‚˜ê¸° ì§ì „ í˜¸ì¶œ:
+    /// ì„ íƒë¬¼ì„ ì†Œì¼“ì˜ attachTransform(ì—†ìœ¼ë©´ socket.transform) ë°‘ìœ¼ë¡œ ë¶™ì´ê³ ,
+    /// Rigidbodyë¥¼ kinematic, Grabì„ ë¹„í™œì„±í™”í•´ì„œ ë–¨ì–´ì§€ì§€ ì•Šê²Œ 'ì •ì§€'ì‹œí‚¨ë‹¤.
+    /// </summary>
+    public void ParkSelectionsToSocket()
+    {
+        _parked.Clear();
+
+        foreach (var socket in answerSockets)
+        {
+            if (socket == null || !socket.hasSelection) continue;
+
+            var it = socket.GetOldestInteractableSelected();
+            if (it is not Component comp) continue;
+
+            var grab = comp.GetComponentInParent<XRGrabInteractable>();
+            Transform root = grab ? grab.transform : (comp.GetComponentInParent<Rigidbody>()?.transform ?? comp.transform);
+            var rb = root.GetComponent<Rigidbody>();
+
+            var info = new ParkInfo
+            {
+                socket = socket,
+                interactable = it,
+                root = root,
+                originalParent = root.parent,
+                hadRigidbody = rb != null,
+                rb = rb,
+                rbWasKinematic = rb ? rb.isKinematic : false,
+                grab = grab,
+                grabWasEnabled = grab ? grab.enabled : false
+            };
+
+            // ë¬¼ë¦¬ ì •ì§€
+            if (rb)
+            {
+                rb.isKinematic = true;
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+            // Grab ì ì‹œ ë¹„í™œì„± (ë¹„í™œì„±í™” ê³¼ì •ì—ì„œ ì´ë™/í•´ì œê°€ ë¼ì–´ë“¤ì§€ ì•Šê²Œ)
+            if (grab) grab.enabled = false;
+
+            // ì†Œì¼“ì˜ attach ë°‘ìœ¼ë¡œ ë¶™ì´ê³  ì •í™•íˆ ë¶™ì—¬ë‘”ë‹¤
+            Transform parent = socket.attachTransform ? socket.attachTransform : socket.transform;
+            root.SetParent(parent, false);
+            root.localPosition = Vector3.zero;
+            root.localRotation = Quaternion.identity;
+
+            _parked.Add(info);
+        }
+    }
+
+    /// <summary>
+    /// Test íƒ­ìœ¼ë¡œ ëŒì•„ì˜¨ ë’¤ í˜¸ì¶œ:
+    /// Grab/ë¬¼ë¦¬ ìƒíƒœë¥¼ ì›ë˜ëŒ€ë¡œ ë³µêµ¬í•œë‹¤.
+    /// (ë¶€ëª¨ë¥¼ ë‹¤ì‹œ ì›ë˜ë¡œ ëŒë¦¬ê³  ì‹¶ìœ¼ë©´ restoreOriginalParent=true)
+    /// </summary>
+    public void UnparkSelections(bool restoreOriginalParent = false)
+    {
+        foreach (var p in _parked)
+        {
+            if (!p.root) continue;
+
+            if (restoreOriginalParent && p.originalParent)
+                p.root.SetParent(p.originalParent, false);
+
+            if (p.hadRigidbody && p.rb)
+                p.rb.isKinematic = p.rbWasKinematic;
+
+            if (p.grab) p.grab.enabled = p.grabWasEnabled;
+        }
+        _parked.Clear();
+    }
 }
-
-
