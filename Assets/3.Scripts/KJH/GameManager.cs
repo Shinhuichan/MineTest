@@ -266,6 +266,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         Debug.Log("게임 클리어");
 
         // 게임 클리어시 필요한 로직
+
+        GlobalUI.I.GameClear();
     }
 
     public void EditBoardText(OreData oreData, int experimentNumber, string boardText)
