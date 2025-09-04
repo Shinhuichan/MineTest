@@ -1,3 +1,4 @@
+using System.Collections;
 using CustomInspector;
 using TMPro;
 using UnityEngine;
@@ -36,8 +37,9 @@ public class TutorialUI : MonoBehaviour
     [Header("UI Show Index")]
     [SerializeField, ReadOnly] private int currentIndex = 0;
 
-    private void Start()
+    IEnumerator Start()
     {
+        yield return null;
         ShowIntroduce(currentIndex);
         SoundManager.I.PlayBGM("조용하지 않은 실험실");
     }

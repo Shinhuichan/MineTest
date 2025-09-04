@@ -17,24 +17,26 @@ public class SequenceController : MonoBehaviour
     [Header("Update Test")]
     [SerializeField] float testUpdateCount = 2f;
     bool alreadyTalk = false;
-
     private enum EndAction { None, Talk, Test }
     [SerializeField] EndAction pendingEnd = EndAction.None;
-
     [ReadOnly][SerializeField] XRGrabInteractable[] grabs;
+    ResetButton rb;
     void Awake()
     {
         grabs = FindObjectsOfType<XRGrabInteractable>();
+
         if (ores == null)
         {
             ores = FindObjectOfType<ObjectInfo>().transform.parent.gameObject;
         }
         foreach (var grab in grabs) { grab.enabled = false; }
-        SoundManager.I.PlayBGM("실험실 속 작은 세계_Fix", 0.6f);
+        rb = FindObjectOfType<ResetButton>(true);
     }
-    void Start()
+    IEnumerator Start()
     {
+        yield return null;
         StartCoroutine(CheckTestCount());
+        SoundManager.I.PlayBGM("실험실 속 작은 세계_Fix", 0.6f);
     }
 
 
@@ -64,16 +66,19 @@ public class SequenceController : MonoBehaviour
             alreadyTalk = true;
             return;
         }
+        Debug.Log($"[Seq] CallPlayer({experimentNumber}), alreadyTalk={alreadyTalk}");
     }
     #endregion 호출 조건
     public void OnConversationEnd(Transform actor)
     {
         switch (pendingEnd)
         {
-            case EndAction.Talk: TalkEndCore(); Debug.Log("이야기 끝");  break;
+            case EndAction.Talk: TalkEndCore(); Debug.Log("이야기 끝"); break;
             case EndAction.Test: TestEndCore(); Debug.Log("실험 끝"); break;
         }
         pendingEnd = EndAction.None;
+        Debug.Log($"[Seq] OnConversationEnd pending={pendingEnd} → TestEndCore/TalkEndCore");
+        rb.QuickReset();
     }
 
     #region Talk
@@ -84,6 +89,27 @@ public class SequenceController : MonoBehaviour
     #endregion Talk
 
     #region Test
+
+    //GameManager가 호출할 전용함수
+    public void TriggerTestEndDialogue(int experimentNumber)
+    {
+        //  이미 대화가 진행중이면 중복 호출 방지
+        if (alreadyTalk) return;
+        
+        // GameManager로 부터 호출을 받았으므로
+        if(GameManager.I.IsCurrentTestClear(experimentNumber))
+        {
+            if(trigger != null)
+            {
+                Debug.Log($"GameManager의 요청으로 {experimentNumber}번 실험 완료 대화를 시작합니다.");
+                alreadyTalk = true;
+                trigger.OnUse();
+                pendingEnd = EndAction.Test;
+            }
+        }
+ Debug.Log($"[Seq] TriggerTestEndDialogue({experimentNumber}) pending=Test");
+
+    }
 
     private void TestEndCore()
     {
@@ -97,6 +123,9 @@ public class SequenceController : MonoBehaviour
         {
             testCount++;
             if (testObjects[testCount] != null) testObjects[testCount].SetActive(true);
+
+            GameManager.I.PrepareNextExperimentUI();
+
             if (testCount == testObjects.Length - 1) ores.SetActive(false);
             alreadyTalk = false; // 다음 대화 트리거 허용
         }

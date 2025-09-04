@@ -20,11 +20,12 @@ public class GameManager : SingletonBehaviour<GameManager>
     public List<LaboratoryAccident> accidents = new List<LaboratoryAccident>();
     public List<Progress> progreses = new List<Progress>();
     //ActionBasedController[] controllers;
-    [ReadOnlyInspector][SerializeField] ResultUI resultUI;
+    [ReadOnlyInspector] [SerializeField] ResultUI resultUI;
 
     [SerializeField] blackBoardUI blackboardUI;                    // ***UI용 추가**
-    [ReadOnlyInspector][SerializeField] BoardSwitcher boardSwitcher;
+    [ReadOnlyInspector] [SerializeField] BoardSwitcher boardSwitcher;
     [SerializeField] FinalTestManager finalTestManager;
+    [SerializeField] private SequenceController sequenceController;
     // 현재 플레이어가 진행해야 할 실험의 단계를 저장하는 변수
     private int currentActiveExperimentIndex = 0;                  // ***UI용 추가**
 
@@ -158,6 +159,23 @@ public class GameManager : SingletonBehaviour<GameManager>
     /// <summary>
     /// 특정 실험의 모든 오브젝트가 완료되었는지 확인하고, 완료되었다면 다음 실험으로 넘어가는 함수
     /// </summary>
+    public void PrepareNextExperimentUI()
+    {
+        if (blackboardUI == null) return;
+        int total =
+            (progreses != null && progreses.Count > 0 && progreses[0].isClear != null)
+            ? progreses[0].isClear.Length
+            : 0;
+        if (currentActiveExperimentIndex >= total)
+        {
+            Debug.Log("[GM.NextUI] 모든 실험 완료 -> 테스트 화면");
+            blackboardUI.ShowTestView();
+            return;
+        }
+        Debug.Log($"[GM.NextUI show index = {currentActiveExperimentIndex}");
+        blackboardUI.ShowExperimentStatus(currentActiveExperimentIndex);
+    }
+
     private void CheckForFullExperimentCompletion(int experimentNumber)
     {
         //현재 진행중인 실험이 아니면 체크할 필요 없음
@@ -186,8 +204,10 @@ public class GameManager : SingletonBehaviour<GameManager>
 
             if (currentActiveExperimentIndex < totalExperiments)
             {
-                // 다음 실험 UI 보여주기
-                FindObjectOfType<blackBoardUI>().ShowExperimentStatus(currentActiveExperimentIndex);
+                if (sequenceController != null)
+                {
+                    sequenceController.TriggerTestEndDialogue(experimentNumber);
+                }
             }
             else
             {
@@ -206,11 +226,22 @@ public class GameManager : SingletonBehaviour<GameManager>
         int correctCount = 0;
         int totalQuestions = progreses.Count;
 
+        // 몇 개의 답안이 제출되었는지 먼저 확인
+        Debug.Log($"제출된 답안 개수: {submittedOreData.Length}, 총 문제 수: {totalQuestions}");
+
         for (int i = 0; i < totalQuestions; i++)
         {
-            if (submittedOreData[i] == null) continue;
+            // 제출된 답안이 null일 경우를 대비
+            if (submittedOreData[i] == null)
+            {
+                Debug.Log($"[검증 {i}]: 제출된 답안이 없습니다.");
+                continue;
+            }
 
             OreData correctAnswerData = progreses[i].oreData;
+
+            // ★★★ 어떤 데이터끼리 비교하는지 직접 출력 ★★★
+            Debug.Log($"[검증 {i}]: 제출된 답: {submittedOreData[i].type}  |  정답: {correctAnswerData.type}");
 
             if (submittedOreData[i].type == correctAnswerData.type)
             {
@@ -218,18 +249,17 @@ public class GameManager : SingletonBehaviour<GameManager>
             }
         }
 
-        Debug.Log($"맞은 개수 : {correctCount} / {totalQuestions}");
+        Debug.Log($"최종 맞은 개수 : {correctCount} / {totalQuestions}");
 
         if (finalTestManager != null)
         {
             finalTestManager.ShowFeedback(correctCount, totalQuestions);
         }
-        // 만약 모두 맞았다면, 게임 종료 로직을 호출합니다.
+
         if (correctCount == totalQuestions)
         {
             Invoke("EndGame", 2f);
         }
-
     }
     public void EndGame()
     {
@@ -374,10 +404,4 @@ public class GameManager : SingletonBehaviour<GameManager>
             yield return null;
         }
     }
-
-
-
-
-
-
 }

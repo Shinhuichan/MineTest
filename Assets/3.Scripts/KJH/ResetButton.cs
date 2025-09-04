@@ -1,6 +1,7 @@
 using System.Collections;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 public class ResetButton : MonoBehaviour
 {
     [SerializeField] Transform objectGroup;
@@ -36,16 +37,15 @@ public class ResetButton : MonoBehaviour
     }
     public void ButtonEnter()
     {
-        StopCoroutine(nameof(ButtonHolding));
-        StartCoroutine(nameof(ButtonHolding));
+        if (!isRunning)
+        {
+            StopCoroutine(nameof(ButtonHolding));
+            StartCoroutine(nameof(ButtonHolding));
+        }
     }
     public void ButtonExit()
     {
-        //StopCoroutine(nameof(ButtonHolding));
-        if (isFade)
-        {
-            GlobalUI.I.FadeIn(0.3f);
-        }
+        
     }
     public void QuickReset()
     {
@@ -61,14 +61,33 @@ public class ResetButton : MonoBehaviour
             }
         }
     }
-    bool isFade;
+    bool isRunning;
     IEnumerator ButtonHolding()
     {
-        yield return new WaitForSeconds(1.5f);
+        isRunning = true;
+        yield return new WaitForSeconds(1.4f);
         GlobalUI.I.FadeOut(0.6f);
-        isFade = true;
         for (int i = 0; i < initTrs.Length; i++)
         {
+            Rigidbody rb = initTrs[i].GetComponent<Rigidbody>();
+            XRGrabInteractable xRGrab = initTrs[i].GetComponent<XRGrabInteractable>();
+            CollisionDetectionMode mode1 = CollisionDetectionMode.Discrete;
+            RigidbodyInterpolation mode2 = RigidbodyInterpolation.None;
+            bool grab = false;
+            if (xRGrab != null)
+            {
+                grab = xRGrab.enabled;
+                xRGrab.enabled = false;
+                yield return null;
+            }
+            if (rb != null)
+            {
+                mode1 = rb.collisionDetectionMode;
+                mode2 = rb.interpolation;
+                rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+                rb.interpolation = RigidbodyInterpolation.None;
+                yield return null;
+            }
             initTrs[i].position = initPoses[i];
             initTrs[i].rotation = initRotations[i];
             initTrs[i].localScale = initScales[i];
@@ -77,9 +96,20 @@ public class ResetButton : MonoBehaviour
                 erlenmeyer.fill = 1f;
                 erlenmeyer.Refresh();
             }
+            if (rb != null)
+            {
+                yield return null;
+                rb.collisionDetectionMode = mode1;
+                rb.interpolation = mode2;
+            }
+            if (xRGrab != null)
+            {
+                yield return null;
+                xRGrab.enabled = grab;
+            }
         }
-        yield return new WaitForSeconds(0.3f);
-        GlobalUI.I.FadeIn(0.6f);
-        isFade = false;
+        yield return new WaitForSeconds(0.2f);
+        GlobalUI.I.FadeIn(0.3f);
+        isRunning = false;
     }
 }

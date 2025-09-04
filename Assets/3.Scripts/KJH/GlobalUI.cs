@@ -143,7 +143,8 @@ public class GlobalUI : SingletonBehaviour<GlobalUI>
         ParticleManager.I.PlayParticle("Explosion", pos, Quaternion.identity, null);
         var pb = ParticleManager.I.PlayParticle("Explosion", pos, Quaternion.identity, null);
         pb.transform.localScale = 0.2f * Vector3.one;
-        SoundManager.I.PlaySFX("Explosion", pos, null, 0.4f, 1.2f);
+        yield return new WaitForSeconds(0.05f);
+        SoundManager.I.PlaySFX("Explosion", pos, null, 0.4f, 1f);
         yield return new WaitForSeconds(0.5f);
         ShowRedScreen();
         yield return new WaitForSeconds(0.5f);
